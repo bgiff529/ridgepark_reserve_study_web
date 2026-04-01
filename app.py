@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import json
 
 import pandas as pd
 import streamlit as st
@@ -77,6 +78,7 @@ def seed_session_state(force=False):
         st.session_state["components_frame"] = defaults["components"]
         st.session_state["assessment_frame"] = defaults["assessments"]
         st.session_state["results"] = None
+        st.session_state["last_run_signature"] = None
 
 
 def require_password():
@@ -133,6 +135,27 @@ def matrix_csv_bytes(df):
     return df.to_csv().encode("utf-8")
 
 
+def serialize_for_signature(value):
+    if isinstance(value, pd.DataFrame):
+        df = value.copy()
+        for col in df.columns:
+            if pd.api.types.is_datetime64_any_dtype(df[col]):
+                df[col] = df[col].astype(str)
+        return df.fillna("").to_dict(orient="records")
+    return value
+
+
+def current_input_signature():
+    payload = {
+        "assumptions": assumptions_frame_from_state().to_dict(orient="records"),
+        "components": serialize_for_signature(st.session_state["components_frame"]),
+        "assessments": serialize_for_signature(st.session_state["assessment_frame"]),
+        "projection_years": int(st.session_state["projection_years"]),
+        "units": int(st.session_state["units"]),
+    }
+    return json.dumps(payload, sort_keys=True, default=str)
+
+
 def show_sidebar_tools():
     st.sidebar.header("Workspace")
 
@@ -144,12 +167,14 @@ def show_sidebar_tools():
     if uploaded_components is not None and st.sidebar.button("Load components CSV", use_container_width=True):
         st.session_state["components_frame"] = prepare_components_input(pd.read_csv(uploaded_components))
         st.session_state["results"] = None
+        st.session_state["last_run_signature"] = None
         st.rerun()
 
     uploaded_assessments = st.sidebar.file_uploader("Replace assessment schedule from CSV", type=["csv"])
     if uploaded_assessments is not None and st.sidebar.button("Load assessment CSV", use_container_width=True):
         st.session_state["assessment_frame"] = prepare_assessment_input(pd.read_csv(uploaded_assessments))
         st.session_state["results"] = None
+        st.session_state["last_run_signature"] = None
         st.rerun()
 
     st.sidebar.download_button(
@@ -337,6 +362,7 @@ def main():
     require_password()
     show_sidebar_tools()
 
+    input_signature = current_input_signature()
     run_requested = render_inputs()
 
     if run_requested:
@@ -348,11 +374,18 @@ def main():
                 projection_years=st.session_state["projection_years"],
                 units=st.session_state["units"],
             )
+            st.session_state["last_run_signature"] = input_signature
         except Exception as exc:
             st.error(f"Study run failed: {exc}")
             st.exception(exc)
 
-    if st.session_state.get("results") is not None:
+    has_results = st.session_state.get("results") is not None
+    is_dirty = st.session_state.get("last_run_signature") != input_signature
+
+    if has_results and is_dirty:
+        st.info("Inputs have changed. Click `Run Study` to refresh the results.")
+
+    if has_results and not is_dirty:
         render_outputs(st.session_state["results"])
 
 
