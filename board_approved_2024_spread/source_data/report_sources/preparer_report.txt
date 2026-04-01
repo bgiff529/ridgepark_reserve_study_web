@@ -1,0 +1,14 @@
+[Description of Engagement and Report]
+This report was generated from the uploaded CSV data package for the association. The workflow reads the reserve assumptions, component inventory, replacement schedule, annual contribution plan, and reserve cash-flow projection, then renders a formatted LaTeX report designed to resemble a traditional reserve study binder. It is intended as a reproducible reporting layer over the association's source data.
+
+
+[Management's Responsibility]
+Management remains responsible for the assumptions underlying the reserve model, including inflation, investment return, beginning reserve balance, component scope, useful life estimates, replacement timing, and any planned contribution or special assessment strategy.
+
+
+[Generator Responsibility]
+The generator's responsibility is limited to organizing the supplied data into financial exhibits, narrative disclosures, and summary schedules. It does not perform a site inspection, engineering opinion, destructive testing, or warranty analysis.
+
+
+[Important Limitations]
+This report should be read together with the source CSV package. If the underlying source data changes, the PDF should be regenerated so that tables and summary metrics remain aligned with the current model.

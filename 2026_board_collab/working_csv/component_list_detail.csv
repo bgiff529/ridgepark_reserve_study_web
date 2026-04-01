@@ -1,0 +1,132 @@
+component_id,category,subcategory,component,tracking,method,cost,cost_units,quantity,quantity_units,life_years,life_months,life_display,remaining_life,remaining_life_months,remaining_life_display,service_date,current_cost,replacement_date,future_cost,source_page
+0,Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3.0,$/SF,20000,SF,15,180,15:00,9:06,114,9:06,,60000.0,2035-07-01,79452.01,60
+1,Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3.0,$/SF,20000,SF,15,180,15:00,9:06,114,9:06,,60000.0,2035-07-01,79452.01,60
+2,Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3.0,$/SF,20000,SF,15,180,15:00,9:06,114,9:06,,60000.0,2035-07-01,79452.01,60
+3,Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3.0,$/SF,20000,SF,15,180,15:00,9:06,114,9:06,,60000.0,2035-07-01,79452.01,60
+4,Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3.0,$/SF,20000,SF,15,180,15:00,9:06,114,9:06,,60000.0,2035-07-01,79452.01,60
+5,Asphalt,Crack Repair,Asphalt Crack Seal,Logistical,One Time,50000.0,Allow,1,Allow,3,36,3:00,0:06,6,0:06,,50000.0,2026-07-01,50744.46,59
+6,Asphalt,Crack Repair,Asphalt Crack Seal,Logistical,One Time,25000.0,Allow,1,Allow,3,36,3:00,3:06,42,3:06,,25000.0,2029-07-01,27724.92,59
+7,Asphalt,Crack Repair,Asphalt Crack Seal,Logistical,Fixed,25000.0,Allow,1,Allow,3,36,3:00,12:06,150,12:06,,25000.0,2038-07-01,36174.73,59
+8,Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,Fixed,6.0,$/SF,20000,SF,30,360,30:00,25:06,306,25:06,,120000.0,2051-07-01,254994.3,61
+9,Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,Fixed,6.0,$/SF,20000,SF,30,360,30:00,26:06,318,26:06,,120000.0,2052-07-01,262644.13,61
+10,Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,Fixed,6.0,$/SF,20000,SF,30,360,30:00,27:06,330,27:06,,120000.0,2053-07-01,270523.46,61
+11,Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,Fixed,6.0,$/SF,20000,SF,30,360,30:00,28:06,342,28:06,,120000.0,2054-07-01,278639.16,61
+12,Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,Fixed,6.0,$/SF,20000,SF,30,360,30:00,29:06,354,29:06,,120000.0,2055-07-01,286998.33,61
+13,Asphalt,Top Coat,Asphalt Seal Coat,Logistical,One Time,0.4,$/SF,100000,SF,5,60,5:00,14:06,174,14:06,,40000.0,2040-07-01,61404.44,62
+14,Asphalt,Top Coat,Asphalt Seal Coat,Logistical,One Time,0.4,$/SF,100000,SF,5,60,5:00,19:06,234,19:06,,40000.0,2045-07-01,71184.57,62
+15,Asphalt,Top Coat,Asphalt Seal Coat,Logistical,Fixed,0.4,$/SF,100000,SF,5,60,5:00,30:06,366,30:06,,40000.0,2056-07-01,98536.09,62
+16,Balconies-Decks-Stairways,Railings,Stairway/Balcony Railing,Logistical,Fixed,7500.0,Allow,1,Allow,8,96,8:00,0:06,6,0:06,,7500.0,2026-07-01,7611.67,148
+17,Balconies-Decks-Stairways,Railings,Walkway Railing,Logistical,Fixed,3000.0,Allow,1,Allow,8,96,8:00,2:06,30,2:06,,3000.0,2028-07-01,3230.09,154
+18,Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,0:06,6,0:06,,57500.0,2026-07-01,58356.13,64
+19,Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,1:06,18,1:06,,57500.0,2027-07-01,60106.81,64
+20,Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,2:06,30,2:06,,57500.0,2028-07-01,61910.01,64
+21,Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,3:06,42,3:06,,57500.0,2029-07-01,63767.32,64
+22,Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,4:06,54,4:06,,57500.0,2030-07-01,65680.33,64
+23,Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,5:06,66,5:06,,57500.0,2031-07-01,67650.74,64
+24,Balconies-Decks-Stairways,Structural,Metal Stairway Flashing/Stringers,Logistical,Fixed,15000.0,Allow,1,Allow,7,84,7:00,2:06,30,2:06,,15000.0,2028-07-01,16150.44,121
+25,Balconies-Decks-Stairways,Structural,Wood Balcony Walls,Logistical,Fixed,25000.0,Allow,1,Allow,5,60,5:00,2:06,30,2:06,,25000.0,2028-07-01,26917.4,156
+26,Concrete,Major Repairs,Concrete Sidewalks-Stairs-Patios/Grinding-Repairs,Logistical,Fixed,10000.0,Allow,1,Allow,3,36,3:00,0:06,6,0:06,,10000.0,2026-07-01,10148.89,102
+27,Concrete,Major Repairs,Curbs-Gutters,Logistical,Adjusted,5000.0,Allow,1,Allow,3,36,3:00,0:06,6,0:06,,5000.0,2026-07-01,5074.45,104
+28,Concrete,Pool,Pool Area Concrete Deck,Logistical,Fixed,12.0,$/SF,1592,SF,25,300,25:00,18:06,222,18:06,,19104.0,2044-07-01,33007.53,128
+29,Doors-Windows,Renovation,Raise and Replace Windows,Logistical,One Time,17233.0,Allow,1,Allow,30,360,30:00,9:06,114,9:06,,17233.0,2035-07-01,22819.94,Board Plan
+30,Doors-Windows,Raised Panel,Clubhouse Bathroom/Interior Doors,Logistical,Fixed,5000.0,Allow,1,Allow,10,120,10:00,10:06,126,10:06,,5000.0,2036-07-01,6819.63,79
+31,Doors-Windows,Renovation,Clubhouse/Fitness Windows,Logistical,Fixed,4500.0,Allow,1,Allow,10,120,10:00,10:06,126,10:06,,4500.0,2036-07-01,6137.67,100
+32,Doors-Windows,Sliders,Clubhouse Sliding Glass Doors,Logistical,Fixed,4000.0,Allow,1,Allow,10,120,10:00,10:06,126,10:06,,4000.0,2036-07-01,5455.7,95
+33,Doors-Windows,Window Treatment,Clubhouse Blinds,Logistical,Fixed,1000.0,Allow,1,Allow,10,120,10:00,10:06,126,10:06,,1000.0,2036-07-01,1363.93,80
+34,Doors-Windows,Wood and Metal,Clubhouse Glass Doors,Logistical,Fixed,3500.0,Allow,1,Allow,10,120,10:00,10:06,126,10:06,,3500.0,2036-07-01,4773.74,87
+35,Equipment,Mail,Mail Boxes,Logistical,Fixed,10000.0,Job,1,Job,25,300,25:00,10:06,126,10:06,,10000.0,2036-07-01,13639.26,120
+36,Equipment,Pool,Pool Chemical Controller-Rola Chem,Logistical,Fixed,2500.0,Job,1,Job,15,180,15:00,10:06,126,10:06,,2500.0,2036-07-01,3409.82,134
+37,Equipment,Pool,Pool Cover,Logistical,Fixed,4.0,$/SF,720,SF,12,144,12:00,2:06,30,2:06,,2880.0,2028-07-01,3100.88,136
+38,Equipment,Pool,Pool Filter Hayward,Logistical,Fixed,1300.0,Each,1,Each,15,180,15:00,5:06,66,5:06,,1300.0,2031-07-01,1529.5,137
+39,Equipment,Pool,Pool Heater Raypak,Logistical,Fixed,3000.0,Each,1,Each,15,180,15:00,2:06,30,2:06,,3000.0,2028-07-01,3230.09,138
+40,Equipment,Pool,Pool Misc Pipes Valves,Logistical,Fixed,1500.0,Allow,1,Allow,7,84,7:00,4:06,54,4:06,,1500.0,2030-07-01,1713.4,139
+41,Equipment,Pool,Pool Pump Hayward,Logistical,Fixed,750.0,Each,1,Each,15,180,15:00,6:06,78,6:06,,750.0,2032-07-01,908.87,140
+42,Equipment,Pool,Pool Rails-Ladder,Logistical,Fixed,250.0,Each,3,Each,15,180,15:00,5:06,66,5:06,,750.0,2031-07-01,882.4,141
+43,Equipment,Pool,Pool Room Compressor,Logistical,Fixed,500.0,Each,1,Each,15,180,15:00,5:06,66,5:06,,500.0,2031-07-01,588.27,143
+44,Exterior Surfaces,Pool,Pool Coping,Logistical,Fixed,35.0,$/LF,120,LF,20,240,20:00,10:06,126,10:06,,4200.0,2036-07-01,5728.49,135
+45,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,5000,SF,30,360,30:00,0:06,6,0:06,,60000.0,2026-07-01,60893.35,157
+46,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,7500,SF,30,360,30:00,2:06,30,2:06,,90000.0,2028-07-01,96902.63,157
+47,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,4:06,54,4:06,,150000.0,2030-07-01,171340.0,157
+48,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,6:06,78,6:06,,150000.0,2032-07-01,181774.61,157
+49,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,8:06,102,8:06,,150000.0,2034-07-01,192844.68,157
+50,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,10:06,126,10:06,,150000.0,2036-07-01,204588.92,157
+51,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,12:06,150,12:06,,150000.0,2038-07-01,217048.39,157
+52,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,14:06,174,14:06,,150000.0,2040-07-01,230266.64,157
+53,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,16:06,198,16:06,,150000.0,2042-07-01,244289.87,157
+54,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,18:06,222,18:06,,150000.0,2044-07-01,259167.13,157
+55,Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12.0,$/SF,12500,SF,30,360,30:00,20:06,246,20:06,,150000.0,2046-07-01,274950.41,157
+56,Exterior Surfaces,Roofing,Fascia-Flashing-Soffits,Logistical,One Time,55000.0,Allow,1,Allow,8,96,8:00,0:06,6,0:06,,55000.0,2026-07-01,55818.9,108
+57,Exterior Surfaces,Roofing,Fascia-Flashing-Soffits,Logistical,Fixed,10000.0,Allow,1,Allow,8,96,8:00,0:06,6,0:06,,10000.0,2026-07-01,10148.89,108
+58,Exterior Surfaces,Siding,Clubhouse Siding,Logistical,Fixed,12.0,$/SF,7500,SF,30,360,30:00,5:06,66,5:06,,90000.0,2031-07-01,105888.12,94
+59,Exterior Surfaces,Siding,Corrugated Balcony Walls,Logistical,Fixed,5000.0,Allow,1,Allow,10,120,10:00,7:06,90,7:06,,5000.0,2033-07-01,6240.93,103
+60,Exterior Surfaces,Siding,Stucco Siding Repair,Logistical,Fixed,10000.0,Allow,1,Allow,7,84,7:00,3:06,42,3:06,,10000.0,2029-07-01,11089.97,149
+61,Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,0:06,6,0:06,,57500.0,2026-07-01,58356.13,71
+62,Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,1:06,18,1:06,,57500.0,2027-07-01,60106.81,71
+63,Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,2:06,30,2:06,,57500.0,2028-07-01,61910.01,71
+64,Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,3:06,42,3:06,,57500.0,2029-07-01,63767.32,71
+65,Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,4:06,54,4:06,,57500.0,2030-07-01,65680.33,71
+66,Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500.0,Each,23,Each,20,240,20:00,5:06,66,5:06,,57500.0,2031-07-01,67650.74,71
+67,Fences-Walls-Gates,Chain Link,Chain Link Fence,Logistical,Fixed,2500.0,Allow,1,Allow,10,120,10:00,3:06,42,3:06,,2500.0,2029-07-01,2772.49,70
+68,Fences-Walls-Gates,Concrete,Concrete Brick Grouted Wall,Logistical,Fixed,2500.0,Allow,1,Allow,3,36,3:00,0:06,6,0:06,,2500.0,2026-07-01,2537.22,101
+69,Fences-Walls-Gates,Concrete,Pool Area Wall Repair,Logistical,Fixed,2500.0,Allow,1,Allow,5,60,5:00,0:06,6,0:06,,2500.0,2026-07-01,2537.22,132
+70,Fences-Walls-Gates,Concrete,Stacked Concrete Block Wall,Logistical,Fixed,1500.0,Allow,1,Allow,5,60,5:00,2:06,30,2:06,,1500.0,2028-07-01,1615.04,147
+71,Fences-Walls-Gates,Metal,Pool Area Metal Rail Fence-Gate,Logistical,Fixed,75.0,$/LF,200,LF,25,300,25:00,10:06,126,10:06,,15000.0,2036-07-01,20458.89,129
+72,Fences-Walls-Gates,Renovation,Wooden Perimeter Fence,Logistical,Fixed,5000.0,Allow,1,Allow,5,60,5:00,3:06,42,3:06,,5000.0,2029-07-01,5544.98,158
+73,Fire Safety,Equipment,Chimney Flues-Caps-Spark Arrestors,Logistical,Fixed,5000.0,Allow,1,Allow,5,60,5:00,3:06,42,3:06,,5000.0,2029-07-01,5544.98,73
+74,Flooring,Carpet,Clubhouse Carpet,Logistical,Fixed,9.0,$/SF,4000,SF,12,144,12:00,8:06,102,8:06,,36000.0,2034-07-01,46282.72,81
+75,Flooring,Tile,Clubhouse Tile Floor,Logistical,Fixed,16.0,$/SF,1000,SF,20,240,20:00,8:06,102,8:06,,16000.0,2034-07-01,20570.1,99
+76,Flooring,Tile,Pool Area Tile Exterior,Logistical,Fixed,16.0,$/SF,400,SF,20,240,20:00,8:06,102,8:06,,6400.0,2034-07-01,8228.04,131
+77,Landscape,Fire Safety,"Landscaping, Wildfire Defensible Space",Logistical,Fixed,10000.0,Allow,1,Allow,1,12,1:00,0:06,6,0:06,,10000.0,2026-07-01,10148.89,Board Plan
+78,Landscape,Concrete,Landscape Border Blocks,Logistical,Fixed,1000.0,Allow,1,Allow,3,36,3:00,0:06,6,0:06,,1000.0,2026-07-01,1014.89,115
+79,Landscape,Fire Safety,Tree Removal-Major Trimming,Logistical,One Time,7000.0,Allow,1,Allow,1,12,1:00,0:06,6,0:06,,7000.0,2026-07-01,7104.22,151
+80,Landscape,Fire Safety,Tree Removal-Major Trimming,Logistical,Fixed,8000.0,Allow,1,Allow,1,12,1:00,0:06,6,0:06,,8000.0,2026-07-01,8119.11,151
+81,Landscape,Renovation,Landscape Replenishment,Logistical,Fixed,2500.0,Allow,1,Allow,3,36,3:00,0:06,6,0:06,,2500.0,2026-07-01,2537.22,116
+82,Landscape,Renovation,Landscape Rock,Logistical,Fixed,2500.0,Allow,1,Allow,8,96,8:00,5:06,66,5:06,,2500.0,2031-07-01,2941.34,117
+83,Painting,Exterior,Painting Building 1,Logistical,Fixed,4.0,$/SF,11539,SF,10,120,10:00,0:06,6,0:06,,46156.0,2026-07-01,46843.22,124
+84,Painting,Exterior,Painting Buildingg 2,Logistical,Fixed,4.0,$/SF,11539,SF,10,120,10:00,0:06,6,0:06,,46156.0,2026-07-01,46843.22,124
+85,Painting,Exterior,Painting Building 3,Logistical,Fixed,4.0,$/SF,11213,SF,10,120,10:00,0:06,6,0:06,,44852.0,2026-07-01,45519.81,124
+86,Painting,Exterior,Painting Building 4,Logistical,Fixed,4.0,$/SF,15029,SF,10,120,10:00,1:06,18,1:06,,60116.0,2027-07-01,62841.41,124
+87,Painting,Exterior,Painting Building 5,Logistical,Fixed,4.0,$/SF,14409,SF,10,120,10:00,9:06,114,9:06,,57636.0,2035-07-01,76321.6,124
+88,Painting,Exterior,Painting Building 6,Logistical,Fixed,4.0,$/SF,11948,SF,10,120,10:00,1:06,18,1:06,,47792.0,2027-07-01,49958.69,124
+89,Painting,Exterior,Painting Building 7,Logistical,Fixed,4.0,$/SF,11948,SF,10,120,10:00,1:06,18,1:06,,47792.0,2027-07-01,49958.69,124
+90,Painting,Exterior,Painting Building 8,Logistical,Fixed,4.0,$/SF,14409,SF,10,120,10:00,2:06,30,2:06,,57636.0,2028-07-01,62056.45,124
+91,Painting,Exterior,Painting Building 9,Logistical,Fixed,4.0,$/SF,7886,SF,10,120,10:00,0:06,6,0:06,,31544.0,2026-07-01,32013.66,124
+92,Painting,Exterior,Painting Building 10,Logistical,Fixed,4.0,$/SF,11799,SF,10,120,10:00,2:06,30,2:06,,47196.0,2028-07-01,50815.74,124
+93,Painting,Exterior,Painting Building 11,Logistical,Fixed,4.0,$/SF,7886,SF,10,120,10:00,0:06,6,0:06,,31544.0,2026-07-01,32013.66,124
+94,Painting,Exterior,Painting Building 12,Logistical,Fixed,4.0,$/SF,11799,SF,10,120,10:00,2:06,30,2:06,,47196.0,2028-07-01,50815.74,124
+95,Painting,Exterior,Painting Building 13,Logistical,Fixed,4.0,$/SF,11799,SF,10,120,10:00,2:06,30,2:06,,47196.0,2028-07-01,50815.74,124
+96,Painting,Exterior,Painting Buidling 14,Logistical,Fixed,4.0,$/SF,4580,SF,10,120,10:00,0:06,6,0:06,,18320.0,2026-07-01,18592.77,124
+97,Painting,Exterior Metal,Pool Area Metal Rail Fence-Gate-Painting,Logistical,Fixed,15.0,$/LF,200,LF,10,120,10:00,8:06,102,8:06,,3000.0,2034-07-01,3856.89,130
+98,Painting,Interior,Clubhouse Interior Painting,Logistical,Fixed,1.75,$/SF,20000,SF,12,144,12:00,10:06,126,10:06,,35000.0,2036-07-01,47737.42,90
+99,Painting,Parking,Parking Striping-Curb Painting,Logistical,Fixed,5000.0,Allow,1,Allow,3,36,3:00,0:06,6,0:06,,5000.0,2026-07-01,5074.45,125
+100,Plumbing,Equipment,Clubhouse Hot Water Heaters-Expansion,Logistical,Fixed,1200.0,Each,2,Each,12,144,12:00,5:06,66,5:06,,2400.0,2031-07-01,2823.68,88
+101,Plumbing,Inspection,Water Valve and Line Annual Inspection,Logistical,One Time,1756.0,Allow,1,Allow,1,12,1:00,0:06,6,0:06,,1756.0,2026-07-01,1782.15,Board Plan
+102,Plumbing,Sanitation,"Sewer Inspection, Semi-annual Inspection",Logistical,One Time,4097.0,Allow,1,Allow,2,24,2:00,0:06,6,0:06,,4097.0,2026-07-01,4158.0,Board Plan
+103,Plumbing,Sanitation,Sewer Lateral Lines-Cleanouts,Logistical,Fixed,5000.0,Allow,1,Allow,2,24,2:00,0:06,6,0:06,,5000.0,2026-07-01,5074.45,146
+104,Renovation,Bar Service,Clubhouse Bar Remodel,Logistical,Fixed,5000.0,Job,1,Job,20,240,20:00,8:06,102,8:06,,5000.0,2034-07-01,6428.16,76
+105,Renovation,Bathrooms,Clubhouse Bathroom Remodel,Logistical,Fixed,6000.0,Each,2,Each,20,240,20:00,8:06,102,8:06,,12000.0,2034-07-01,15427.57,78
+106,Renovation,Kitchenette,Fitness Room Kitchenette Remodel,Logistical,Fixed,3500.0,Allow,1,Allow,20,240,20:00,8:06,102,8:06,,3500.0,2034-07-01,4499.71,111
+107,Renovation,Laundry,Laundry Room Remodel,Logistical,Fixed,3500.0,Allow,1,Allow,20,240,20:00,8:06,102,8:06,,3500.0,2034-07-01,4499.71,118
+108,Renovation,Plaster,Pool Resurface,Logistical,Fixed,12.0,$/SF,1200,SF,15,180,15:00,13:06,162,13:06,,14400.0,2039-07-01,21461.74,142
+109,Renovation,Shop,Clubhouse Maintenance Shop Remodel,Logistical,Fixed,2500.0,Allow,1,Allow,10,120,10:00,3:06,42,3:06,,2500.0,2029-07-01,2772.49,91
+110,Renovation,Shower Room,Clubhouse Pool Room-Shower Remodel,Logistical,Fixed,5000.0,Allow,1,Allow,20,240,20:00,5:06,66,5:06,,5000.0,2031-07-01,5882.67,92
+111,Renovation,Wood,Sauna Remodel,Logistical,Fixed,2500.0,Job,1,Job,20,240,20:00,5:06,66,5:06,,2500.0,2031-07-01,2941.34,145
+112,Roofing,Drainage,Gutters-Downspouts,Logistical,Fixed,20000.0,Allow,1,Allow,5,60,5:00,4:06,54,4:06,,20000.0,2030-07-01,22845.33,113
+113,Roofing,Elastomeric,Garage Flat Roof,Logistical,Fixed,300000.0,Allow,1,Allow,10,120,10:00,10:06,126,10:06,,300000.0,2036-07-01,409177.85,112
+114,Roofing,Metal,Carport Roofs,Logistical,Fixed,12.0,$/SF,4280,SF,25,300,25:00,5:06,66,5:06,,51360.0,2031-07-01,60426.82,68
+115,Roofing,Metal,Carport Roofs,Logistical,Fixed,12.0,$/SF,4280,SF,25,300,25:00,7:06,90,7:06,,51360.0,2033-07-01,64106.81,68
+116,Roofing,Metal,Carport Roofs,Logistical,Fixed,12.0,$/SF,4280,SF,25,300,25:00,9:06,114,9:06,,51360.0,2035-07-01,68010.92,68
+117,Roofing,Metal,Carport Roofs,Logistical,Fixed,12.0,$/SF,4280,SF,25,300,25:00,11:06,138,11:06,,51360.0,2037-07-01,72152.79,68
+118,Roofing,Metal,Carport Roofs,Logistical,Fixed,12.0,$/SF,4280,SF,25,300,25:00,13:06,162,13:06,,51360.0,2039-07-01,76546.89,68
+119,Roofing,Shingle,Clubhouse Roof,Logistical,Fixed,12.0,$/SF,4500,SF,25,300,25:00,9:06,114,9:06,,54000.0,2035-07-01,71506.81,93
+120,Roofing,Inspection,Roof Inspection and Repair,Logistical,One Time,15000.0,Allow,1,Allow,5,60,5:00,0:06,6,0:06,,15000.0,2026-07-01,15223.34,Board Plan
+121,Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12.0,$/SF,20000,SF,30,360,30:00,10:06,126,10:06,,240000.0,2036-07-01,327342.28,152
+122,Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12.0,$/SF,20000,SF,30,360,30:00,11:06,138,11:06,,240000.0,2037-07-01,337162.55,152
+123,Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12.0,$/SF,20000,SF,30,360,30:00,12:06,150,12:06,,240000.0,2038-07-01,347277.42,152
+124,Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12.0,$/SF,20000,SF,30,360,30:00,13:06,162,13:06,,240000.0,2039-07-01,357695.75,152
+125,Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12.0,$/SF,20000,SF,30,360,30:00,14:06,174,14:06,,240000.0,2040-07-01,368426.62,152
+126,Signage,Misc,Misc and Parking Signs,Logistical,Fixed,1000.0,Allow,1,Allow,10,120,10:00,3:06,42,3:06,,1000.0,2029-07-01,1109.0,122
+127,Signage,Monument,Monument Sign/Wall,Logistical,Fixed,2000.0,Allow,1,Allow,20,240,20:00,2:06,30,2:06,,2000.0,2028-07-01,2153.39,123
+128,Signage,Numbers,Building Signs/Numbers,Logistical,Fixed,2000.0,Allow,1,Allow,5,60,5:00,0:06,6,0:06,,2000.0,2026-07-01,2029.78,65
+129,Structural,Metal,Carport Support Posts-Beams,Logistical,Fixed,5000.0,Allow,1,Allow,10,120,10:00,2:06,30,2:06,,5000.0,2028-07-01,5383.48,69
+130,Structural,Renovation,Trash Enclosures,Logistical,Fixed,7500.0,Allow,1,Allow,5,60,5:00,0:06,6,0:06,,7500.0,2026-07-01,7611.67,150

@@ -1,0 +1,518 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.8in,top=0.85in,bottom=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext,newtxmath,microtype,graphicx,booktabs,longtable,array,tabularx,multirow,xcolor,fancyhdr,lastpage,pdflscape,caption,tocloft,hyperref,colortbl}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue,pdftitle=Reserve Management Plan}
+\definecolor{linegray}{HTML}{C8CDD2}
+\definecolor{sectionblue}{HTML}{3A5F7D}
+\definecolor{softgray}{HTML}{F6F7F8}
+\setlength{\headheight}{16pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize Ridge Park Luxury Condominiums Owners' Association Inc.}
+\fancyhead[R]{\footnotesize January 1, 2026}
+\fancyfoot[L]{\footnotesize Reserve Study Report}
+\fancyfoot[R]{\footnotesize Page \thepage\ of \pageref{LastPage}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\renewcommand{\arraystretch}{1.18}
+
+\newcommand{\sectionrule}{\par\vspace{0.2em}{\color{linegray}\rule{\linewidth}{0.6pt}}\par\vspace{0.6em}}
+\newcommand{\reportsection}[1]{%
+  \par\vspace{0.2em}%
+  \addcontentsline{toc}{section}{#1}%
+  {{\Large\bfseries\color{sectionblue} #1\par}}%
+  \sectionrule
+}
+\newcommand{\subnote}[1]{\vspace{0.3em}\colorbox{softgray}{\parbox{0.97\linewidth}{\small #1}}\vspace{0.4em}}
+
+\begin{document}
+
+\thispagestyle{empty}
+\begin{flushleft}
+{\small Board of Directors}\\
+{\small Ridge Park Luxury Condominiums Owners' Association Inc.}\\
+{\small Los Alamos, New Mexico}
+\end{flushleft}
+
+\vspace{0.8em}
+Please find attached your reserve study report. This version was generated from association CSV source files using a Python-to-LaTeX workflow so that the report can be reproduced, updated, and audited from the underlying data package.
+
+The report is intended to mirror the structure and feel of a conventional reserve study: a cover page, statement of position, component summaries, annual funding projections, expenditure schedules, and supporting disclosures. The purpose is not to imitate the original preparer's authorship, but to provide a transparent and reusable reporting format driven directly by the uploaded reserve data.
+
+The reserve model remains a planning tool rather than a prediction of exact future outcomes. Actual repair timing, pricing, inflation, and investment returns will differ from the assumptions used here. The goal is to keep the association approximately funded at approximately the right time and to make long-range reserve decisions easier to review.
+
+Sincerely,\\[0.7em]
+Brendan J. Gifford\\
+Ridge Park Treasurer
+\newpage
+
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.2cm}
+{\LARGE\bfseries Ridge Park Luxury Condominiums Owners' Association Inc.}\\[2.0cm]
+{\Huge\bfseries Reserve Management Plan}\\[0.45cm]
+{\Large\bfseries Type 1}\\[0.45cm]
+{\LARGE\bfseries Reserve Study with Data-Driven Analysis}\\[1.7cm]
+{\large\bfseries For 30-Year Projection Period Beginning January 1, 2026}\\[1.0cm]
+\IfFileExists{cover_img.png}{\includegraphics[width=0.68\linewidth]{cover_img.png}}{\vspace{3cm}}
+\end{center}
+\newpage
+
+\tableofcontents
+\newpage
+
+\reportsection{Preparer's Report on Reserve Study}
+{\bfseries Description of Engagement and Report}\\
+This report was generated from the uploaded CSV data package for the association. The workflow reads the reserve assumptions, component inventory, replacement schedule, annual contribution plan, and reserve cash-flow projection, then renders a formatted LaTeX report designed to resemble a traditional reserve study binder. It is intended as a reproducible reporting layer over the association's source data.
+
+{\bfseries Management's Responsibility}\\
+Management remains responsible for the assumptions underlying the reserve model, including inflation, investment return, beginning reserve balance, component scope, useful life estimates, replacement timing, and any planned contribution or special assessment strategy.
+
+{\bfseries Generator Responsibility}\\
+The generator's responsibility is limited to organizing the supplied data into financial exhibits, narrative disclosures, and summary schedules. It does not perform a site inspection, engineering opinion, destructive testing, or warranty analysis.
+
+{\bfseries Important Limitations}\\
+This report should be read together with the source CSV package. If the underlying source data changes, the PDF should be regenerated so that tables and summary metrics remain aligned with the current model.
+
+\subnote{This document was not prepared by a credentialed professional. It is best treated as a transparent analytical report, not as a substitute for a professional reserve study.}
+
+\newpage
+\reportsection{Statement of Position}
+\begin{tabularx}{\linewidth}{>{\bfseries}l X}
+Projection period: & 2026 to 2055 \\
+Type of project: & Reserve Study \\
+Number of units: & 138 \\
+Location: & Los Alamos, New Mexico \\
+Project construction date: & 1984 \\
+Analysis date: & January 1, 2026 \\
+Report prepared by: & Brendan J. Gifford, Treasurer \\
+\end{tabularx}
+
+\vspace{0.8em}
+\begin{tabularx}{\linewidth}{X r}
+\toprule
+Metric & Value \\
+\midrule
+\rowcolor{blue!12} Current Replacement Cost & \$6,349,702 \\
+Future Replacement Cost & \$8,933,244 \\
+\rowcolor{blue!12} Current Reserve Fund Balance & \$620,000 \\
+Fully Funded Reserve Balance & \$3,447,700 \\
+\rowcolor{blue!12} Percent Funded & 17.98 \% \\
+Reserve Deficit & \$2,827,700 \\
+\rowcolor{blue!12} Reserve Deficit per Unit & \$20,491 \\
+Projected Annual Reserve Contribution & \$250,000 \\
+\rowcolor{blue!12} Average Annual Reserve Contribution per Unit & \$1,812 \\
+Projected Monthly Reserve Contribution & \$20,833 \\
+\rowcolor{blue!12} Average Monthly Reserve Contribution per Unit & \$151 \\
+\bottomrule
+\end{tabularx}
+
+\subnote{First-year reserve contribution: \$250,000. First-year ending balance: \$268,737. Ending balance in the final projection year (2055): \$5,274,591.}
+
+\newpage
+\reportsection{Summary of Major Components}
+{\small Analysis Date - January 1, 2026 \quad Inflation: 3.00\% \quad Investment: 2.50\% \quad Contribution Factor: 0.00}
+
+\vspace{0.6em}
+\begin{tabularx}{\linewidth}{X >{\centering\arraybackslash}p{1.3cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{2.3cm} >{\raggedleft\arraybackslash}p{2.7cm}}
+\toprule
+Category & Useful Lives & Replacement Years & Remaining Years & Future Cost \\
+\midrule
+\rowcolor{blue!12} Exterior Surfaces & 7-30 & 2026-2046 & 0:06-20:06 & \$2,706,453 \\
+Roofing & 5-30 & 2026-2040 & 0:06-14:06 & \$2,597,902 \\
+\rowcolor{blue!12} Asphalt & 3-30 & 2026-2056 & 0:06-30:06 & \$2,096,829 \\
+Painting & 3-12 & 2026-2036 & 0:06-10:06 & \$732,079 \\
+\rowcolor{blue!12} Balconies-Decks-Stairways & 5-20 & 2026-2031 & 0:06-5:06 & \$431,381 \\
+Flooring & 12-20 & 2034 & 8:06 & \$75,081 \\
+\rowcolor{blue!12} Renovation & 10-20 & 2029-2039 & 3:06-13:06 & \$63,913 \\
+Concrete & 3-25 & 2026-2044 & 0:06-18:06 & \$48,231 \\
+\rowcolor{blue!12} Doors-Windows & 10-30 & 2035-2036 & 9:06-10:06 & \$47,371 \\
+Fences-Walls-Gates & 3-25 & 2026-2036 & 0:06-10:06 & \$35,466 \\
+\rowcolor{blue!12} Landscape & 1-8 & 2026-2031 & 0:06-5:06 & \$31,866 \\
+Equipment & 7-25 & 2028-2036 & 2:06-10:06 & \$29,002 \\
+\rowcolor{blue!12} Plumbing & 1-12 & 2026-2031 & 0:06-5:06 & \$13,838 \\
+Structural & 5-10 & 2026-2028 & 0:06-2:06 & \$12,995 \\
+\rowcolor{blue!12} Fire Safety & 5 & 2029 & 3:06 & \$5,545 \\
+Signage & 5-20 & 2026-2029 & 0:06-3:06 & \$5,292 \\
+\bottomrule
+\end{tabularx}
+
+\newpage
+\reportsection{Percent Funded - Annual - Ending Balance}
+\begin{longtable}{>{\centering\arraybackslash}p{1.4cm} >{\raggedleft\arraybackslash}p{2.6cm} >{\raggedleft\arraybackslash}p{2.7cm} >{\raggedleft\arraybackslash}p{2.0cm}}
+\toprule
+Year & Ending Balance & Funded Balance & Percent Funded \\
+\midrule
+\endfirsthead
+\toprule
+Year & Ending Balance & Funded Balance & Percent Funded \\
+\midrule
+\endhead
+\rowcolor{blue!12} 2026 & \$268,737 & \$3,284,911 & 8.18\% \\
+2027 & \$274,681 & \$3,446,214 & 7.97\% \\
+\rowcolor{blue!12} 2028 & \$109,174 & \$3,400,168 & 3.21\% \\
+2029 & \$282,068 & \$3,652,638 & 7.72\% \\
+\rowcolor{blue!12} 2030 & \$388,112 & \$3,797,018 & 10.22\% \\
+2031 & \$546,540 & \$3,956,553 & 13.81\% \\
+\rowcolor{blue!12} 2032 & \$842,862 & \$4,247,149 & 19.85\% \\
+2033 & \$1,284,336 & \$4,676,890 & 27.46\% \\
+\rowcolor{blue!12} 2034 & \$1,513,050 & \$4,887,158 & 30.96\% \\
+2035 & \$1,390,950 & \$4,735,651 & 29.37\% \\
+\rowcolor{blue!12} 2036 & \$599,238 & \$3,900,461 & 15.36\% \\
+2037 & \$570,416 & \$3,830,298 & 14.89\% \\
+\rowcolor{blue!12} 2038 & \$197,528 & \$3,417,349 & 5.78\% \\
+2039 & \$325,680 & \$3,509,310 & 9.28\% \\
+\rowcolor{blue!12} 2040 & \$244,479 & \$3,395,536 & 7.20\% \\
+2041 & \$780,117 & \$3,905,444 & 19.98\% \\
+\rowcolor{blue!12} 2042 & \$1,130,674 & \$4,237,112 & 26.69\% \\
+2043 & \$1,719,421 & \$4,824,526 & 35.64\% \\
+\rowcolor{blue!12} 2044 & \$1,998,192 & \$5,100,204 & 39.18\% \\
+2045 & \$2,515,791 & \$5,606,562 & 44.87\% \\
+\rowcolor{blue!12} 2046 & \$1,690,834 & \$4,755,608 & 35.55\% \\
+2047 & \$1,833,605 & \$4,868,248 & 37.66\% \\
+\rowcolor{blue!12} 2048 & \$1,859,636 & \$4,859,477 & 38.27\% \\
+2049 & \$2,374,948 & \$5,337,172 & 44.50\% \\
+\rowcolor{blue!12} 2050 & \$2,766,202 & \$5,687,357 & 48.64\% \\
+2051 & \$3,091,400 & \$5,976,113 & 51.73\% \\
+\rowcolor{blue!12} 2052 & \$3,714,722 & \$6,569,441 & 56.55\% \\
+2053 & \$4,207,016 & \$7,029,129 & 59.85\% \\
+\rowcolor{blue!12} 2054 & \$4,732,390 & \$7,519,205 & 62.94\% \\
+2055 & \$5,274,591 & \$8,023,291 & 65.74\% \\
+\bottomrule
+\end{longtable}
+
+\newpage
+\reportsection{Cash Flow - Annual}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} >{\raggedleft\arraybackslash}p{2.0cm} >{\raggedleft\arraybackslash}p{1.9cm} >{\raggedleft\arraybackslash}p{2.1cm} >{\raggedleft\arraybackslash}p{1.9cm} >{\raggedleft\arraybackslash}p{1.7cm} >{\raggedleft\arraybackslash}p{2.0cm}}
+\toprule
+Year & Begin & Contribution & Special Assess. & Expenditures & Interest & Ending \\
+\midrule
+\endfirsthead
+\toprule
+Year & Begin & Contribution & Special Assess. & Expenditures & Interest & Ending \\
+\midrule
+\endhead
+\rowcolor{blue!12} 2026 & \$620,000 & \$250,000 & \$0 & \$613,932 & \$12,668 & \$268,737 \\
+2027 & \$268,737 & \$300,000 & \$0 & \$301,788 & \$7,733 & \$274,681 \\
+\rowcolor{blue!12} 2028 & \$274,681 & \$350,000 & \$0 & \$521,771 & \$6,264 & \$109,174 \\
+2029 & \$109,174 & \$400,000 & \$0 & \$232,889 & \$5,783 & \$282,068 \\
+\rowcolor{blue!12} 2030 & \$282,068 & \$450,000 & \$0 & \$353,532 & \$9,576 & \$388,112 \\
+2031 & \$388,112 & \$500,000 & \$0 & \$354,502 & \$12,929 & \$546,540 \\
+\rowcolor{blue!12} 2032 & \$546,540 & \$520,000 & \$0 & \$242,063 & \$18,385 & \$842,862 \\
+2033 & \$842,862 & \$540,000 & \$0 & \$125,892 & \$27,366 & \$1,284,336 \\
+\rowcolor{blue!12} 2034 & \$1,284,336 & \$560,000 & \$0 & \$367,562 & \$36,276 & \$1,513,050 \\
+2035 & \$1,513,050 & \$580,000 & \$0 & \$740,531 & \$38,431 & \$1,390,950 \\
+\rowcolor{blue!12} 2036 & \$1,390,950 & \$600,000 & \$0 & \$1,420,218 & \$28,507 & \$599,238 \\
+2037 & \$599,238 & \$610,000 & \$0 & \$655,444 & \$16,622 & \$570,416 \\
+\rowcolor{blue!12} 2038 & \$570,416 & \$620,000 & \$0 & \$1,005,258 & \$12,370 & \$197,528 \\
+2039 & \$197,528 & \$630,000 & \$0 & \$510,104 & \$8,256 & \$325,680 \\
+\rowcolor{blue!12} 2040 & \$325,680 & \$640,000 & \$0 & \$730,529 & \$9,328 & \$244,479 \\
+2041 & \$244,479 & \$650,000 & \$0 & \$128,074 & \$13,712 & \$780,117 \\
+\rowcolor{blue!12} 2042 & \$780,117 & \$660,000 & \$0 & \$334,677 & \$25,233 & \$1,130,674 \\
+2043 & \$1,130,674 & \$661,139 & \$0 & \$108,867 & \$36,476 & \$1,719,421 \\
+\rowcolor{blue!12} 2044 & \$1,719,421 & \$680,973 & \$0 & \$450,267 & \$48,064 & \$1,998,192 \\
+2045 & \$1,998,192 & \$701,402 & \$0 & \$241,380 & \$57,577 & \$2,515,791 \\
+\rowcolor{blue!12} 2046 & \$2,515,791 & \$722,444 & \$0 & \$1,604,101 & \$56,700 & \$1,690,834 \\
+2047 & \$1,690,834 & \$744,118 & \$0 & \$647,487 & \$46,140 & \$1,833,605 \\
+\rowcolor{blue!12} 2048 & \$1,833,605 & \$766,441 & \$0 & \$788,984 & \$48,575 & \$1,859,636 \\
+2049 & \$1,859,636 & \$789,435 & \$0 & \$328,487 & \$54,364 & \$2,374,948 \\
+\rowcolor{blue!12} 2050 & \$2,374,948 & \$813,118 & \$0 & \$487,914 & \$66,051 & \$2,766,202 \\
+2051 & \$2,766,202 & \$837,511 & \$0 & \$587,549 & \$75,236 & \$3,091,400 \\
+\rowcolor{blue!12} 2052 & \$3,091,400 & \$862,637 & \$0 & \$325,854 & \$86,539 & \$3,714,722 \\
+2053 & \$3,714,722 & \$888,516 & \$0 & \$497,087 & \$100,864 & \$4,207,016 \\
+\rowcolor{blue!12} 2054 & \$4,207,016 & \$915,171 & \$0 & \$503,408 & \$113,611 & \$4,732,390 \\
+2055 & \$4,732,390 & \$942,626 & \$0 & \$527,446 & \$127,020 & \$5,274,591 \\
+\bottomrule
+\end{longtable}
+
+\newpage
+\reportsection{Disclosures}
+\begin{itemize}
+\item This report was generated from current component inventory and condition, projected expenditures, annual contribution schedules, and reserve cash-flow projections.
+\item Analysis date: January 1, 2026. Projection horizon: 30 years.
+\item Inflation assumption used in the model: 3.00\%.
+\item Investment return assumption used in the model: 2.50\%.
+\item Beginning reserve balance used in the projection: \$620,000.
+\item While component replacement timing and cost estimates are best guesses, actual field conditions may cause different timing or scope.
+\item This document is formatted to resemble a conventional reserve study using custom Python-based software designed and written by Brendan J. Gifford rather than from proprietary reserve-study software.
+\item Readers should review contribution levels, projected expenditures, and percent-funded results together. No single table should be interpreted in isolation.
+\end{itemize}
+
+\newpage
+\begin{landscape}
+\reportsection{Expenditures Matrix: Years 1--10}
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\begin{tabular}{p{4.2cm}*{10}{r}}
+\toprule
+Category & 2026 & 2027 & 2028 & 2029 & 2030 & 2031 & 2032 & 2033 & 2034 & 2035 \\
+\midrule
+\rowcolor{blue!12} Asphalt & \$50,744 &  &  & \$27,725 &  &  &  &  &  & \$397,260 \\
+Balconies-Decks-Stairways & \$65,968 & \$60,107 & \$108,208 & \$63,767 & \$65,680 & \$67,651 &  & \$31,205 & \$9,642 & \$19,863 \\
+\rowcolor{blue!12} Concrete & \$15,223 &  &  & \$16,635 &  &  & \$18,177 &  &  & \$19,863 \\
+Doors-Windows &  &  &  &  &  &  &  &  &  & \$22,820 \\
+\rowcolor{blue!12} Equipment &  &  & \$6,331 &  & \$1,713 & \$3,000 & \$909 &  &  &  \\
+Exterior Surfaces & \$185,217 & \$60,107 & \$158,813 & \$74,857 & \$237,020 & \$173,539 & \$181,775 & \$6,241 & \$205,701 &  \\
+\rowcolor{blue!12} Fences-Walls-Gates & \$5,074 &  & \$1,615 & \$11,090 &  & \$2,941 & \$3,030 & \$1,872 & \$6,428 & \$3,310 \\
+Fire Safety &  &  &  & \$5,545 &  &  &  &  & \$6,428 &  \\
+\rowcolor{blue!12} Flooring &  &  &  &  &  &  &  &  & \$75,081 &  \\
+Landscape & \$28,924 & \$18,816 & \$19,381 & \$23,843 & \$20,561 & \$24,119 & \$26,054 & \$22,467 & \$23,141 & \$28,470 \\
+\rowcolor{blue!12} Painting & \$226,901 & \$162,759 & \$214,504 & \$5,545 &  &  & \$6,059 &  & \$3,857 & \$82,943 \\
+Plumbing & \$11,015 &  & \$5,383 &  & \$5,711 & \$2,824 & \$6,059 &  & \$6,428 &  \\
+\rowcolor{blue!12} Renovation &  &  &  & \$2,772 &  & \$8,824 &  &  & \$30,855 &  \\
+Roofing & \$15,223 &  &  &  & \$22,845 & \$60,427 &  & \$64,107 &  & \$166,002 \\
+\rowcolor{blue!12} Signage & \$2,030 &  & \$2,153 & \$1,109 &  & \$2,353 &  &  &  &  \\
+Structural & \$7,612 &  & \$5,383 &  &  & \$8,824 &  &  &  &  \\
+\bottomrule
+\end{tabular}
+\end{landscape}
+
+\newpage
+\begin{landscape}
+\reportsection{Expenditures Matrix: Years 11--20}
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\begin{tabular}{p{4.2cm}*{10}{r}}
+\toprule
+Category & 2036 & 2037 & 2038 & 2039 & 2040 & 2041 & 2042 & 2043 & 2044 & 2045 \\
+\midrule
+\rowcolor{blue!12} Asphalt &  &  & \$36,175 &  & \$61,404 & \$39,529 &  &  & \$43,195 & \$71,185 \\
+Balconies-Decks-Stairways & \$4,092 &  & \$36,175 &  &  &  & \$36,643 & \$41,936 & \$5,183 &  \\
+\rowcolor{blue!12} Concrete &  &  & \$21,705 &  &  & \$23,717 &  &  & \$58,924 &  \\
+Doors-Windows & \$24,551 &  &  &  &  &  &  &  &  &  \\
+\rowcolor{blue!12} Equipment & \$17,049 & \$2,107 &  &  & \$4,421 &  &  & \$5,032 & \$2,592 &  \\
+Exterior Surfaces & \$223,957 &  & \$217,048 &  & \$230,267 &  & \$260,576 & \$25,162 & \$259,167 &  \\
+\rowcolor{blue!12} Fences-Walls-Gates & \$23,869 &  & \$5,788 & \$11,178 &  & \$7,906 &  & \$2,516 & \$12,958 &  \\
+Fire Safety &  &  &  & \$7,452 &  &  &  &  & \$8,639 &  \\
+\rowcolor{blue!12} Flooring &  &  &  &  &  &  &  &  &  &  \\
+Landscape & \$24,551 & \$25,287 & \$31,110 & \$30,553 & \$27,632 & \$33,995 & \$29,315 & \$30,194 & \$37,147 & \$32,033 \\
+\rowcolor{blue!12} Painting & \$345,854 & \$218,734 & \$295,510 &  &  & \$7,906 &  &  & \$13,822 & \$102,570 \\
+Plumbing & \$6,820 &  & \$7,235 &  & \$7,676 &  & \$8,143 & \$4,026 & \$8,639 &  \\
+\rowcolor{blue!12} Renovation &  &  &  & \$25,188 &  &  &  &  &  &  \\
+Roofing & \$736,520 & \$409,315 & \$347,277 & \$434,243 & \$399,129 &  &  &  &  & \$35,592 \\
+\rowcolor{blue!12} Signage & \$2,728 &  &  & \$1,490 &  & \$3,162 &  &  &  &  \\
+Structural & \$10,229 &  & \$7,235 &  &  & \$11,859 &  &  &  &  \\
+\bottomrule
+\end{tabular}
+\end{landscape}
+
+\newpage
+\begin{landscape}
+\reportsection{Expenditures Matrix: Years 21--30}
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\begin{tabular}{p{4.2cm}*{10}{r}}
+\toprule
+Category & 2046 & 2047 & 2048 & 2049 & 2050 & 2051 & 2052 & 2053 & 2054 & 2055 \\
+\midrule
+\rowcolor{blue!12} Asphalt &  & \$47,200 &  &  & \$51,577 & \$254,994 & \$262,644 & \$326,883 & \$278,639 & \$286,998 \\
+Balconies-Decks-Stairways & \$105,398 & \$108,560 & \$160,432 & \$145,215 & \$134,099 & \$122,185 & \$6,566 & \$56,359 &  &  \\
+\rowcolor{blue!12} Concrete &  & \$28,320 &  &  & \$30,946 &  &  & \$33,815 &  &  \\
+Doors-Windows & \$32,994 &  &  &  &  &  &  &  &  &  \\
+\rowcolor{blue!12} Equipment & \$4,674 & \$1,416 &  &  &  & \$8,500 & \$6,303 &  &  &  \\
+Exterior Surfaces & \$380,348 & \$108,560 & \$111,816 & \$115,171 & \$159,887 & \$122,185 &  & \$11,272 &  &  \\
+\rowcolor{blue!12} Fences-Walls-Gates & \$4,583 & \$4,720 & \$2,917 & \$15,022 & \$5,158 & \$5,312 &  & \$9,017 & \$11,610 &  \\
+Fire Safety &  &  &  & \$10,015 &  &  &  &  & \$11,610 &  \\
+\rowcolor{blue!12} Flooring & \$65,988 &  &  &  &  &  &  &  & \$52,013 &  \\
+Landscape & \$32,994 & \$45,312 & \$35,003 & \$36,053 & \$44,356 & \$38,249 & \$39,397 & \$48,469 & \$41,796 & \$49,029 \\
+\rowcolor{blue!12} Painting & \$400,643 & \$303,400 & \$455,480 &  & \$10,315 &  &  & \$11,272 & \$6,966 & \$137,845 \\
+Plumbing & \$9,165 &  & \$9,723 &  & \$10,315 &  & \$10,944 &  & \$11,610 & \$5,740 \\
+\rowcolor{blue!12} Renovation &  &  &  & \$5,007 &  & \$15,937 &  &  & \$89,165 &  \\
+Roofing & \$549,901 &  &  &  & \$41,261 &  &  &  &  & \$47,833 \\
+\rowcolor{blue!12} Signage & \$3,666 &  & \$3,889 & \$2,003 &  & \$4,250 &  &  &  &  \\
+Structural & \$13,748 &  & \$9,723 &  &  & \$15,937 &  &  &  &  \\
+\bottomrule
+\end{tabular}
+\end{landscape}
+
+\newpage
+\reportsection{Component List - Summary}
+\scriptsize
+\begin{longtable}{p{4.2cm} p{1.6cm} r r r c c r}
+\toprule
+\textbf{Category} & \textbf{Replace} & \textbf{Basis Cost} & \textbf{Quantity} & \textbf{Current Cost} & \textbf{Est Life} & \textbf{Rem Life} & \textbf{Future Cost} \\
+\textbf{Component} & \textbf{Date} &  &  &  &  &  &  \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Category} & \textbf{Replace} & \textbf{Basis Cost} & \textbf{Quantity} & \textbf{Current Cost} & \textbf{Est Life} & \textbf{Rem Life} & \textbf{Future Cost} \\
+\textbf{Component} & \textbf{Date} &  &  &  &  &  &  \\
+\midrule
+\endhead
+\multicolumn{8}{l}{\textbf{Asphalt}} \\
+\rowcolor{blue!12} Asphalt Crack Seal & 7/26 - 7/38 & \$50,000 & 3 & \$100,000 & 3 & 0:06-12:06 & \$114,644 \\
+Asphalt Mill and Overlay & 7/35 - 7/35 & \$3 & 100,000 & \$300,000 & 15 & 9:06 & \$397,260 \\
+\rowcolor{blue!12} Asphalt Seal Coat & 7/40 - 7/56 & \$0 & 300,000 & \$120,000 & 5 & 14:06-30:06 & \$231,125 \\
+Asphalt Remove and Replace & 7/51 - 7/55 & \$6 & 100,000 & \$600,000 & 30 & 25:06-29:06 & \$1,353,799 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$1,120,000} & & & \textbf{\$2,096,829} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Balconies-Decks-Stairways}} \\
+\rowcolor{blue!12} Balconies-Decks-Posts/Structural Supports & 7/26 - 7/31 & \$2,500 & 138 & \$345,000 & 20 & 0:06-5:06 & \$377,471 \\
+Stairway/Balcony Railing & 7/26 & \$7,500 & 1 & \$7,500 & 8 & 0:06 & \$7,612 \\
+\rowcolor{blue!12} Metal Stairway Flashing/Stringers & 7/28 & \$15,000 & 1 & \$15,000 & 7 & 2:06 & \$16,150 \\
+Walkway Railing & 7/28 & \$3,000 & 1 & \$3,000 & 8 & 2:06 & \$3,230 \\
+\rowcolor{blue!12} Wood Balcony Walls & 7/28 & \$25,000 & 1 & \$25,000 & 5 & 2:06 & \$26,917 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$395,500} & & & \textbf{\$431,381} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Concrete}} \\
+Concrete Sidewalks-Stairs-Patios/Grinding-Repairs & 7/26 & \$10,000 & 1 & \$10,000 & 3 & 0:06 & \$10,149 \\
+\rowcolor{blue!12} Curbs-Gutters & 7/26 & \$5,000 & 1 & \$5,000 & 3 & 0:06 & \$5,074 \\
+Pool Area Concrete Deck & 7/44 & \$12 & 1,592 & \$19,104 & 25 & 18:06 & \$33,008 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$34,104} & & & \textbf{\$48,231} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Doors-Windows}} \\
+\rowcolor{blue!12} Raise and Replace Windows & 7/35 & \$17,233 & 1 & \$17,233 & 30 & 9:06 & \$22,820 \\
+Clubhouse Bathroom/Interior Doors & 7/36 & \$5,000 & 1 & \$5,000 & 10 & 10:06 & \$6,820 \\
+\rowcolor{blue!12} Clubhouse Blinds & 7/36 & \$1,000 & 1 & \$1,000 & 10 & 10:06 & \$1,364 \\
+Clubhouse Glass Doors & 7/36 & \$3,500 & 1 & \$3,500 & 10 & 10:06 & \$4,774 \\
+\rowcolor{blue!12} Clubhouse Sliding Glass Doors & 7/36 & \$4,000 & 1 & \$4,000 & 10 & 10:06 & \$5,456 \\
+Clubhouse/Fitness Windows & 7/36 & \$4,500 & 1 & \$4,500 & 10 & 10:06 & \$6,138 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$35,233} & & & \textbf{\$47,371} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Equipment}} \\
+\rowcolor{blue!12} Pool Cover & 7/28 & \$4 & 720 & \$2,880 & 12 & 2:06 & \$3,101 \\
+Pool Heater Raypak & 7/28 & \$3,000 & 1 & \$3,000 & 15 & 2:06 & \$3,230 \\
+\rowcolor{blue!12} Pool Misc Pipes Valves & 7/30 & \$1,500 & 1 & \$1,500 & 7 & 4:06 & \$1,713 \\
+Pool Filter Hayward & 7/31 & \$1,300 & 1 & \$1,300 & 15 & 5:06 & \$1,530 \\
+\rowcolor{blue!12} Pool Rails-Ladder & 7/31 & \$250 & 3 & \$750 & 15 & 5:06 & \$882 \\
+Pool Room Compressor & 7/31 & \$500 & 1 & \$500 & 15 & 5:06 & \$588 \\
+\rowcolor{blue!12} Pool Pump Hayward & 7/32 & \$750 & 1 & \$750 & 15 & 6:06 & \$909 \\
+Mail Boxes & 7/36 & \$10,000 & 1 & \$10,000 & 25 & 10:06 & \$13,639 \\
+\rowcolor{blue!12} Pool Chemical Controller-Rola Chem & 7/36 & \$2,500 & 1 & \$2,500 & 15 & 10:06 & \$3,410 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$23,180} & & & \textbf{\$29,002} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Exterior Surfaces}} \\
+Chimney Chases Structural Renovations & 7/26 - 7/31 & \$2,500 & 138 & \$345,000 & 20 & 0:06-5:06 & \$377,471 \\
+\rowcolor{blue!12} Fascia-Flashing-Soffits & 7/26 - 7/26 & \$55,000 & 2 & \$65,000 & 8 & 0:06 & \$65,968 \\
+Wood Siding & 7/26 - 7/46 & \$12 & 125,000 & \$1,500,000 & 30 & 0:06-20:06 & \$2,134,067 \\
+\rowcolor{blue!12} Stucco Siding Repair & 7/29 & \$10,000 & 1 & \$10,000 & 7 & 3:06 & \$11,090 \\
+Clubhouse Siding & 7/31 & \$12 & 7,500 & \$90,000 & 30 & 5:06 & \$105,888 \\
+\rowcolor{blue!12} Corrugated Balcony Walls & 7/33 & \$5,000 & 1 & \$5,000 & 10 & 7:06 & \$6,241 \\
+Pool Coping & 7/36 & \$35 & 120 & \$4,200 & 20 & 10:06 & \$5,728 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$2,019,200} & & & \textbf{\$2,706,453} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Fences-Walls-Gates}} \\
+\rowcolor{blue!12} Concrete Brick Grouted Wall & 7/26 & \$2,500 & 1 & \$2,500 & 3 & 0:06 & \$2,537 \\
+Pool Area Wall Repair & 7/26 & \$2,500 & 1 & \$2,500 & 5 & 0:06 & \$2,537 \\
+\rowcolor{blue!12} Stacked Concrete Block Wall & 7/28 & \$1,500 & 1 & \$1,500 & 5 & 2:06 & \$1,615 \\
+Chain Link Fence & 7/29 & \$2,500 & 1 & \$2,500 & 10 & 3:06 & \$2,772 \\
+\rowcolor{blue!12} Wooden Perimeter Fence & 7/29 & \$5,000 & 1 & \$5,000 & 5 & 3:06 & \$5,545 \\
+Pool Area Metal Rail Fence-Gate & 7/36 & \$75 & 200 & \$15,000 & 25 & 10:06 & \$20,459 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$29,000} & & & \textbf{\$35,466} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Fire Safety}} \\
+\rowcolor{blue!12} Chimney Flues-Caps-Spark Arrestors & 7/29 & \$5,000 & 1 & \$5,000 & 5 & 3:06 & \$5,545 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$5,000} & & & \textbf{\$5,545} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Flooring}} \\
+Clubhouse Carpet & 7/34 & \$9 & 4,000 & \$36,000 & 12 & 8:06 & \$46,283 \\
+\rowcolor{blue!12} Clubhouse Tile Floor & 7/34 & \$16 & 1,000 & \$16,000 & 20 & 8:06 & \$20,570 \\
+Pool Area Tile Exterior & 7/34 & \$16 & 400 & \$6,400 & 20 & 8:06 & \$8,228 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$58,400} & & & \textbf{\$75,081} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Landscape}} \\
+\rowcolor{blue!12} Landscape Border Blocks & 7/26 & \$1,000 & 1 & \$1,000 & 3 & 0:06 & \$1,015 \\
+Landscape Replenishment & 7/26 & \$2,500 & 1 & \$2,500 & 3 & 0:06 & \$2,537 \\
+\rowcolor{blue!12} Landscaping, Wildfire Defensible Space & 7/26 & \$10,000 & 1 & \$10,000 & 1 & 0:06 & \$10,149 \\
+Tree Removal-Major Trimming & 7/26 - 7/26 & \$7,000 & 2 & \$15,000 & 1 & 0:06 & \$15,223 \\
+\rowcolor{blue!12} Landscape Rock & 7/31 & \$2,500 & 1 & \$2,500 & 8 & 5:06 & \$2,941 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$31,000} & & & \textbf{\$31,866} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Painting}} \\
+Painting Buidling 14 & 7/26 & \$4 & 4,580 & \$18,320 & 10 & 0:06 & \$18,593 \\
+\rowcolor{blue!12} Painting Building 1 & 7/26 & \$4 & 11,539 & \$46,156 & 10 & 0:06 & \$46,843 \\
+Painting Building 11 & 7/26 & \$4 & 7,886 & \$31,544 & 10 & 0:06 & \$32,014 \\
+\rowcolor{blue!12} Painting Building 3 & 7/26 & \$4 & 11,213 & \$44,852 & 10 & 0:06 & \$45,520 \\
+Painting Building 9 & 7/26 & \$4 & 7,886 & \$31,544 & 10 & 0:06 & \$32,014 \\
+\rowcolor{blue!12} Painting Buildingg 2 & 7/26 & \$4 & 11,539 & \$46,156 & 10 & 0:06 & \$46,843 \\
+Parking Striping-Curb Painting & 7/26 & \$5,000 & 1 & \$5,000 & 3 & 0:06 & \$5,074 \\
+\rowcolor{blue!12} Painting Building 4 & 7/27 & \$4 & 15,029 & \$60,116 & 10 & 1:06 & \$62,841 \\
+Painting Building 6 & 7/27 & \$4 & 11,948 & \$47,792 & 10 & 1:06 & \$49,959 \\
+\rowcolor{blue!12} Painting Building 7 & 7/27 & \$4 & 11,948 & \$47,792 & 10 & 1:06 & \$49,959 \\
+Painting Building 10 & 7/28 & \$4 & 11,799 & \$47,196 & 10 & 2:06 & \$50,816 \\
+\rowcolor{blue!12} Painting Building 12 & 7/28 & \$4 & 11,799 & \$47,196 & 10 & 2:06 & \$50,816 \\
+Painting Building 13 & 7/28 & \$4 & 11,799 & \$47,196 & 10 & 2:06 & \$50,816 \\
+\rowcolor{blue!12} Painting Building 8 & 7/28 & \$4 & 14,409 & \$57,636 & 10 & 2:06 & \$62,056 \\
+Pool Area Metal Rail Fence-Gate-Painting & 7/34 & \$15 & 200 & \$3,000 & 10 & 8:06 & \$3,857 \\
+\rowcolor{blue!12} Painting Building 5 & 7/35 & \$4 & 14,409 & \$57,636 & 10 & 9:06 & \$76,322 \\
+Clubhouse Interior Painting & 7/36 & \$2 & 20,000 & \$35,000 & 12 & 10:06 & \$47,737 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$674,132} & & & \textbf{\$732,079} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Plumbing}} \\
+\rowcolor{blue!12} Sewer Inspection, Semi-annual Inspection & 7/26 & \$4,097 & 1 & \$4,097 & 2 & 0:06 & \$4,158 \\
+Sewer Lateral Lines-Cleanouts & 7/26 & \$5,000 & 1 & \$5,000 & 2 & 0:06 & \$5,074 \\
+\rowcolor{blue!12} Water Valve and Line Annual Inspection & 7/26 & \$1,756 & 1 & \$1,756 & 1 & 0:06 & \$1,782 \\
+Clubhouse Hot Water Heaters-Expansion & 7/31 & \$1,200 & 2 & \$2,400 & 12 & 5:06 & \$2,824 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$13,253} & & & \textbf{\$13,838} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Renovation}} \\
+\rowcolor{blue!12} Clubhouse Maintenance Shop Remodel & 7/29 & \$2,500 & 1 & \$2,500 & 10 & 3:06 & \$2,772 \\
+Clubhouse Pool Room-Shower Remodel & 7/31 & \$5,000 & 1 & \$5,000 & 20 & 5:06 & \$5,883 \\
+\rowcolor{blue!12} Sauna Remodel & 7/31 & \$2,500 & 1 & \$2,500 & 20 & 5:06 & \$2,941 \\
+Clubhouse Bar Remodel & 7/34 & \$5,000 & 1 & \$5,000 & 20 & 8:06 & \$6,428 \\
+\rowcolor{blue!12} Clubhouse Bathroom Remodel & 7/34 & \$6,000 & 2 & \$12,000 & 20 & 8:06 & \$15,428 \\
+Fitness Room Kitchenette Remodel & 7/34 & \$3,500 & 1 & \$3,500 & 20 & 8:06 & \$4,500 \\
+\rowcolor{blue!12} Laundry Room Remodel & 7/34 & \$3,500 & 1 & \$3,500 & 20 & 8:06 & \$4,500 \\
+Pool Resurface & 7/39 & \$12 & 1,200 & \$14,400 & 15 & 13:06 & \$21,462 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$48,400} & & & \textbf{\$63,913} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Roofing}} \\
+\rowcolor{blue!12} Roof Inspection and Repair & 7/26 & \$15,000 & 1 & \$15,000 & 5 & 0:06 & \$15,223 \\
+Gutters-Downspouts & 7/30 & \$20,000 & 1 & \$20,000 & 5 & 4:06 & \$22,845 \\
+\rowcolor{blue!12} Carport Roofs & 7/31 - 7/39 & \$12 & 21,400 & \$256,800 & 25 & 5:06-13:06 & \$341,244 \\
+Clubhouse Roof & 7/35 & \$12 & 4,500 & \$54,000 & 25 & 9:06 & \$71,507 \\
+\rowcolor{blue!12} Garage Flat Roof & 7/36 & \$300,000 & 1 & \$300,000 & 10 & 10:06 & \$409,178 \\
+Unit Building Shingle Roofs & 7/36 - 7/40 & \$12 & 100,000 & \$1,200,000 & 30 & 10:06-14:06 & \$1,737,905 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$1,845,800} & & & \textbf{\$2,597,902} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Signage}} \\
+\rowcolor{blue!12} Building Signs/Numbers & 7/26 & \$2,000 & 1 & \$2,000 & 5 & 0:06 & \$2,030 \\
+Monument Sign/Wall & 7/28 & \$2,000 & 1 & \$2,000 & 20 & 2:06 & \$2,153 \\
+\rowcolor{blue!12} Misc and Parking Signs & 7/29 & \$1,000 & 1 & \$1,000 & 10 & 3:06 & \$1,109 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$5,000} & & & \textbf{\$5,292} \\
+\addlinespace[6pt]
+\multicolumn{8}{l}{\textbf{Structural}} \\
+Trash Enclosures & 7/26 & \$7,500 & 1 & \$7,500 & 5 & 0:06 & \$7,612 \\
+\rowcolor{blue!12} Carport Support Posts-Beams & 7/28 & \$5,000 & 1 & \$5,000 & 10 & 2:06 & \$5,383 \\
+\addlinespace[1pt] \multicolumn{4}{r}{} & \textbf{\$12,500} & & & \textbf{\$12,995} \\
+\addlinespace[6pt]
+\bottomrule
+\end{longtable}
+
+\newpage
+\reportsection{Upcoming Major Components}
+\begin{longtable}{>{\centering\arraybackslash}p{2.0cm} p{2.6cm} p{7.0cm} >{\raggedleft\arraybackslash}p{2.3cm}}
+\toprule
+Date & Category & Component & Future Cost \\
+\midrule
+\endfirsthead
+\toprule
+Date & Category & Component & Future Cost \\
+\midrule
+\endhead
+\rowcolor{blue!12} 2026-07-01 & Exterior Surfaces & Wood Siding & \$60,893 \\
+2026-07-01 & Balconies-Decks-Stairways & Balconies-Decks-Posts/Structural Supports & \$58,356 \\
+\rowcolor{blue!12} 2026-07-01 & Exterior Surfaces & Chimney Chases Structural Renovations & \$58,356 \\
+2026-07-01 & Exterior Surfaces & Fascia-Flashing-Soffits & \$55,819 \\
+\rowcolor{blue!12} 2026-07-01 & Asphalt & Asphalt Crack Seal & \$50,744 \\
+2026-07-01 & Painting & Painting Building 1 & \$46,843 \\
+\rowcolor{blue!12} 2026-07-01 & Painting & Painting Buildingg 2 & \$46,843 \\
+2026-07-01 & Painting & Painting Building 3 & \$45,520 \\
+\rowcolor{blue!12} 2026-07-01 & Painting & Painting Building 9 & \$32,014 \\
+2026-07-01 & Painting & Painting Building 11 & \$32,014 \\
+\rowcolor{blue!12} 2026-07-01 & Painting & Painting Buidling 14 & \$18,593 \\
+2026-07-01 & Roofing & Roof Inspection and Repair & \$15,223 \\
+\rowcolor{blue!12} 2026-07-01 & Concrete & Concrete Sidewalks-Stairs-Patios/Grinding-Repairs & \$10,149 \\
+2026-07-01 & Exterior Surfaces & Fascia-Flashing-Soffits & \$10,149 \\
+\rowcolor{blue!12} 2026-07-01 & Landscape & Landscaping, Wildfire Defensible Space & \$10,149 \\
+2026-07-01 & Landscape & Tree Removal-Major Trimming & \$8,119 \\
+\rowcolor{blue!12} 2026-07-01 & Balconies-Decks-Stairways & Stairway/Balcony Railing & \$7,612 \\
+2026-07-01 & Structural & Trash Enclosures & \$7,612 \\
+\bottomrule
+\end{longtable}
+
+\subnote{Largest summarized category by future cost: Exterior Surfaces at \$2,706,453. Lowest year-end reserve balance in the projection occurs in 2028, at \$109,174. Highest projected percent funded occurs in 2055, at 65.74\%.}
+
+\end{document}
