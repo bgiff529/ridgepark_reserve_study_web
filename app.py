@@ -220,13 +220,11 @@ def render_inputs():
             "Projection years",
             value=int(st.session_state["projection_years"]),
             disabled=True,
-            use_container_width=True,
         )
         st.number_input(
             "Units",
             value=int(st.session_state["units"]),
             disabled=True,
-            use_container_width=True,
         )
         st.info(
             "Adjust the parameters to the right to modify the Reserve Study Assumptions."
