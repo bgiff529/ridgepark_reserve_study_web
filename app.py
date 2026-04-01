@@ -216,14 +216,20 @@ def render_inputs():
 
     with summary_col:
         st.subheader("Study Settings")
-        st.session_state["projection_years"] = int(
-            st.number_input("Projection years", min_value=1, max_value=60, step=1, value=int(st.session_state["projection_years"]))
+        st.number_input(
+            "Projection years",
+            value=int(st.session_state["projection_years"]),
+            disabled=True,
+            use_container_width=True,
         )
-        st.session_state["units"] = int(
-            st.number_input("Units", min_value=1, step=1, value=int(st.session_state["units"]))
+        st.number_input(
+            "Units",
+            value=int(st.session_state["units"]),
+            disabled=True,
+            use_container_width=True,
         )
         st.info(
-            "This MVP keeps everything intentionally simple: CSV-style inputs in the browser and downloadable study outputs."
+            "Adjust the parameters to the right to modify the Reserve Study Assumptions."
         )
 
     st.subheader("Component Schedule")
