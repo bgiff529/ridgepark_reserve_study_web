@@ -174,7 +174,7 @@ def format_results_table(df, currency_cols=None, percent_cols=None, date_cols=No
 
     for col in integer_cols:
         if col in out.columns:
-            out[col] = out[col].apply(lambda value: "" if pd.isna(value) or value == "" else f"{int(float(value)):,}")
+            out[col] = out[col].apply(lambda value: "" if pd.isna(value) or value == "" else str(int(float(value))))
 
     return out
 
