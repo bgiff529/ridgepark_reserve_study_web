@@ -135,6 +135,50 @@ def matrix_csv_bytes(df):
     return df.to_csv().encode("utf-8")
 
 
+def format_currency(value):
+    if pd.isna(value) or value == "":
+        return ""
+    return f"${float(value):,.0f}"
+
+
+def format_percent(value):
+    if pd.isna(value) or value == "":
+        return ""
+    return f"{float(value):.2f}%"
+
+
+def format_date(value):
+    if pd.isna(value) or value == "":
+        return ""
+    return pd.to_datetime(value).strftime("%Y-%m-%d")
+
+
+def format_results_table(df, currency_cols=None, percent_cols=None, date_cols=None, integer_cols=None):
+    out = df.copy()
+    currency_cols = currency_cols or []
+    percent_cols = percent_cols or []
+    date_cols = date_cols or []
+    integer_cols = integer_cols or []
+
+    for col in currency_cols:
+        if col in out.columns:
+            out[col] = out[col].apply(format_currency)
+
+    for col in percent_cols:
+        if col in out.columns:
+            out[col] = out[col].apply(format_percent)
+
+    for col in date_cols:
+        if col in out.columns:
+            out[col] = out[col].apply(format_date)
+
+    for col in integer_cols:
+        if col in out.columns:
+            out[col] = out[col].apply(lambda value: "" if pd.isna(value) or value == "" else f"{int(float(value)):,}")
+
+    return out
+
+
 def serialize_for_signature(value):
     if isinstance(value, pd.DataFrame):
         df = value.copy()
@@ -306,6 +350,43 @@ def render_outputs(results):
     st.subheader("Study Results")
 
     raw_statement = results["statement_of_position"].set_index("Metric")["Value"]
+    reserve_projection_display = format_results_table(
+        results["reserve_projection"],
+        currency_cols=[
+            "begin_balance",
+            "contribution",
+            "special_assessment",
+            "expenditures",
+            "interest",
+            "end_balance",
+            "funded_balance",
+        ],
+        percent_cols=["percent_funded"],
+        integer_cols=["year"],
+    )
+    expenditure_summary_display = format_results_table(
+        results["expenditures_by_year_summary"],
+        currency_cols=["expenditures"],
+        integer_cols=["replacement_year", "component_count"],
+    )
+    expenditure_detail_display = format_results_table(
+        results["expenditures_by_year_detail"],
+        currency_cols=["current_cost", "future_cost"],
+        date_cols=["replacement_date"],
+        integer_cols=["component_id", "occurrence", "replacement_year", "life_months"],
+    )
+    component_detail_display = format_results_table(
+        results["component_list_detail"],
+        currency_cols=["cost", "current_cost", "future_cost"],
+        date_cols=["service_date", "replacement_date"],
+        integer_cols=["component_id", "life_months", "remaining_life_months"],
+    )
+    assessment_input_display = format_results_table(
+        results["assessment_frame"],
+        currency_cols=["annual_contribution", "special_assessment"],
+        integer_cols=["year"],
+    )
+
     metric_cols = st.columns(4)
     metric_cols[0].metric("Percent funded", f"{raw_statement['Percent Funded']:.2f}%")
     metric_cols[1].metric("Fully funded balance", f"${raw_statement['Fully Funded Reserve Balance']:,.0f}")
@@ -317,6 +398,7 @@ def render_outputs(results):
             "Statement",
             "Plots",
             "Reserve Projection",
+            "Expenditure Detail",
             "Year Summary",
             "Component Detail",
             "Assessment Input",
@@ -338,7 +420,7 @@ def render_outputs(results):
             st.pyplot(figure, use_container_width=True)
 
     with tabs[2]:
-        st.dataframe(results["reserve_projection"], use_container_width=True, hide_index=True)
+        st.dataframe(reserve_projection_display, use_container_width=True, hide_index=True)
         st.download_button(
             "Download reserve projection",
             data=csv_bytes(results["reserve_projection"]),
@@ -347,7 +429,16 @@ def render_outputs(results):
         )
 
     with tabs[3]:
-        st.dataframe(results["expenditures_by_year_summary"], use_container_width=True, hide_index=True)
+        st.dataframe(expenditure_detail_display, use_container_width=True, hide_index=True)
+        st.download_button(
+            "Download expenditure detail",
+            data=csv_bytes(results["expenditures_by_year_detail"]),
+            file_name="expenditures_by_year_detail.csv",
+            mime="text/csv",
+        )
+
+    with tabs[4]:
+        st.dataframe(expenditure_summary_display, use_container_width=True, hide_index=True)
         st.download_button(
             "Download year summary",
             data=csv_bytes(results["expenditures_by_year_summary"]),
@@ -361,8 +452,8 @@ def render_outputs(results):
             mime="text/csv",
         )
 
-    with tabs[4]:
-        st.dataframe(results["component_list_detail"], use_container_width=True, hide_index=True)
+    with tabs[5]:
+        st.dataframe(component_detail_display, use_container_width=True, hide_index=True)
         st.download_button(
             "Download component detail",
             data=csv_bytes(results["component_list_detail"]),
@@ -370,8 +461,8 @@ def render_outputs(results):
             mime="text/csv",
         )
 
-    with tabs[5]:
-        st.dataframe(results["assessment_frame"], use_container_width=True, hide_index=True)
+    with tabs[6]:
+        st.dataframe(assessment_input_display, use_container_width=True, hide_index=True)
         st.download_button(
             "Download assessment input",
             data=csv_bytes(results["assessment_frame"]),
