@@ -12,9 +12,9 @@ This folder contains a minimal Streamlit web app for running the Ridge Park rese
 
 The current default inputs are loaded from:
 
-- `2026_board_collab/source_data/assumptions.csv`
-- `2026_board_collab/source_data/component_list_v2.csv`
-- `2026_board_collab/source_data/assessment_contributions.csv`
+- `2026_brendan_plan/source_data/assumptions.csv`
+- `2026_brendan_plan/source_data/component_list_v2.csv`
+- `2026_brendan_plan/source_data/assessment_contributions.csv`
 
 ## Local Run
 
@@ -63,7 +63,7 @@ If the service stays linked to your repo, Render will automatically rebuild and 
 
 ### Notes
 
-- `DEFAULT_VARIANT` is set to `2026_board_collab` in `render.yaml`.
+- `DEFAULT_VARIANT` is set to `2026_brendan_plan` in `render.yaml`.
 - `APP_PASSWORD` is marked with `sync: false`, so Render will prompt you for it during the initial Blueprint setup.
 - If you later want to rotate the password, update the environment variable in the Render dashboard.
 
@@ -76,7 +76,7 @@ gcloud run deploy reserve-study-web \
   --source . \
   --region us-central1 \
   --allow-unauthenticated \
-  --set-env-vars APP_PASSWORD='choose-a-strong-shared-password',DEFAULT_VARIANT='2026_board_collab'
+  --set-env-vars APP_PASSWORD='choose-a-strong-shared-password',DEFAULT_VARIANT='2026_brendan_plan'
 ```
 
 After deployment:
