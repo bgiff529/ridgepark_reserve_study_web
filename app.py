@@ -255,27 +255,51 @@ def render_inputs():
             "Adjust the parameters to the right to modify the Reserve Study Assumptions."
         )
 
-    st.subheader("Component Schedule")
-    components_frame = st.data_editor(
-        st.session_state["components_frame"],
-        num_rows="dynamic",
-        use_container_width=True,
-        height=420,
-        key="components_editor",
-    )
-    st.session_state["components_frame"] = prepare_components_input(pd.DataFrame(components_frame))
+    apply_requested = False
+    run_requested = False
 
-    st.subheader("Assessment Schedule")
-    assessments_frame = st.data_editor(
-        st.session_state["assessment_frame"],
-        num_rows="dynamic",
-        use_container_width=True,
-        height=280,
-        key="assessments_editor",
-    )
-    st.session_state["assessment_frame"] = prepare_assessment_input(pd.DataFrame(assessments_frame))
+    with st.form("schedule_form", clear_on_submit=False):
+        st.subheader("Component Schedule")
+        st.caption("Edit the table below. `Run Study` will apply these edits automatically, or you can save them first without rerunning.")
+        components_frame = st.data_editor(
+            st.session_state["components_frame"],
+            num_rows="dynamic",
+            use_container_width=True,
+            height=420,
+            key="components_editor",
+        )
 
-    return st.button("Run Study", type="primary", use_container_width=True)
+        st.subheader("Assessment Schedule")
+        st.caption("Edit the table below. `Run Study` will apply these edits automatically, or you can save them first without rerunning.")
+        assessments_frame = st.data_editor(
+            st.session_state["assessment_frame"],
+            num_rows="dynamic",
+            use_container_width=True,
+            height=280,
+            key="assessments_editor",
+        )
+
+        action_col, run_col = st.columns(2)
+        with action_col:
+            apply_requested = st.form_submit_button(
+                "Apply Schedule Changes",
+                use_container_width=True,
+            )
+        with run_col:
+            run_requested = st.form_submit_button(
+                "Run Study",
+                type="primary",
+                use_container_width=True,
+            )
+
+    if apply_requested or run_requested:
+        st.session_state["components_frame"] = prepare_components_input(pd.DataFrame(components_frame))
+        st.session_state["assessment_frame"] = prepare_assessment_input(pd.DataFrame(assessments_frame))
+
+    if apply_requested and not run_requested:
+        st.success("Schedule changes saved in this browser session. Click `Run Study` to refresh results.")
+
+    return run_requested
 
 
 def render_outputs(results):
@@ -362,8 +386,8 @@ def main():
     require_password()
     show_sidebar_tools()
 
-    input_signature = current_input_signature()
     run_requested = render_inputs()
+    input_signature = current_input_signature()
 
     if run_requested:
         try:
