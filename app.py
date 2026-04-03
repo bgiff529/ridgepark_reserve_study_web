@@ -20,7 +20,7 @@ from reserve_study_v3_3 import (
 
 
 APP_ROOT = Path(__file__).resolve().parent
-DEFAULT_VARIANT = os.getenv("DEFAULT_VARIANT", "2026_brendan_plan")
+DEFAULT_VARIANT = os.getenv("DEFAULT_VARIANT", "2026_board_collab")
 DEFAULT_SOURCE_DIR = APP_ROOT / DEFAULT_VARIANT / "source_data"
 DEFAULT_ASSUMPTIONS_FILE = DEFAULT_SOURCE_DIR / "assumptions.csv"
 DEFAULT_COMPONENTS_FILE = DEFAULT_SOURCE_DIR / "component_list_v2.csv"
