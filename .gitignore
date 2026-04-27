@@ -46,6 +46,14 @@ venv/
 2026_opt_contrib_inflation_tweaks/report_latex/*.out
 2026_opt_contrib_inflation_tweaks/report_latex/*.toc
 
+2026_joint_buget_maint/report_latex/*.aux
+2026_joint_buget_maint/report_latex/*.fdb_latexmk
+2026_joint_buget_maint/report_latex/*.fls
+2026_joint_buget_maint/report_latex/*.log
+2026_joint_buget_maint/report_latex/*.out
+2026_joint_buget_maint/report_latex/*.toc
+2026_joint_buget_maint/source_data/~$*.xlsx
+
 board_approved_2024_spread/report_latex/*.aux
 board_approved_2024_spread/report_latex/*.fdb_latexmk
 board_approved_2024_spread/report_latex/*.fls

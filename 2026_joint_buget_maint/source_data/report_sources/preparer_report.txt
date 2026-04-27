@@ -1,0 +1,65 @@
+[Report Description]
+
+This report was generated using a custom-built Python package. The workflow reads the Association’s reserve assumptions, component inventory, replacement schedule, annual contribution plan, and reserve cash-flow projection, then produces a report in the format of a typical reserve study.
+
+The report is intended to serve as a planning tool and to establish a baseline for future revisions as the Association’s long-term reserve priorities, project scopes, and funding needs become clearer.
+
+The assessment requirements shown in this report were generated with short-term affordability in mind. The objectives were to begin with an assessment level generally consistent with what homeowners are paying in 2026, increase assessments over the first five years sufficiently to address major deferred-maintenance projects expected during that period, and maintain sufficient reserve funding for longer-term projects. These include, among other items, roofing repairs, pavement repairs, siding replacement, and related exterior-building needs.
+
+[Engagement between Maintenance and Budget Committees]
+
+The Ridge Park Maintenance and Budget Committees met on April 15, 2026, to discuss maintenance priorities for 2026 and beyond. The committees reviewed maintenance schedules and estimates from the 2024 Reserve Plan. As a result of that discussion, the following components were introduced, revised, or rescheduled within the reserve study.
+
+Unless otherwise stated, the dollar figures discussed in this section are shown in current dollars and are not adjusted for inflation. Inflation adjustments are incorporated in the maintenance schedules underlying the overall reserve study.
+
+a. The structural engineering report identified the need to install railings around the patio area adjacent to the pool. The Maintenance Committee obtained estimates for this work, totaling approximately $21,000, and this amount has been integrated into the 2026 work plan.
+
+b. The committees discussed the scope of the chimney chase structural renovations originally identified in the 2024 Reserve Study. This component has been broken into an annual cost beginning in the current year and continuing over the next six years. The estimate assumes that 23 chimney chases will be repaired each year at a cost of $2,500 per chase, for a total of $57,500 per year over the next six years. This component is then scheduled to recur every 20 years.
+
+c. Asphalt crack repair is scheduled for 2026 at an estimated cost of $50,000. This work is expected to recur in four years. Approximately nine years from now, the plan shifts to a mill-and-overlay project covering approximately 100,000 square feet of asphalt.
+
+d. The original reserve study included $8,000 per year for tree and shrub trimming, and that recurring amount is maintained in this version. Because the 2025 Board budgeted $15,000 for this item, an additional one-time expense of $7,000 has been added in 2026. This allows the reserve plan to reflect a $15,000 expenditure in 2026 without disrupting the recurring long-term funding assumption.
+
+e. The 2026 plan includes $25,000 for gutter repairs to continue the work begun last year. The model then assumes that $25,000 will be spent every five years, which is approximately equivalent to collecting $5,000 per year for this component.
+
+f. Buildings 2, 3, 4, 6, and 7 are scheduled for repainting in 2026 at a cost of $3 per square foot, for a total estimated cost of $185,000. The model assumes these buildings will be repainted again in 10 years. The remaining buildings are scheduled for repainting over the following two years and follow the same recurring schedule.
+
+g. The original 2024 Reserve Study called for replacement of all building siding beginning immediately. The joint committee agreed that this schedule is likely too aggressive given the estimated $1.5 million cost. The committee also noted that the siding replacements associated with the repainting of Building 5 last year were satisfactory and were included in the painting price. However, that may not be the case when other buildings are repainted. This reserve study therefore schedules full siding replacement to align with the next paint cycle, beginning in 2035 and continuing through 2037.
+
+h. Metal stairway flashing and stringer repairs are included at $15,000 to cover work associated with multiple stairwells. This item is then scheduled to recur every seven years. Additional review may be needed to ensure that the remaining maintenance schedule is sufficiently funded.
+
+i. Skylight replacement has been included at $5,000. Because this item was not included in the original reserve study, further research should be conducted to determine whether it should be treated as a recurring reserve component.
+
+j. Fascia, flashing, and soffit repairs were included in the 2024 Reserve Study, but only at $10,000 every eight years, beginning in 2026. To ensure anticipated 2026 expenditures are covered, an additional $55,000 has been added in 2026.
+
+k. Balcony, deck, and structural-support work is included beginning in 2027. The model assumes 23 repairs per year at $2,500 each, for a total of $57,500 per year, continuing through 2031. This component is then scheduled to recur every 20 years.
+
+l. Replacement of one or two dumpster surrounds is scheduled for 2026 at a total estimated cost of $7,500. A design plan should be developed before this work proceeds.
+
+m. Concrete work on the grouted walls was originally scheduled every three years at a cost of $2,500. The Maintenance Committee has identified an additional $12,000 of work it would like to complete in 2026. This amount has been added as a one-time cost so the recurring contribution schedule can be preserved.
+
+n. Total landscape work of $13,500 is planned for 2026. This includes wildfire defensible-space planning, border blocks, and landscape replenishment.
+
+o. Parking lot restriping in the amount of $5,000 is included in the 2026 plan.
+
+p. Several smaller inspection and maintenance items are included in the plan. These include roof inspection and repair ($17,000), water valve inspection ($1,800), sewer inspection ($5,000), and lateral sewer-line cleanout ($5,000). These items begin in 2026 and recur every other year.
+
+q. The brick wall beside the pool requires repair estimated at $2,500, which is budgeted in 2026. This item recurs at the same rate as other brick-wall components on the property.
+
+[Management’s Responsibility]
+
+Management remains responsible for the assumptions underlying the reserve model. These include inflation, investment return, beginning reserve balance, component scope, useful-life estimates, replacement timing, and any planned contribution or special-assessment strategy.
+
+The Board and committees should review all assumptions and estimates for accuracy, completeness, and reasonableness. The preparer may lack the technical expertise, project-specific knowledge, or operational insight needed to independently verify all maintenance assumptions and cost estimates.
+
+[Preparer Responsibility]
+
+The preparer’s responsibility is limited to organizing the supplied data into financial exhibits, narrative disclosures, and summary schedules. The preparer is also responsible for ensuring that the report-generation process, data handling, and algorithms used by the custom Python package function as intended.
+
+The preparer does not independently certify the accuracy of the underlying maintenance estimates, engineering assumptions, useful-life determinations, or Board-approved funding strategy.
+
+[Important Limitations]
+
+This report should be read together with the full set of assumptions, source data, schedules, and component-level details underlying the reserve model.
+
+If any underlying source data changes, including component costs, project timing, useful-life assumptions, beginning balances, contribution schedules, inflation assumptions, or investment-return assumptions, the report should be regenerated so that the tables, exhibits, and summary metrics remain aligned with the current model.

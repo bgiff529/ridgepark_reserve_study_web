@@ -10,6 +10,6 @@ services:
     healthCheckPath: /
     envVars:
       - key: DEFAULT_VARIANT
-        value: 2026_board_collab
+        value: 2026_joint_buget_maint
       - key: APP_PASSWORD
         sync: false
