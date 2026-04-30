@@ -312,6 +312,65 @@ APP_CSS = """
         padding-left: 0.4rem;
         padding-right: 0.4rem;
     }
+    .rp-native-component-header {
+        display: grid;
+        grid-template-columns: 1.2fr 2.2fr 1.25fr 1fr 1fr 1fr 1.15fr .75fr .9fr 2.2fr 1.1fr;
+        gap: 8px;
+        align-items: center;
+        background: #fff;
+        border: 1px solid #e5e8eb;
+        color: #5f6870;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 9px 8px;
+        position: sticky;
+        top: 0;
+        z-index: 6;
+    }
+    .rp-category-strip,
+    .rp-category-fill {
+        background: var(--rp-blue-row);
+        color: #42535f;
+        min-height: 34px;
+        padding: 8px 10px;
+        box-sizing: border-box;
+        font-weight: 700;
+        border-top: 1px solid #e5e8eb;
+        border-bottom: 1px solid #e5e8eb;
+    }
+    .rp-category-fill {
+        color: transparent;
+    }
+    .rp-component-cell {
+        min-height: 34px;
+        background: #fff;
+        border-bottom: 1px solid #edf0f2;
+        color: #65717a;
+        font-size: 12px;
+        padding: 8px 2px;
+        overflow-wrap: anywhere;
+        box-sizing: border-box;
+    }
+    div[data-testid="stHorizontalBlock"]:has(.rp-component-cell):hover .rp-component-cell {
+        background: #b7b7b7;
+        color: #3d3d3d;
+    }
+    .rp-editing-note {
+        background: #b7b7b7;
+        color: #3d3d3d;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 8px;
+        border-top: 1px solid #a9a9a9;
+    }
+    .rp-empty-table {
+        min-height: 180px;
+        background: #fff;
+        border: 1px solid #edf0f2;
+        color: #9aa4ac;
+        text-align: center;
+        padding: 70px 0;
+    }
 </style>
 """
 
@@ -366,6 +425,9 @@ def seed_session_state(force=False):
         st.session_state["units"] = DEFAULT_UNITS
         st.session_state["components_frame"] = defaults["components"]
         st.session_state["assessment_frame"] = defaults["assessments"]
+        st.session_state["editing_component_index"] = None
+        st.session_state["editing_category"] = None
+        st.session_state["moving_component_index"] = None
         st.session_state["results"] = None
         st.session_state["last_run_signature"] = None
 
@@ -890,6 +952,270 @@ def current_input_signature():
     return json.dumps(payload, sort_keys=True, default=str)
 
 
+def mark_components_dirty():
+    st.session_state["components_frame"] = prepare_components_input(st.session_state["components_frame"])
+    st.session_state["results"] = None
+    st.session_state["last_run_signature"] = None
+    st.session_state.pop("components_editor", None)
+
+
+def component_categories() -> list[str]:
+    frame = prepare_components_input(st.session_state["components_frame"])
+    return sorted([str(value) for value in frame["category"].dropna().unique() if str(value).strip()])
+
+
+def add_component_to_category(category: str) -> None:
+    frame = prepare_components_input(st.session_state["components_frame"])
+    new_row = {
+        "category": category,
+        "subcategory": "",
+        "component": "New Component",
+        "method": "Repeating",
+        "cost": 0.0,
+        "cost_units": "Each",
+        "quantity": 1.0,
+        "quantity_units": "Each",
+        "useful_life": 1.0,
+        "remaining_useful_life": "0:00",
+        "notes": "",
+    }
+    st.session_state["components_frame"] = pd.concat([frame, pd.DataFrame([new_row])], ignore_index=True)
+    st.session_state["editing_component_index"] = len(st.session_state["components_frame"]) - 1
+    st.session_state["moving_component_index"] = None
+    mark_components_dirty()
+
+
+def rename_component_category(old_category: str, new_category: str) -> None:
+    new_category = str(new_category).strip()
+    if not new_category:
+        st.warning("Category name cannot be blank.")
+        return
+    frame = prepare_components_input(st.session_state["components_frame"])
+    frame.loc[frame["category"] == old_category, "category"] = new_category
+    st.session_state["components_frame"] = frame
+    st.session_state["editing_category"] = None
+    mark_components_dirty()
+
+
+def delete_component_at(row_index: int) -> None:
+    frame = prepare_components_input(st.session_state["components_frame"])
+    if row_index not in frame.index:
+        return
+    st.session_state["components_frame"] = frame.drop(index=row_index).reset_index(drop=True)
+    st.session_state["editing_component_index"] = None
+    st.session_state["moving_component_index"] = None
+    mark_components_dirty()
+
+
+@st.dialog("Delete component")
+def render_delete_component_dialog(row_index: int):
+    frame = prepare_components_input(st.session_state["components_frame"])
+    if row_index not in frame.index:
+        st.warning("This component is no longer available.")
+        if st.button("Close", use_container_width=True):
+            st.rerun()
+        return
+
+    row = frame.loc[row_index]
+    label = f"{row.get('subcategory', '')} / {row.get('component', '')}".strip(" /")
+    st.write(f"Are you sure you want to delete {label}?")
+    delete_col, cancel_col = st.columns(2)
+    with delete_col:
+        if st.button("Delete", type="primary", use_container_width=True):
+            delete_component_at(row_index)
+            st.rerun()
+    with cancel_col:
+        if st.button("Cancel", use_container_width=True):
+            st.rerun()
+
+
+def render_component_category_row(category: str) -> None:
+    editing_category = st.session_state.get("editing_category")
+    if editing_category == category:
+        category_col, save_col, cancel_col = st.columns([8.5, 0.75, 0.75])
+        with category_col:
+            new_category = st.text_input(
+                "Category",
+                value=category,
+                label_visibility="collapsed",
+                key=f"category_name_{category}",
+            )
+        with save_col:
+            if st.button("💾", help="Save category name", key=f"save_category_{category}", use_container_width=True):
+                rename_component_category(category, new_category)
+                st.rerun()
+        with cancel_col:
+            if st.button("✖", help="Cancel category edit", key=f"cancel_category_{category}", use_container_width=True):
+                st.session_state["editing_category"] = None
+                st.rerun()
+        return
+
+    name_col, add_col, spacer_col, edit_col = st.columns([2.4, 1.4, 6.0, 0.75])
+    with name_col:
+        st.markdown(f"<div class='rp-category-strip'>{escape(category)}</div>", unsafe_allow_html=True)
+    with add_col:
+        if st.button("+ Add component", key=f"add_component_{category}", use_container_width=True):
+            add_component_to_category(category)
+            st.rerun()
+    with spacer_col:
+        st.markdown("<div class='rp-category-fill'></div>", unsafe_allow_html=True)
+    with edit_col:
+        if st.button("✎", help="Edit category name", key=f"edit_category_{category}", use_container_width=True):
+            st.session_state["editing_category"] = category
+            st.session_state["editing_component_index"] = None
+            st.rerun()
+
+
+def render_component_display_row(row_index: int, row: pd.Series, categories: list[str]) -> None:
+    columns = st.columns([1.2, 2.2, 1.25, 1.0, 1.0, 1.0, 1.15, 0.75, 0.9, 2.2, 0.55, 0.55])
+    values = [
+        row["subcategory"],
+        row["component"],
+        row["method"],
+        format_currency(row["cost"]),
+        row["cost_units"],
+        f"{float(row['quantity']):,.0f}",
+        row["quantity_units"],
+        f"{float(row['useful_life']):.0f}",
+        row["remaining_useful_life"],
+        row.get("notes", ""),
+    ]
+    for column, value in zip(columns[:10], values):
+        with column:
+            st.markdown(f"<div class='rp-component-cell'>{escape(str(value))}</div>", unsafe_allow_html=True)
+    with columns[10]:
+        if st.button("✎", help="Edit component", key=f"edit_component_{row_index}", use_container_width=True):
+            st.session_state["editing_component_index"] = row_index
+            st.session_state["editing_category"] = None
+            st.session_state["moving_component_index"] = None
+            st.rerun()
+    with columns[11]:
+        if st.button("🗑", help="Delete component", key=f"delete_component_{row_index}", use_container_width=True):
+            render_delete_component_dialog(row_index)
+
+
+def render_component_edit_row(row_index: int, row: pd.Series, categories: list[str]) -> None:
+    st.markdown("<div class='rp-editing-note'>Editing component</div>", unsafe_allow_html=True)
+    columns = st.columns([1.2, 2.2, 1.25, 1.0, 1.0, 1.0, 1.15, 0.75, 0.9, 2.2, 0.5, 0.5, 0.5])
+    with columns[0]:
+        subcategory = st.text_input("Subcategory", value=str(row["subcategory"]), key=f"edit_subcategory_{row_index}", label_visibility="collapsed")
+    with columns[1]:
+        component = st.text_input("Component", value=str(row["component"]), key=f"edit_component_name_{row_index}", label_visibility="collapsed")
+    with columns[2]:
+        method = st.selectbox(
+            "Method",
+            ["One Time", "Repeating"],
+            index=0 if row["method"] == "One Time" else 1,
+            key=f"edit_method_{row_index}",
+            label_visibility="collapsed",
+        )
+    with columns[3]:
+        cost = st.number_input("Cost", value=float(row["cost"]), min_value=0.0, step=100.0, key=f"edit_cost_{row_index}", label_visibility="collapsed")
+    with columns[4]:
+        cost_units = st.text_input("Cost Units", value=str(row["cost_units"]), key=f"edit_cost_units_{row_index}", label_visibility="collapsed")
+    with columns[5]:
+        quantity = st.number_input("Quantity", value=float(row["quantity"]), min_value=0.0, step=1.0, key=f"edit_quantity_{row_index}", label_visibility="collapsed")
+    with columns[6]:
+        quantity_units = st.text_input("Quantity Units", value=str(row["quantity_units"]), key=f"edit_quantity_units_{row_index}", label_visibility="collapsed")
+    with columns[7]:
+        useful_life = st.number_input("UL", value=float(row["useful_life"]), min_value=0.0, step=1.0, key=f"edit_useful_life_{row_index}", label_visibility="collapsed")
+    with columns[8]:
+        remaining_useful_life = st.text_input("RUL", value=str(row["remaining_useful_life"]), key=f"edit_remaining_life_{row_index}", label_visibility="collapsed")
+    with columns[9]:
+        notes = st.text_input("Notes", value=str(row.get("notes", "")), key=f"edit_notes_{row_index}", label_visibility="collapsed")
+    with columns[10]:
+        if st.button("💾", help="Save component", key=f"save_component_{row_index}", use_container_width=True):
+            frame = prepare_components_input(st.session_state["components_frame"])
+            frame.loc[row_index, [
+                "subcategory",
+                "component",
+                "method",
+                "cost",
+                "cost_units",
+                "quantity",
+                "quantity_units",
+                "useful_life",
+                "remaining_useful_life",
+                "notes",
+            ]] = [
+                subcategory,
+                component,
+                method,
+                cost,
+                cost_units,
+                quantity,
+                quantity_units,
+                useful_life,
+                remaining_useful_life,
+                notes,
+            ]
+            st.session_state["components_frame"] = frame
+            st.session_state["editing_component_index"] = None
+            st.session_state["moving_component_index"] = None
+            mark_components_dirty()
+            st.rerun()
+    with columns[11]:
+        if st.button("✖", help="Delete component", key=f"delete_edit_component_{row_index}", use_container_width=True):
+            render_delete_component_dialog(row_index)
+    with columns[12]:
+        if st.button("⇄", help="Move to another category", key=f"move_component_{row_index}", use_container_width=True):
+            st.session_state["moving_component_index"] = row_index
+            st.rerun()
+
+    if st.session_state.get("moving_component_index") == row_index:
+        current_category = str(row["category"])
+        current_index = categories.index(current_category) if current_category in categories else 0
+        move_col, apply_col = st.columns([5, 1])
+        with move_col:
+            new_category = st.selectbox(
+                "Move component to category",
+                categories,
+                index=current_index,
+                key=f"move_category_select_{row_index}",
+            )
+        with apply_col:
+            if st.button("Apply", key=f"apply_move_category_{row_index}", use_container_width=True):
+                frame = prepare_components_input(st.session_state["components_frame"])
+                frame.loc[row_index, "category"] = new_category
+                st.session_state["components_frame"] = frame
+                st.session_state["moving_component_index"] = None
+                mark_components_dirty()
+                st.rerun()
+
+
+def render_component_table(frame: pd.DataFrame, chapter: str) -> None:
+    frame = prepare_components_input(frame)
+    display_frame = frame if chapter == "ALL" else frame.loc[frame["category"] == chapter]
+    categories = component_categories()
+
+    st.markdown(
+        """
+        <div class="rp-native-component-header">
+            <span>Category/Subcategory</span><span>Component</span><span>Method</span><span>Cost</span>
+            <span>Cost Units</span><span>Quantity</span><span>Quantity Units</span><span>UL</span><span>RUL</span><span>Notes</span><span>Options</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    current_category = None
+    shown_rows = 0
+    for row_index, row in display_frame.head(80).iterrows():
+        category = str(row.get("category", "") or "Uncategorized")
+        if category != current_category:
+            current_category = category
+            render_component_category_row(category)
+
+        if st.session_state.get("editing_component_index") == row_index:
+            render_component_edit_row(row_index, row, categories)
+        else:
+            render_component_display_row(row_index, row, categories)
+        shown_rows += 1
+
+    if shown_rows == 0:
+        st.markdown("<div class='rp-empty-table'>No components in this chapter.</div>", unsafe_allow_html=True)
+
+
 def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
     frame = prepare_components_input(components_frame)
     if chapter != "ALL":
@@ -1061,7 +1387,10 @@ def render_component_workspace() -> bool:
         if st.button("⬆", help="Import Inventory", use_container_width=True):
             render_component_import_dialog()
     with add_col:
-        st.button("＋", help="Add component", use_container_width=True)
+        if st.button("＋", help="Add component", use_container_width=True):
+            target_category = chapter if chapter != "ALL" else (categories[1] if len(categories) > 1 else "New Category")
+            add_component_to_category(target_category)
+            st.rerun()
     with refresh_col:
         st.button("↻", help="Refresh component preview", use_container_width=True)
     with grid_col:
@@ -1070,17 +1399,15 @@ def render_component_workspace() -> bool:
         st.button("▤", help="Export native CSV below", use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    components.html(component_table_html(frame, chapter), height=720, scrolling=True)
+    st.markdown('<div class="rp-panel">', unsafe_allow_html=True)
+    render_component_table(frame, chapter)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     with st.container():
         st.markdown('<div class="rp-editor-shell">', unsafe_allow_html=True)
-        st.markdown('<div class="rp-native-editor"><h4>Edit Component Schedule</h4></div>', unsafe_allow_html=True)
-        st.markdown(
-            '<div class="rp-small-note">Use this editable grid for now; the table above previews the denser component workspace style.</div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown('<div class="rp-native-editor"><h4>Component Schedule Actions</h4></div>', unsafe_allow_html=True)
 
-        download_col, reset_col = st.columns([1, 1])
+        download_col, reset_col, run_col = st.columns([1, 1, 1])
         with download_col:
             st.download_button(
                 "Download native CSV",
@@ -1093,44 +1420,14 @@ def render_component_workspace() -> bool:
             if st.button("Reset components", use_container_width=True):
                 defaults = load_default_inputs()
                 st.session_state["components_frame"] = defaults["components"]
+                st.session_state["editing_component_index"] = None
+                st.session_state["editing_category"] = None
+                st.session_state["moving_component_index"] = None
                 st.session_state["results"] = None
                 st.session_state["last_run_signature"] = None
                 st.rerun()
-
-        apply_requested = False
-        run_requested = False
-        with st.form("components_form", clear_on_submit=False):
-            components_frame = st.data_editor(
-                st.session_state["components_frame"],
-                num_rows="dynamic",
-                use_container_width=True,
-                height=420,
-                column_config={
-                    "category": st.column_config.TextColumn("Category"),
-                    "subcategory": st.column_config.TextColumn("Subcategory"),
-                    "component": st.column_config.TextColumn("Component"),
-                    "method": st.column_config.SelectboxColumn("Method", options=["One Time", "Repeating"]),
-                    "cost": st.column_config.NumberColumn("Cost", format="$%0.2f"),
-                    "cost_units": st.column_config.TextColumn("Cost Units"),
-                    "quantity": st.column_config.NumberColumn("Quantity", format="%0.2f"),
-                    "quantity_units": st.column_config.TextColumn("Quantity Units"),
-                    "useful_life": st.column_config.NumberColumn("Useful Life", format="%0.0f"),
-                    "remaining_useful_life": st.column_config.TextColumn("Remaining Useful Life"),
-                    "notes": st.column_config.TextColumn("Notes"),
-                },
-                key="components_editor",
-            )
-            action_col, run_col = st.columns(2)
-            with action_col:
-                apply_requested = st.form_submit_button("Apply Component Changes", use_container_width=True)
-            with run_col:
-                run_requested = st.form_submit_button("Run Study", type="primary", use_container_width=True)
-
-        if apply_requested or run_requested:
-            st.session_state["components_frame"] = prepare_components_input(pd.DataFrame(components_frame))
-
-        if apply_requested and not run_requested:
-            st.success("Component changes saved in this browser session. Click Run Study to refresh results.")
+        with run_col:
+            run_requested = st.button("Run Study", type="primary", use_container_width=True)
 
         st.markdown("</div>", unsafe_allow_html=True)
 
