@@ -8,6 +8,7 @@ import sys
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
 
 APP_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = APP_ROOT.parent
@@ -607,6 +608,92 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         rows.append('<tr><td colspan="9" style="height:180px;text-align:center;color:#9aa4ac;">No components in this chapter.</td></tr>')
 
     return f"""
+    <style>
+        :root {{
+            --rp-blue-row: #c5e5f1;
+            --rp-line: #e3e7eb;
+            --rp-green: #72d957;
+        }}
+        body {{
+            margin: 0;
+            background: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #65717a;
+        }}
+        .rp-panel {{
+            background: #fff;
+            border: 1px solid var(--rp-line);
+            box-shadow: 0 1px 2px rgba(31,49,64,.06);
+            padding: 14px 16px 28px 16px;
+            box-sizing: border-box;
+        }}
+        .rp-toolbar {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }}
+        .rp-green-btn {{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 32px;
+            height: 26px;
+            background: var(--rp-green);
+            color: #1f7b21;
+            border-radius: 4px;
+            border: 1px solid #8ee06f;
+            font-weight: 800;
+            font-size: 13px;
+            margin-left: 5px;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }}
+        .rp-components-table {{
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            color: #65717a;
+        }}
+        .rp-components-table th {{
+            background: #fff;
+            border: 1px solid #e5e8eb;
+            padding: 10px 8px;
+            color: #5f6870;
+            font-weight: 700;
+            text-align: left;
+        }}
+        .rp-components-table td {{
+            border: 1px solid #edf0f2;
+            padding: 9px 8px;
+            background: #fff;
+            vertical-align: middle;
+        }}
+        .rp-components-table tr.selected td {{
+            background: #b7b7b7;
+            color: #3d3d3d;
+        }}
+        .rp-components-table tr.group td {{
+            background: var(--rp-blue-row);
+            color: #42535f;
+            font-weight: 700;
+            padding: 8px;
+        }}
+        .rp-funded {{
+            display: inline-block;
+            border: 1px solid #d7dde2;
+            border-radius: 3px;
+            padding: 2px 8px;
+            background: #fafafa;
+            color: #69747c;
+        }}
+        .rp-row-actions {{
+            color: #2b6f9c;
+            font-weight: 700;
+            white-space: nowrap;
+        }}
+    </style>
     <div class="rp-panel">
         <div class="rp-toolbar">
             <div>Chapters: <span style="display:inline-block;min-width:160px;border:1px solid #dfe5e9;padding:4px 10px;background:#fff;">{escape(chapter)} ▾</span></div>
@@ -644,7 +731,7 @@ def render_component_workspace() -> bool:
     frame = st.session_state["components_frame"]
     categories = ["ALL"] + sorted([str(value) for value in frame["category"].dropna().unique() if str(value).strip()])
     chapter = st.selectbox("Chapters", categories, label_visibility="collapsed", key="component_chapter")
-    st.markdown(component_table_html(frame, chapter), unsafe_allow_html=True)
+    components.html(component_table_html(frame, chapter), height=720, scrolling=True)
 
     with st.container():
         st.markdown('<div class="rp-editor-shell">', unsafe_allow_html=True)
