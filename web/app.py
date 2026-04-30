@@ -9,6 +9,8 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 
 APP_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = APP_ROOT.parent
@@ -316,6 +318,38 @@ APP_CSS = """
         font-size: 12px;
         margin: 2px 0 12px 0;
     }
+    .rp-upload-card {
+        border: 1px solid var(--rp-line);
+        background: #fff;
+        padding: 14px;
+        margin: 8px 0 16px 0;
+    }
+    .rp-upload-title {
+        background: var(--rp-teal);
+        color: white;
+        font-weight: 700;
+        padding: 9px 12px;
+        margin: -14px -14px 14px -14px;
+    }
+    .rp-upload-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #6a7580;
+        font-size: 13px;
+    }
+    .rp-upload-icon {
+        display: inline-flex;
+        width: 34px;
+        height: 26px;
+        align-items: center;
+        justify-content: center;
+        background: var(--rp-green);
+        color: #1f7b21;
+        border-radius: 4px;
+        border: 1px solid #8ee06f;
+        font-weight: 800;
+    }
     div.stButton > button,
     div.stDownloadButton > button {
         background: var(--rp-green);
@@ -485,6 +519,216 @@ def assumptions_frame_from_state():
 
 def csv_bytes(df):
     return df.to_csv(index=False).encode("utf-8")
+
+
+def component_template_bytes():
+    workbook = Workbook()
+    instructions = workbook.active
+    instructions.title = "Instructions"
+    component_sheet = workbook.create_sheet("Component List")
+
+    teal = PatternFill("solid", fgColor="2D8599")
+    yellow = PatternFill("solid", fgColor="FFF6A5")
+    section_yellow = PatternFill("solid", fgColor="FFF13B")
+    blue = PatternFill("solid", fgColor="A7C9EA")
+    thin_gray = Side(style="thin", color="8C8C8C")
+    border = Border(left=thin_gray, right=thin_gray, top=thin_gray, bottom=thin_gray)
+
+    instructions.column_dimensions["A"].width = 8
+    instructions.column_dimensions["B"].width = 32
+    instructions.column_dimensions["C"].width = 38
+    instructions.column_dimensions["D"].width = 32
+    instructions["B2"] = "RIDGE PARK"
+    instructions["B2"].font = Font(size=24, bold=True, color="2D8599")
+    instructions["C2"] = "RESERVES"
+    instructions["C2"].font = Font(size=24, bold=True, color="2D8599")
+    instructions["B5"] = "Master Template for Component List Import"
+    instructions["B5"].font = Font(italic=True, color="666666")
+    instructions["A8"] = "If you wish to import your own Reserve Component List, this is the starting point!"
+    instructions["A8"].font = Font(size=14, bold=True)
+    instructions["B11"] = "Note: This file contains two worksheet tabs along the bottom: Instructions and Component List"
+
+    sections = [
+        (13, "Instructions"),
+        (20, "Tips & Techniques"),
+        (31, "Component Guidance"),
+    ]
+    for row, label in sections:
+        instructions.merge_cells(start_row=row, start_column=1, end_row=row, end_column=4)
+        cell = instructions.cell(row=row, column=1, value=label)
+        cell.fill = section_yellow
+        cell.font = Font(size=14, bold=True)
+        cell.alignment = Alignment(horizontal="center")
+        cell.border = border
+
+    instruction_lines = [
+        (15, '* Enter your component information in the shaded rows and columns on the "Component List" worksheet.'),
+        (16, "* Useful Life (UL) and Remaining Useful Life (RUL) must be non-negative numbers."),
+        (17, "* Current Cost must be a non-negative number."),
+        (22, "* Data will be imported starting with component #1."),
+        (23, "* A blank Component Description field is interpreted as the end of your data."),
+        (24, "* A blank Quantity field may remain blank."),
+        (25, "* A blank Useful Life field causes RUL and Current Cost to be ignored."),
+        (26, "* Components to be replaced in the initial year should have RUL = 0."),
+        (27, "* Current Cost is already formatted as currency, so no $ symbol is required."),
+        (33, '#1 Be a common-area maintenance responsibility of the Association.'),
+        (34, '#2 Have a limited Useful Life (UL), not the life of the building.'),
+        (35, "#3 Have a predictable Remaining Useful Life (RUL)."),
+        (36, "#4 Be above a minimum threshold cost."),
+    ]
+    for row, text in instruction_lines:
+        instructions.cell(row=row, column=1, value=text)
+
+    headers = ["#", "Component #", "Funded (Yes/No)", "Component Description", "Quantity", "UL", "RUL", "Current Cost", "Notes"]
+    for column_index, header in enumerate(headers, start=1):
+        cell = component_sheet.cell(row=2, column=column_index, value=header)
+        cell.font = Font(bold=True)
+        cell.alignment = Alignment(horizontal="center")
+        cell.border = border
+    component_sheet.cell(row=3, column=1, value="Title").font = Font(bold=True)
+    component_sheet.cell(row=3, column=2, value="General Common Areas").font = Font(bold=True)
+    for col in range(2, 10):
+        component_sheet.cell(row=3, column=col).fill = blue
+        component_sheet.cell(row=3, column=col).border = border
+
+    for row in range(4, 84):
+        component_sheet.cell(row=row, column=1, value=row - 3)
+        component_sheet.cell(row=row, column=3, value="Yes")
+        for col in range(1, 10):
+            cell = component_sheet.cell(row=row, column=col)
+            if 2 <= col <= 9:
+                cell.fill = yellow
+            cell.border = border
+        component_sheet.cell(row=row, column=8).number_format = "$#,##0"
+
+    widths = [8, 16, 22, 38, 22, 9, 9, 18, 28]
+    for index, width in enumerate(widths, start=1):
+        component_sheet.column_dimensions[chr(64 + index)].width = width
+    component_sheet.freeze_panes = "A4"
+
+    buffer = BytesIO()
+    workbook.save(buffer)
+    buffer.seek(0)
+    return buffer.getvalue()
+
+
+def _clean_template_value(value):
+    if pd.isna(value):
+        return ""
+    return str(value).strip()
+
+
+def _template_number(value, default=0.0):
+    if pd.isna(value) or value == "":
+        return default
+    text = str(value).strip().replace("$", "").replace(",", "")
+    if ":" in text:
+        text = text.split(":", 1)[0]
+    try:
+        return float(text)
+    except ValueError:
+        return default
+
+
+def _parse_quantity(value):
+    text = _clean_template_value(value)
+    if not text:
+        return 1.0, "Allow"
+    parts = text.replace(",", "").split()
+    try:
+        quantity = float(parts[0])
+        units = " ".join(parts[1:]).strip() or "Each"
+        return quantity, units
+    except (ValueError, IndexError):
+        return 1.0, text
+
+
+def _normalize_template_columns(columns):
+    normalized = {}
+    for column in columns:
+        key = str(column).strip().lower().replace("\n", " ")
+        key = " ".join(key.split())
+        normalized[key] = column
+    return normalized
+
+
+def components_from_template_frame(raw_frame: pd.DataFrame) -> pd.DataFrame:
+    frame = raw_frame.dropna(how="all").copy()
+    if frame.empty:
+        return prepare_components_input(pd.DataFrame(columns=COMPONENT_INPUT_COLUMNS))
+
+    header_index = None
+    for index, row in frame.iterrows():
+        values = [str(value).strip().lower() for value in row.tolist()]
+        if "component description" in values or "component name" in values:
+            header_index = index
+            break
+    if header_index is None:
+        raise ValueError('Could not find a "Component Description" header in the uploaded template.')
+
+    headers = [str(value).strip() for value in frame.loc[header_index].tolist()]
+    data = frame.loc[header_index + 1 :].copy()
+    data.columns = headers
+    columns = _normalize_template_columns(data.columns)
+
+    component_col = columns.get("component description") or columns.get("component name")
+    if component_col is None:
+        raise ValueError('The template must include a "Component Description" or "Component Name" column.')
+
+    category = "Imported Components"
+    rows = []
+    for _, row in data.iterrows():
+        marker = _clean_template_value(row.get("#", ""))
+        component_number = _clean_template_value(row.get(columns.get("component #", ""), ""))
+        description = _clean_template_value(row.get(component_col, ""))
+
+        if marker.lower() == "title":
+            category = component_number or description or category
+            continue
+        if not description:
+            continue
+
+        funded = _clean_template_value(row.get(columns.get("funded (yes/no)", ""), "")) or "Yes"
+        if funded.lower().startswith("n"):
+            continue
+
+        quantity, quantity_units = _parse_quantity(row.get(columns.get("quantity", ""), ""))
+        life_years = _template_number(row.get(columns.get("ul", ""), 0))
+        remaining_life_years = _template_number(row.get(columns.get("rul", ""), 0))
+        current_cost = _template_number(row.get(columns.get("current cost", ""), 0))
+        unit_cost = current_cost / quantity if quantity else current_cost
+
+        rows.append(
+            {
+                "category": category,
+                "subcategory": "",
+                "component": description,
+                "tracking": "Imported",
+                "method": "Fixed",
+                "cost": unit_cost,
+                "cost_units": quantity_units,
+                "quantity": quantity,
+                "quantity_units": quantity_units,
+                "life_years": life_years,
+                "remaining_life": f"{int(remaining_life_years)}:00",
+                "service_date": "",
+                "source_page": _clean_template_value(row.get(columns.get("notes", ""), "")),
+            }
+        )
+
+    return prepare_components_input(pd.DataFrame(rows, columns=COMPONENT_INPUT_COLUMNS))
+
+
+def load_component_upload(uploaded_file) -> pd.DataFrame:
+    suffix = Path(uploaded_file.name).suffix.lower()
+    if suffix == ".csv":
+        frame = pd.read_csv(uploaded_file)
+        if set(COMPONENT_INPUT_COLUMNS).issubset(frame.columns):
+            return prepare_components_input(frame)
+        return components_from_template_frame(frame)
+    if suffix in {".xlsx", ".xlsm", ".xls"}:
+        return components_from_template_frame(pd.read_excel(uploaded_file, sheet_name="Component List", header=None))
+    raise ValueError("Upload a native component CSV or the Excel template downloaded from this page.")
 
 
 def matrix_csv_bytes(df):
@@ -741,21 +985,55 @@ def render_component_workspace() -> bool:
             unsafe_allow_html=True,
         )
 
-        uploaded_components = st.file_uploader(
-            "Import component CSV",
-            type=["csv"],
-            help="Upload a component_list_v2-style CSV to replace the current component schedule.",
+        st.markdown(
+            """
+            <div class="rp-upload-card">
+                <div class="rp-upload-title">Upload</div>
+                <div class="rp-upload-row">
+                    <span class="rp-upload-icon">⬆</span>
+                    <span>Import components using only the downloadable template, or load the native component CSV.</span>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
-        upload_col, download_col, reset_col = st.columns([1, 1, 1])
-        with upload_col:
-            if uploaded_components is not None and st.button("Load imported components", use_container_width=True):
-                st.session_state["components_frame"] = prepare_components_input(pd.read_csv(uploaded_components))
+        template_col, file_col, load_col = st.columns([1.15, 1.85, 1])
+        with template_col:
+            st.download_button(
+                "THIS template",
+                data=component_template_bytes(),
+                file_name="ridge_park_component_import_template.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                help='Download the Excel workbook with "Instructions" and "Component List" tabs.',
+                use_container_width=True,
+            )
+        with file_col:
+            uploaded_components = st.file_uploader(
+                "Upload completed template or native CSV",
+                type=["csv", "xlsx", "xlsm", "xls"],
+                help='Upload the completed Excel template, or a native component_list_v2.csv file.',
+            )
+        with load_col:
+            st.write("")
+            st.write("")
+            load_import = st.button("Load import", use_container_width=True, disabled=uploaded_components is None)
+
+        if uploaded_components is not None and load_import:
+            try:
+                st.session_state["components_frame"] = load_component_upload(uploaded_components)
                 st.session_state["results"] = None
                 st.session_state["last_run_signature"] = None
+                st.success("Component import loaded.")
                 st.rerun()
+            except Exception as exc:
+                st.error(f"Could not import components: {exc}")
+
+        st.markdown('<div class="rp-small-note">Native CSV imports still work for component_list_v2.csv compatibility.</div>', unsafe_allow_html=True)
+
+        download_col, reset_col = st.columns([1, 1])
         with download_col:
             st.download_button(
-                "Download components",
+                "Download native CSV",
                 data=csv_bytes(st.session_state["components_frame"]),
                 file_name="component_list_v2.csv",
                 mime="text/csv",
