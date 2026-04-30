@@ -163,26 +163,9 @@ APP_CSS = """
         font-size: 12px;
         font-weight: 700;
     }
-    .rp-cost-row {
-        max-width: 1110px;
-        margin: 18px auto 8px auto;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        color: #75838d;
-        font-size: 12px;
-    }
-    .rp-select-pill {
-        background: #4bb4d4;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 2px;
-        font-weight: 700;
-        margin-left: 6px;
-    }
     .rp-tabs {
         max-width: 1110px;
-        margin: 8px auto 20px auto;
+        margin: 18px auto 20px auto;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         text-align: center;
@@ -440,9 +423,6 @@ def render_project_shell(active_tab: str = "Components"):
             </div>
             <div class="rp-project-subtabs"><span>Documents</span><span>uPlanIt</span></div>
         </div>
-        <div class="rp-cost-row">
-            <div>Cost Centers:<span class="rp-select-pill">⌄</span></div>
-        </div>
         <div class="rp-tabs">{tabs}</div>
         """,
         unsafe_allow_html=True,
@@ -635,11 +615,10 @@ def components_from_template_frame(raw_frame: pd.DataFrame) -> pd.DataFrame:
     rows = []
     for _, row in data.iterrows():
         marker = _clean_template_value(row.get("#", ""))
-        component_number = _clean_template_value(row.get(columns.get("component #", ""), ""))
         description = _clean_template_value(row.get(component_col, ""))
 
         if marker.lower() == "title":
-            category = component_number or description or category
+            category = description or category
             continue
         if not description:
             continue
@@ -926,7 +905,7 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
             rows.append(
                 f"""
                 <tr class="group">
-                    <td colspan="11">{escape(category)} <span style="margin-left:16px;background:#fff;border:1px solid #dfe7ec;padding:3px 9px;">+ Add component</span></td>
+                    <td colspan="10">{escape(category)} <span style="margin-left:16px;background:#fff;border:1px solid #dfe7ec;padding:3px 9px;">+ Add component</span></td>
                     <td class="rp-row-actions">✎ 🗑 ⬆</td>
                 </tr>
                 """
@@ -937,7 +916,6 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         rows.append(
             f"""
             <tr class="{selected_class}">
-                <td style="text-align:right;">{display_index * 25}</td>
                 <td>{escape(str(row["subcategory"]))}</td>
                 <td>{escape(str(row["component"]))}</td>
                 <td>{escape(str(row["method"]))}</td>
@@ -954,7 +932,7 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         )
 
     if not rows:
-        rows.append('<tr><td colspan="12" style="height:180px;text-align:center;color:#9aa4ac;">No components in this chapter.</td></tr>')
+        rows.append('<tr><td colspan="11" style="height:180px;text-align:center;color:#9aa4ac;">No components in this chapter.</td></tr>')
 
     return f"""
     <style>
@@ -1024,7 +1002,6 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         <table class="rp-components-table">
             <thead>
                 <tr>
-                    <th style="width:6%;text-align:right;">#</th>
                     <th style="width:12%;">Subcategory</th>
                     <th style="width:20%;">Component</th>
                     <th style="width:9%;">Method</th>
