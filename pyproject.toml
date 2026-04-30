@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ridge-park-reserve-study-oo"
+version = "0.1.0"
+description = "Class-based reserve study workflow for Ridge Park"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scipy>=1.10",
+  "matplotlib>=3.7",
+]
+
+[tool.setuptools.packages.find]
+include = ["reserve_study*"]
