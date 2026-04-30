@@ -1,6 +1,7 @@
 from pathlib import Path
 from io import BytesIO
 from html import escape
+import base64
 import os
 import json
 import sys
@@ -799,25 +800,27 @@ def load_component_upload(uploaded_file) -> pd.DataFrame:
     raise ValueError("Upload a component schedule in CSV, XLSX, XLSM, XLSCSV, or XLS format.")
 
 
+def component_template_download_link() -> str:
+    encoded = base64.b64encode(component_template_bytes()).decode("ascii")
+    return (
+        '<a download="ridge_park_component_import_template.xlsx" '
+        'href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,'
+        f'{encoded}">THIS TEMPLATE</a>'
+    )
+
+
 @st.dialog("Upload")
 def render_component_import_dialog():
-    st.markdown("Upload a component schedule using THIS TEMPLATE in CSV, XLSX, XLSM, or XLSCSV format.")
-    template_col, upload_col = st.columns([1, 1.4])
-    with template_col:
-        st.download_button(
-            "THIS TEMPLATE",
-            data=component_template_bytes(),
-            file_name="ridge_park_component_import_template.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            help='Download the Excel workbook. Keep the schedule tab named exactly "Component List"; additional tabs are allowed.',
-            use_container_width=True,
-        )
-    with upload_col:
-        uploaded_components = st.file_uploader(
-            "Upload component schedule",
-            type=["csv", "xlsx", "xlsm", "xlscsv", "xls"],
-            help='Upload CSV/XLSCSV or a workbook with a sheet named exactly "Component List". Extra workbook tabs are allowed.',
-        )
+    st.markdown(
+        "Upload a component schedule using "
+        f"{component_template_download_link()} in CSV, XLSX, XLSM, or XLSCSV format.",
+        unsafe_allow_html=True,
+    )
+    uploaded_components = st.file_uploader(
+        "Upload component schedule",
+        type=["csv", "xlsx", "xlsm", "xlscsv"],
+        help='Upload CSV/XLSCSV or a workbook with a sheet named exactly "Component List". Extra workbook tabs are allowed.',
+    )
 
     if uploaded_components is not None:
         if st.button("Load import", use_container_width=True):
