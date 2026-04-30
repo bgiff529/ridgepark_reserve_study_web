@@ -5,6 +5,7 @@ import shutil
 
 import pandas as pd
 
+from .component_io import prepare_components_input
 from .models import Assumptions, Component, OptimizationResult, ReserveStudyScenario, ScenarioPaths
 from .schedules import CollectionSchedule
 from .study import StudyResult
@@ -16,24 +17,20 @@ class ScenarioRepository:
         assumptions_map = dict(zip(assumptions_df["Parameter"], assumptions_df["Value"]))
         assumptions = Assumptions.from_mapping(assumptions_map)
 
-        component_df = pd.read_csv(paths.source_data_dir / "component_list_v2.csv").copy()
-        if "source_page" not in component_df.columns:
-            component_df["source_page"] = ""
+        component_df = prepare_components_input(pd.read_csv(paths.source_data_dir / "component_list_v2.csv").copy())
         components = [
             Component(
                 category=row["category"],
                 subcategory=row["subcategory"],
                 component=row["component"],
-                tracking=row["tracking"],
                 method=row["method"],
                 cost=row["cost"],
                 cost_units=row["cost_units"],
                 quantity=row["quantity"],
                 quantity_units=row["quantity_units"],
-                life_years=row["life_years"],
-                remaining_life=row["remaining_life"],
-                service_date=row.get("service_date"),
-                source_page=row.get("source_page", ""),
+                useful_life=row["useful_life"],
+                remaining_useful_life=row["remaining_useful_life"],
+                notes=row["notes"],
             )
             for _, row in component_df.iterrows()
         ]

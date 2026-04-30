@@ -18,14 +18,13 @@ class ProjectionTests(unittest.TestCase):
             category="Fence",
             subcategory="Perimeter",
             component="Fence Repair",
-            tracking="Reserve",
             method="One Time",
             cost=1200.0,
             cost_units="ea",
             quantity=1,
             quantity_units="ea",
-            life_years=1,
-            remaining_life="0:01",
+            useful_life=1,
+            remaining_useful_life="0:01",
             component_id=0,
         )
         expenditure_schedule = ExpenditureSchedule.from_components([component], assumptions, projection_years=1, extend_for_next_instance=False)
@@ -55,14 +54,13 @@ class ProjectionTests(unittest.TestCase):
             category="Gate",
             subcategory="Entry",
             component="New Gate",
-            tracking="Reserve",
             method="One Time",
             cost=5000,
             cost_units="ea",
             quantity=1,
             quantity_units="ea",
-            life_years=20,
-            remaining_life="1:00",
+            useful_life=20,
+            remaining_useful_life="1:00",
             component_id=2,
         )
         expenditure_schedule = ExpenditureSchedule.from_components([component], assumptions, projection_years=5)

@@ -51,12 +51,11 @@ class ExpenditureSchedule:
                         category=component.category,
                         subcategory=component.subcategory,
                         component=component.component,
-                        tracking=component.tracking,
                         method=component.normalized_method,
-                        life_years=component.life_years,
+                        useful_life=component.useful_life,
                         life_months=int(life_months),
                         current_cost=round(component.current_cost, 2),
-                        source_page=component.source_page,
+                        notes=component.notes,
                     )
                 )
                 if component.is_one_time:

@@ -127,8 +127,8 @@ class ReportBuilder:
         summary = (
             components.groupby("category", dropna=False)
             .agg(
-                useful_min=("life_years", "min"),
-                useful_max=("life_years", "max"),
+                useful_min=("useful_life", "min"),
+                useful_max=("useful_life", "max"),
                 repl_min=("replacement_date", "min"),
                 repl_max=("replacement_date", "max"),
                 rem_min=("remaining_life_months", "min"),
@@ -166,8 +166,8 @@ class ReportBuilder:
                 basis_cost=("cost", "first"),
                 quantity=("quantity", "sum"),
                 current_cost=("current_cost", "sum"),
-                life_years_min=("life_years", "min"),
-                life_years_max=("life_years", "max"),
+                life_years_min=("useful_life", "min"),
+                life_years_max=("useful_life", "max"),
                 rem_life_min=("remaining_life_months", "min"),
                 rem_life_max=("remaining_life_months", "max"),
                 future_cost=("future_cost", "sum"),

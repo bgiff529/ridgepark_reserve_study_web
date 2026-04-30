@@ -11,28 +11,13 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from reserve_study.models import Assumptions, Component, ReserveStudyScenario, ScenarioPaths
+from reserve_study.component_io import COMPONENT_INPUT_COLUMNS, prepare_components_input
 from reserve_study.schedules import CollectionSchedule
 from reserve_study.study import ReserveStudy
 
 
 DEFAULT_PROJECTION_YEARS = 30
 DEFAULT_UNITS = 138
-
-COMPONENT_INPUT_COLUMNS = [
-    "category",
-    "subcategory",
-    "component",
-    "tracking",
-    "method",
-    "cost",
-    "cost_units",
-    "quantity",
-    "quantity_units",
-    "life_years",
-    "remaining_life",
-    "service_date",
-    "source_page",
-]
 
 ASSESSMENT_INPUT_COLUMNS = [
     "year",
@@ -82,23 +67,6 @@ def load_assumptions(source) -> dict[str, object]:
         "contribution_factor": float(values["Contribution Factor"]),
         "begin_balance": float(values["Begin Balance"]),
     }
-
-
-def prepare_components_input(source) -> pd.DataFrame:
-    df = _read_frame(source)
-    out = df.copy()
-    for column in COMPONENT_INPUT_COLUMNS:
-        if column not in out.columns:
-            out[column] = "" if column in {"category", "subcategory", "component", "tracking", "method", "cost_units", "quantity_units", "remaining_life", "service_date", "source_page"} else 0
-    out = out[COMPONENT_INPUT_COLUMNS].copy()
-
-    for column in ["cost", "quantity", "life_years"]:
-        out[column] = pd.to_numeric(out[column], errors="coerce").fillna(0.0)
-
-    for column in ["category", "subcategory", "component", "tracking", "method", "cost_units", "quantity_units", "remaining_life", "service_date", "source_page"]:
-        out[column] = out[column].fillna("").astype(str)
-
-    return out
 
 
 def prepare_assessment_input(source) -> pd.DataFrame:
@@ -167,16 +135,14 @@ def _component_from_row(row: pd.Series) -> Component:
         category=row["category"],
         subcategory=row["subcategory"],
         component=row["component"],
-        tracking=row["tracking"],
         method=row["method"],
         cost=row["cost"],
         cost_units=row["cost_units"],
         quantity=row["quantity"],
         quantity_units=row["quantity_units"],
-        life_years=row["life_years"],
-        remaining_life=row["remaining_life"],
-        service_date=row.get("service_date") or None,
-        source_page=row.get("source_page", ""),
+        useful_life=row["useful_life"],
+        remaining_useful_life=row["remaining_useful_life"],
+        notes=row["notes"],
     )
 
 

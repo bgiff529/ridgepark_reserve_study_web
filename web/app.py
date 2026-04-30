@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+from openpyxl.worksheet.datavalidation import DataValidation
 
 APP_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = APP_ROOT.parent
@@ -503,14 +504,13 @@ def component_template_bytes():
 
     instruction_lines = [
         (15, '* Enter your component information in the shaded rows and columns on the "Component List" worksheet.'),
-        (16, "* Useful Life (UL) and Remaining Useful Life (RUL) must be non-negative numbers."),
-        (17, "* Current Cost must be a non-negative number."),
-        (22, "* Data will be imported starting with component #1."),
-        (23, "* A blank Component Description field is interpreted as the end of your data."),
-        (24, "* A blank Quantity field may remain blank."),
-        (25, "* A blank Useful Life field causes RUL and Current Cost to be ignored."),
-        (26, "* Components to be replaced in the initial year should have RUL = 0."),
-        (27, "* Current Cost is already formatted as currency, so no $ symbol is required."),
+        (16, '* Method must be either "One Time" or "Repeating". Anything else imports as Repeating.'),
+        (17, '* Remaining Useful Life must use yy:mm format, such as 0:06 or 14:00.'),
+        (22, "* Data will be imported from the shaded rows."),
+        (23, "* A blank Component field is interpreted as the end of your data."),
+        (24, "* Quantity and Cost are separate numeric fields; units are separate text fields."),
+        (25, "* Components to be replaced in the initial year should have Remaining Useful Life = 0:00."),
+        (26, "* Use Notes for source page references and other supporting detail."),
         (33, '#1 Be a common-area maintenance responsibility of the Association.'),
         (34, '#2 Have a limited Useful Life (UL), not the life of the building.'),
         (35, "#3 Have a predictable Remaining Useful Life (RUL)."),
@@ -519,32 +519,43 @@ def component_template_bytes():
     for row, text in instruction_lines:
         instructions.cell(row=row, column=1, value=text)
 
-    headers = ["#", "Component #", "Funded (Yes/No)", "Component Description", "Quantity", "UL", "RUL", "Current Cost", "Notes"]
+    headers = [
+        "Category",
+        "Subcategory",
+        "Component",
+        "Method",
+        "Cost",
+        "Cost Units",
+        "Quantity",
+        "Quantity Units",
+        "Useful Life",
+        "Remaining Useful Life",
+        "Notes",
+    ]
     for column_index, header in enumerate(headers, start=1):
         cell = component_sheet.cell(row=2, column=column_index, value=header)
         cell.font = Font(bold=True)
         cell.alignment = Alignment(horizontal="center")
         cell.border = border
-    component_sheet.cell(row=3, column=1, value="Title").font = Font(bold=True)
-    component_sheet.cell(row=3, column=2, value="General Common Areas").font = Font(bold=True)
-    for col in range(2, 10):
-        component_sheet.cell(row=3, column=col).fill = blue
-        component_sheet.cell(row=3, column=col).border = border
 
-    for row in range(4, 84):
-        component_sheet.cell(row=row, column=1, value=row - 3)
-        component_sheet.cell(row=row, column=3, value="Yes")
-        for col in range(1, 10):
+    method_validation = DataValidation(type="list", formula1='"One Time,Repeating"', allow_blank=False)
+    component_sheet.add_data_validation(method_validation)
+    for row in range(3, 83):
+        component_sheet.cell(row=row, column=4, value="Repeating")
+        component_sheet.cell(row=row, column=6, value="Each")
+        component_sheet.cell(row=row, column=8, value="Each")
+        component_sheet.cell(row=row, column=10, value="0:00")
+        method_validation.add(component_sheet.cell(row=row, column=4))
+        for col in range(1, len(headers) + 1):
             cell = component_sheet.cell(row=row, column=col)
-            if 2 <= col <= 9:
-                cell.fill = yellow
+            cell.fill = yellow
             cell.border = border
-        component_sheet.cell(row=row, column=8).number_format = "$#,##0"
+        component_sheet.cell(row=row, column=5).number_format = "$#,##0"
 
-    widths = [8, 16, 22, 38, 22, 9, 9, 18, 28]
+    widths = [24, 24, 38, 16, 14, 16, 14, 18, 14, 22, 36]
     for index, width in enumerate(widths, start=1):
         component_sheet.column_dimensions[chr(64 + index)].width = width
-    component_sheet.freeze_panes = "A4"
+    component_sheet.freeze_panes = "A3"
 
     buffer = BytesIO()
     workbook.save(buffer)
@@ -600,20 +611,20 @@ def components_from_template_frame(raw_frame: pd.DataFrame) -> pd.DataFrame:
     header_index = None
     for index, row in frame.iterrows():
         values = [str(value).strip().lower() for value in row.tolist()]
-        if "component description" in values or "component name" in values:
+        if "component" in values or "component description" in values or "component name" in values:
             header_index = index
             break
     if header_index is None:
-        raise ValueError('Could not find a "Component Description" header in the uploaded template.')
+        raise ValueError('Could not find a "Component" header in the uploaded template.')
 
     headers = [str(value).strip() for value in frame.loc[header_index].tolist()]
     data = frame.loc[header_index + 1 :].copy()
     data.columns = headers
     columns = _normalize_template_columns(data.columns)
 
-    component_col = columns.get("component description") or columns.get("component name")
+    component_col = columns.get("component") or columns.get("component description") or columns.get("component name")
     if component_col is None:
-        raise ValueError('The template must include a "Component Description" or "Component Name" column.')
+        raise ValueError('The template must include a "Component" column.')
 
     category = "Imported Components"
     rows = []
@@ -632,27 +643,36 @@ def components_from_template_frame(raw_frame: pd.DataFrame) -> pd.DataFrame:
         if funded.lower().startswith("n"):
             continue
 
-        quantity, quantity_units = _parse_quantity(row.get(columns.get("quantity", ""), ""))
-        life_years = _template_number(row.get(columns.get("ul", ""), 0))
-        remaining_life_years = _template_number(row.get(columns.get("rul", ""), 0))
+        if columns.get("quantity units") is not None:
+            quantity = _template_number(row.get(columns.get("quantity", ""), 0), default=0.0)
+            quantity_units = _clean_template_value(row.get(columns.get("quantity units", ""), "")) or "Each"
+        else:
+            quantity, quantity_units = _parse_quantity(row.get(columns.get("quantity", ""), ""))
+
         current_cost = _template_number(row.get(columns.get("current cost", ""), 0))
-        unit_cost = current_cost / quantity if quantity else current_cost
+        cost = _template_number(row.get(columns.get("cost", ""), current_cost), default=current_cost)
+        cost_units = _clean_template_value(row.get(columns.get("cost units", ""), "")) or quantity_units
+        if columns.get("cost") is None and current_cost:
+            cost = current_cost / quantity if quantity else current_cost
+
+        useful_life = _template_number(row.get(columns.get("useful life", columns.get("ul", "")), 0))
+        remaining_useful_life = _clean_template_value(
+            row.get(columns.get("remaining useful life", columns.get("rul", "")), "0:00")
+        ) or "0:00"
 
         rows.append(
             {
-                "category": category,
-                "subcategory": "",
+                "category": _clean_template_value(row.get(columns.get("category", ""), "")) or category,
+                "subcategory": _clean_template_value(row.get(columns.get("subcategory", ""), "")),
                 "component": description,
-                "tracking": "Imported",
-                "method": "Fixed",
-                "cost": unit_cost,
-                "cost_units": quantity_units,
+                "method": _clean_template_value(row.get(columns.get("method", ""), "")) or "Repeating",
+                "cost": cost,
+                "cost_units": cost_units,
                 "quantity": quantity,
                 "quantity_units": quantity_units,
-                "life_years": life_years,
-                "remaining_life": f"{int(remaining_life_years)}:00",
-                "service_date": "",
-                "source_page": _clean_template_value(row.get(columns.get("notes", ""), "")),
+                "useful_life": useful_life,
+                "remaining_useful_life": remaining_useful_life,
+                "notes": _clean_template_value(row.get(columns.get("notes", ""), "")),
             }
         )
 
@@ -663,7 +683,7 @@ def load_component_upload(uploaded_file) -> pd.DataFrame:
     suffix = Path(uploaded_file.name).suffix.lower()
     if suffix == ".csv":
         frame = pd.read_csv(uploaded_file)
-        if set(COMPONENT_INPUT_COLUMNS).issubset(frame.columns):
+        if "component" in frame.columns:
             return prepare_components_input(frame)
         return components_from_template_frame(frame)
     if suffix in {".xlsx", ".xlsm", ".xls"}:
@@ -795,33 +815,35 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
             rows.append(
                 f"""
                 <tr class="group">
-                    <td colspan="8">{escape(category)} <span style="margin-left:16px;background:#fff;border:1px solid #dfe7ec;padding:3px 9px;">+ Add component</span></td>
+                    <td colspan="11">{escape(category)} <span style="margin-left:16px;background:#fff;border:1px solid #dfe7ec;padding:3px 9px;">+ Add component</span></td>
                     <td class="rp-row-actions">✎ 🗑 ⬆</td>
                 </tr>
                 """
             )
 
         selected_class = "selected" if display_index - 1 == selected_position else ""
-        quantity = f"{float(row['quantity']):,.0f} {escape(str(row['quantity_units']))}" if pd.notna(row["quantity"]) else ""
-        cost = format_currency(row["cost"] * row["quantity"])
+        cost = format_currency(row["cost"])
         rows.append(
             f"""
             <tr class="{selected_class}">
                 <td style="text-align:right;">{display_index * 25}</td>
-                <td><span class="rp-funded">Yes⌄</span></td>
+                <td>{escape(str(row["subcategory"]))}</td>
                 <td>{escape(str(row["component"]))}</td>
-                <td>{quantity}</td>
-                <td style="text-align:right;">{float(row["life_years"]):.0f}</td>
-                <td style="text-align:right;">{escape(str(row["remaining_life"]))}</td>
+                <td>{escape(str(row["method"]))}</td>
                 <td style="text-align:right;">{cost}</td>
-                <td>{escape(str(row.get("source_page", "")))}</td>
+                <td>{escape(str(row["cost_units"]))}</td>
+                <td style="text-align:right;">{float(row["quantity"]):,.0f}</td>
+                <td>{escape(str(row["quantity_units"]))}</td>
+                <td style="text-align:right;">{float(row["useful_life"]):.0f}</td>
+                <td style="text-align:right;">{escape(str(row["remaining_useful_life"]))}</td>
+                <td>{escape(str(row.get("notes", "")))}</td>
                 <td class="rp-row-actions">✎ &nbsp; 🗑</td>
             </tr>
             """
         )
 
     if not rows:
-        rows.append('<tr><td colspan="9" style="height:180px;text-align:center;color:#9aa4ac;">No components in this chapter.</td></tr>')
+        rows.append('<tr><td colspan="12" style="height:180px;text-align:center;color:#9aa4ac;">No components in this chapter.</td></tr>')
 
     return f"""
     <style>
@@ -891,15 +913,18 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         <table class="rp-components-table">
             <thead>
                 <tr>
-                    <th style="width:7%;text-align:right;">#</th>
-                    <th style="width:7%;">Funded</th>
-                    <th style="width:23%;">Component Name</th>
-                    <th style="width:17%;">Quantity/Specs</th>
+                    <th style="width:6%;text-align:right;">#</th>
+                    <th style="width:12%;">Subcategory</th>
+                    <th style="width:20%;">Component</th>
+                    <th style="width:9%;">Method</th>
+                    <th style="width:8%;text-align:right;">Cost</th>
+                    <th style="width:8%;">Cost Units</th>
+                    <th style="width:7%;text-align:right;">Quantity</th>
+                    <th style="width:9%;">Quantity Units</th>
                     <th style="width:6%;text-align:right;">UL</th>
-                    <th style="width:6%;text-align:right;">RUL</th>
-                    <th style="width:9%;text-align:right;">Current<br>Cost</th>
+                    <th style="width:7%;text-align:right;">RUL</th>
                     <th>Notes</th>
-                    <th style="width:9%;">Options</th>
+                    <th style="width:7%;">Options</th>
                 </tr>
             </thead>
             <tbody>{''.join(rows)}</tbody>
@@ -965,6 +990,19 @@ def render_component_workspace() -> bool:
                 num_rows="dynamic",
                 use_container_width=True,
                 height=420,
+                column_config={
+                    "category": st.column_config.TextColumn("Category"),
+                    "subcategory": st.column_config.TextColumn("Subcategory"),
+                    "component": st.column_config.TextColumn("Component"),
+                    "method": st.column_config.SelectboxColumn("Method", options=["One Time", "Repeating"]),
+                    "cost": st.column_config.NumberColumn("Cost", format="$%0.2f"),
+                    "cost_units": st.column_config.TextColumn("Cost Units"),
+                    "quantity": st.column_config.NumberColumn("Quantity", format="%0.2f"),
+                    "quantity_units": st.column_config.TextColumn("Quantity Units"),
+                    "useful_life": st.column_config.NumberColumn("Useful Life", format="%0.0f"),
+                    "remaining_useful_life": st.column_config.TextColumn("Remaining Useful Life"),
+                    "notes": st.column_config.TextColumn("Notes"),
+                },
                 key="components_editor",
             )
             action_col, run_col = st.columns(2)
@@ -1050,6 +1088,19 @@ def render_inputs():
             num_rows="dynamic",
             use_container_width=True,
             height=420,
+            column_config={
+                "category": st.column_config.TextColumn("Category"),
+                "subcategory": st.column_config.TextColumn("Subcategory"),
+                "component": st.column_config.TextColumn("Component"),
+                "method": st.column_config.SelectboxColumn("Method", options=["One Time", "Repeating"]),
+                "cost": st.column_config.NumberColumn("Cost", format="$%0.2f"),
+                "cost_units": st.column_config.TextColumn("Cost Units"),
+                "quantity": st.column_config.NumberColumn("Quantity", format="%0.2f"),
+                "quantity_units": st.column_config.TextColumn("Quantity Units"),
+                "useful_life": st.column_config.NumberColumn("Useful Life", format="%0.0f"),
+                "remaining_useful_life": st.column_config.TextColumn("Remaining Useful Life"),
+                "notes": st.column_config.TextColumn("Notes"),
+            },
             key="components_editor",
         )
 
@@ -1118,7 +1169,7 @@ def render_outputs(results):
     component_detail_display = format_results_table(
         results["component_list_detail"],
         currency_cols=["cost", "current_cost", "future_cost"],
-        date_cols=["service_date", "replacement_date"],
+        date_cols=["replacement_date"],
         integer_cols=["component_id", "life_months", "remaining_life_months"],
     )
     assessment_input_display = format_results_table(

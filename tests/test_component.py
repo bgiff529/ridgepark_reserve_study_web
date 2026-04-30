@@ -11,14 +11,13 @@ class ComponentTests(unittest.TestCase):
             category="Roofs",
             subcategory="Main",
             component="Asphalt Roof",
-            tracking="Reserve",
-            method="fixed",
+            method="Repeating",
             cost=100.0,
             cost_units="sf",
             quantity=50,
             quantity_units="sf",
-            life_years=10,
-            remaining_life="2:06",
+            useful_life=10,
+            remaining_useful_life="2:06",
         )
         self.assertEqual(component.current_cost, 5000.0)
         self.assertEqual(component.life_months, 120)
@@ -36,14 +35,13 @@ class ComponentTests(unittest.TestCase):
             category="Paint",
             subcategory="Entry",
             component="Exterior Paint",
-            tracking="Reserve",
-            method="Fixed",
+            method="Repeating",
             cost=1000,
             cost_units="ea",
             quantity=1,
             quantity_units="ea",
-            life_years=5,
-            remaining_life="1:00",
+            useful_life=5,
+            remaining_useful_life="1:00",
             component_id=1,
         )
         schedule = ExpenditureSchedule.from_components([component], assumptions, projection_years=10)
@@ -64,14 +62,13 @@ class ComponentTests(unittest.TestCase):
             category="Gate",
             subcategory="Entry",
             component="New Gate",
-            tracking="Reserve",
             method="One Time",
             cost=5000,
             cost_units="ea",
             quantity=1,
             quantity_units="ea",
-            life_years=20,
-            remaining_life="1:00",
+            useful_life=20,
+            remaining_useful_life="1:00",
             component_id=2,
         )
         schedule = ExpenditureSchedule.from_components([component], assumptions, projection_years=30)

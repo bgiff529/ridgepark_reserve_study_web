@@ -38,56 +38,53 @@ class Component:
     category: str
     subcategory: str
     component: str
-    tracking: str
     method: str
     cost: float
     cost_units: str
     quantity: float
     quantity_units: str
-    life_years: float
-    remaining_life: str
-    service_date: pd.Timestamp | None = None
-    source_page: str = ""
+    useful_life: float
+    remaining_useful_life: str
+    notes: str = ""
     component_id: int | None = None
 
     def __post_init__(self) -> None:
         self.category = str(self.category).strip()
         self.subcategory = str(self.subcategory).strip()
         self.component = str(self.component).strip()
-        self.tracking = str(self.tracking).strip()
-        self.method = str(self.method).strip().replace("fixed", "Fixed").replace("one time", "One Time")
+        self.method = "One Time" if str(self.method).strip().lower() == "one time" else "Repeating"
         self.cost_units = str(self.cost_units).strip()
         self.quantity_units = str(self.quantity_units).strip()
-        self.remaining_life = str(self.remaining_life).strip()
-        self.source_page = "" if pd.isna(self.source_page) else str(self.source_page).strip()
+        remaining_months = parse_remaining_life_to_months(self.remaining_useful_life)
+        self.remaining_useful_life = "0:00" if pd.isna(remaining_months) else months_to_ym(remaining_months)
+        self.notes = "" if pd.isna(self.notes) else str(self.notes).strip()
         self.cost = float(self.cost)
         self.quantity = float(self.quantity)
-        self.life_years = float(self.life_years)
-        if self.service_date is not None and not pd.isna(self.service_date):
-            self.service_date = normalize_to_month(pd.to_datetime(self.service_date))
-        else:
-            self.service_date = None
+        self.useful_life = float(self.useful_life)
 
     @property
     def normalized_method(self) -> str:
-        lowered = self.method.strip().lower()
-        if lowered == "fixed":
-            return "Fixed"
-        if lowered == "one time":
-            return "One Time"
-        return self.method.strip()
+        return "One Time" if self.method.strip().lower() == "one time" else "Repeating"
 
     @property
     def is_one_time(self) -> bool:
         return self.normalized_method.lower() == "one time"
 
     @property
+    def life_years(self) -> float:
+        return self.useful_life
+
+    @property
     def life_months(self) -> float:
-        return years_to_months(self.life_years)
+        return years_to_months(self.useful_life)
+
+    @property
+    def remaining_life(self) -> str:
+        return self.remaining_useful_life
 
     @property
     def remaining_life_months(self) -> float:
-        return parse_remaining_life_to_months(self.remaining_life)
+        return parse_remaining_life_to_months(self.remaining_useful_life)
 
     @property
     def current_cost(self) -> float:
@@ -111,23 +108,21 @@ class Component:
             "category": self.category,
             "subcategory": self.subcategory,
             "component": self.component,
-            "tracking": self.tracking,
             "method": self.normalized_method,
             "cost": self.cost,
             "cost_units": self.cost_units,
             "quantity": self.quantity,
             "quantity_units": self.quantity_units,
-            "life_years": self.life_years,
+            "useful_life": self.useful_life,
             "life_months": self.life_months,
             "life_display": months_to_ym(self.life_months),
-            "remaining_life": self.remaining_life,
+            "remaining_useful_life": self.remaining_useful_life,
             "remaining_life_months": self.remaining_life_months,
             "remaining_life_display": months_to_ym(self.remaining_life_months),
-            "service_date": self.service_date,
             "current_cost": round(self.current_cost, 2),
             "replacement_date": self.replacement_date(assumptions.analysis_date),
             "future_cost": self.future_cost(assumptions.analysis_date, assumptions.inflation),
-            "source_page": self.source_page,
+            "notes": self.notes,
         }
 
 
@@ -141,12 +136,11 @@ class CashflowEvent:
     category: str = ""
     subcategory: str = ""
     component: str = ""
-    tracking: str = ""
     method: str = ""
-    life_years: float | None = None
+    useful_life: float | None = None
     life_months: int | None = None
     current_cost: float | None = None
-    source_page: str = ""
+    notes: str = ""
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "date", normalize_to_month(pd.Timestamp(self.date)))
@@ -169,13 +163,12 @@ class CashflowEvent:
             "category": self.category,
             "subcategory": self.subcategory,
             "component": self.component,
-            "tracking": self.tracking,
             "method": self.method,
-            "life_years": self.life_years,
+            "useful_life": self.useful_life,
             "life_months": self.life_months,
             "current_cost": None if self.current_cost is None else round(float(self.current_cost), 2),
             "future_cost": round(float(self.amount), 2),
-            "source_page": self.source_page,
+            "notes": self.notes,
             "replacement_year": self.year,
         }
 

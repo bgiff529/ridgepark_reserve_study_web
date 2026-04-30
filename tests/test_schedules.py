@@ -18,14 +18,13 @@ class ScheduleTests(unittest.TestCase):
             category="Roof",
             subcategory="Main",
             component="Roof Replacement",
-            tracking="Reserve",
-            method="Fixed",
+            method="Repeating",
             cost=10000,
             cost_units="allow",
             quantity=1,
             quantity_units="allow",
-            life_years=3,
-            remaining_life="1:00",
+            useful_life=3,
+            remaining_useful_life="1:00",
             component_id=0,
         )
 
