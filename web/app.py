@@ -203,6 +203,17 @@ APP_CSS = """
         box-shadow: 0 1px 2px rgba(31,49,64,.06);
         padding: 14px 16px 28px 16px;
     }
+    .rp-native-toolbar {
+        max-width: 1110px;
+        margin: 0 auto;
+        background: #fff;
+        border: 1px solid var(--rp-line);
+        border-bottom: 0;
+        padding: 14px 16px 8px 16px;
+    }
+    .rp-native-toolbar [data-testid="stHorizontalBlock"] {
+        align-items: center;
+    }
     .rp-toolbar {
         display: flex;
         justify-content: space-between;
@@ -293,38 +304,6 @@ APP_CSS = """
         font-size: 12px;
         margin: 2px 0 12px 0;
     }
-    .rp-upload-card {
-        border: 1px solid var(--rp-line);
-        background: #fff;
-        padding: 14px;
-        margin: 8px 0 16px 0;
-    }
-    .rp-upload-title {
-        background: var(--rp-teal);
-        color: white;
-        font-weight: 700;
-        padding: 9px 12px;
-        margin: -14px -14px 14px -14px;
-    }
-    .rp-upload-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #6a7580;
-        font-size: 13px;
-    }
-    .rp-upload-icon {
-        display: inline-flex;
-        width: 34px;
-        height: 26px;
-        align-items: center;
-        justify-content: center;
-        background: var(--rp-green);
-        color: #1f7b21;
-        border-radius: 4px;
-        border: 1px solid #8ee06f;
-        font-weight: 800;
-    }
     div.stButton > button,
     div.stDownloadButton > button {
         background: var(--rp-green);
@@ -338,6 +317,11 @@ APP_CSS = """
     div.stDownloadButton > button:hover {
         border-color: var(--rp-green-dark);
         color: #0f6c18;
+    }
+    .rp-icon-button button {
+        min-width: 34px;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
     }
 </style>
 """
@@ -687,6 +671,38 @@ def load_component_upload(uploaded_file) -> pd.DataFrame:
     raise ValueError("Upload a native component CSV or the Excel template downloaded from this page.")
 
 
+@st.dialog("Upload")
+def render_component_import_dialog():
+    st.markdown("Import components using only the downloaded **THIS** template, or upload the native component CSV.")
+    template_col, upload_col = st.columns([1, 1.4])
+    with template_col:
+        st.download_button(
+            "THIS template",
+            data=component_template_bytes(),
+            file_name="ridge_park_component_import_template.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            help='Download the Excel workbook with "Instructions" and "Component List" tabs.',
+            use_container_width=True,
+        )
+    with upload_col:
+        uploaded_components = st.file_uploader(
+            "Upload CSV or completed template",
+            type=["csv", "xlsx", "xlsm", "xls"],
+            help="Upload a native component_list_v2.csv or the completed Excel template.",
+        )
+
+    if uploaded_components is not None:
+        if st.button("Load import", use_container_width=True):
+            try:
+                st.session_state["components_frame"] = load_component_upload(uploaded_components)
+                st.session_state["results"] = None
+                st.session_state["last_run_signature"] = None
+                st.success("Component import loaded.")
+                st.rerun()
+            except Exception as exc:
+                st.error(f"Could not import components: {exc}")
+
+
 def matrix_csv_bytes(df):
     return df.to_csv().encode("utf-8")
 
@@ -827,29 +843,6 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
             padding: 14px 16px 28px 16px;
             box-sizing: border-box;
         }}
-        .rp-toolbar {{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 12px;
-        }}
-        .rp-green-btn {{
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 32px;
-            height: 26px;
-            background: var(--rp-green);
-            color: #1f7b21;
-            border-radius: 4px;
-            border: 1px solid #8ee06f;
-            font-weight: 800;
-            font-size: 13px;
-            margin-left: 5px;
-            padding: 0 10px;
-            box-sizing: border-box;
-        }}
         .rp-components-table {{
             width: 100%;
             border-collapse: collapse;
@@ -895,16 +888,6 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         }}
     </style>
     <div class="rp-panel">
-        <div class="rp-toolbar">
-            <div>Chapters: <span style="display:inline-block;min-width:160px;border:1px solid #dfe5e9;padding:4px 10px;background:#fff;">{escape(chapter)} ▾</span></div>
-            <div>
-                <span class="rp-green-btn">⬆</span>
-                <span class="rp-green-btn">＋</span>
-                <span class="rp-green-btn">↻</span>
-                <span class="rp-green-btn">▣</span>
-                <span class="rp-green-btn">▤</span>
-            </div>
-        </div>
         <table class="rp-components-table">
             <thead>
                 <tr>
@@ -929,7 +912,24 @@ def render_component_workspace() -> bool:
     render_project_shell("Components")
     frame = st.session_state["components_frame"]
     categories = ["ALL"] + sorted([str(value) for value in frame["category"].dropna().unique() if str(value).strip()])
-    chapter = st.selectbox("Chapters", categories, label_visibility="collapsed", key="component_chapter")
+
+    st.markdown('<div class="rp-native-toolbar">', unsafe_allow_html=True)
+    chapter_col, spacer_col, upload_col, add_col, refresh_col, grid_col, print_col = st.columns([4.5, 3.7, 0.45, 0.45, 0.45, 0.45, 0.45])
+    with chapter_col:
+        chapter = st.selectbox("Chapters", categories, key="component_chapter")
+    with upload_col:
+        if st.button("⬆", help="Import Inventory", use_container_width=True):
+            render_component_import_dialog()
+    with add_col:
+        st.button("＋", help="Add component", use_container_width=True)
+    with refresh_col:
+        st.button("↻", help="Refresh component preview", use_container_width=True)
+    with grid_col:
+        st.button("▣", help="Component grid options", use_container_width=True)
+    with print_col:
+        st.button("▤", help="Export native CSV below", use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
+
     components.html(component_table_html(frame, chapter), height=720, scrolling=True)
 
     with st.container():
@@ -939,51 +939,6 @@ def render_component_workspace() -> bool:
             '<div class="rp-small-note">Use this editable grid for now; the table above previews the denser component workspace style.</div>',
             unsafe_allow_html=True,
         )
-
-        st.markdown(
-            """
-            <div class="rp-upload-card">
-                <div class="rp-upload-title">Upload</div>
-                <div class="rp-upload-row">
-                    <span class="rp-upload-icon">⬆</span>
-                    <span>Import components using only the downloadable template, or load the native component CSV.</span>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        template_col, file_col, load_col = st.columns([1.15, 1.85, 1])
-        with template_col:
-            st.download_button(
-                "THIS template",
-                data=component_template_bytes(),
-                file_name="ridge_park_component_import_template.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                help='Download the Excel workbook with "Instructions" and "Component List" tabs.',
-                use_container_width=True,
-            )
-        with file_col:
-            uploaded_components = st.file_uploader(
-                "Upload completed template or native CSV",
-                type=["csv", "xlsx", "xlsm", "xls"],
-                help='Upload the completed Excel template, or a native component_list_v2.csv file.',
-            )
-        with load_col:
-            st.write("")
-            st.write("")
-            load_import = st.button("Load import", use_container_width=True, disabled=uploaded_components is None)
-
-        if uploaded_components is not None and load_import:
-            try:
-                st.session_state["components_frame"] = load_component_upload(uploaded_components)
-                st.session_state["results"] = None
-                st.session_state["last_run_signature"] = None
-                st.success("Component import loaded.")
-                st.rerun()
-            except Exception as exc:
-                st.error(f"Could not import components: {exc}")
-
-        st.markdown('<div class="rp-small-note">Native CSV imports still work for component_list_v2.csv compatibility.</div>', unsafe_allow_html=True)
 
         download_col, reset_col = st.columns([1, 1])
         with download_col:
