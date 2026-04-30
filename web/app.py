@@ -1,6 +1,5 @@
 from pathlib import Path
 from io import BytesIO
-from html import escape
 import base64
 import os
 import json
@@ -13,7 +12,6 @@ import re
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-import streamlit.components.v1 as components
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.worksheet.datavalidation import DataValidation
@@ -266,6 +264,20 @@ APP_CSS = """
         color: #2b6f9c;
         font-weight: 700;
         white-space: nowrap;
+    }
+    .rp-panel div[data-testid="stDataFrame"],
+    .rp-panel div[data-testid="stDataEditor"] {
+        border: 1px solid var(--rp-line);
+        box-shadow: none;
+    }
+    .rp-panel [data-testid="stDataFrameResizable"] {
+        border-radius: 0;
+    }
+    .rp-panel [data-testid="stDataEditor"] div {
+        border-radius: 0;
+    }
+    .rp-panel [data-testid="stDataEditor"] button {
+        border-radius: 0;
     }
     .rp-native-editor {
         margin-top: 18px;
@@ -890,162 +902,58 @@ def current_input_signature():
     return json.dumps(payload, sort_keys=True, default=str)
 
 
-def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
-    frame = prepare_components_input(components_frame)
+def render_component_editor(frame: pd.DataFrame, chapter: str) -> pd.DataFrame:
+    editor_frame = prepare_components_input(frame)
     if chapter != "ALL":
-        frame = frame.loc[frame["category"] == chapter].copy()
+        visible_index = editor_frame.index[editor_frame["category"] == chapter]
+        display_frame = editor_frame.loc[visible_index].copy()
+    else:
+        visible_index = editor_frame.index
+        display_frame = editor_frame.copy()
 
-    rows = []
-    current_category = None
-    for _, row in frame.head(80).iterrows():
-        category = str(row.get("category", "") or "Uncategorized")
-        if category != current_category:
-            current_category = category
-            rows.append(
-                f"""
-                <tr class="group">
-                    <td colspan="10"><span class="rp-category-name">{escape(category)}</span><span class="rp-add-component">+ Add component</span></td>
-                    <td class="rp-row-actions">✎ 🗑 ⬆</td>
-                </tr>
-                """
-            )
+    edited_frame = st.data_editor(
+        display_frame,
+        num_rows="dynamic",
+        use_container_width=True,
+        height=720,
+        hide_index=True,
+        column_order=[
+            "category",
+            "subcategory",
+            "component",
+            "method",
+            "cost",
+            "cost_units",
+            "quantity",
+            "quantity_units",
+            "useful_life",
+            "remaining_useful_life",
+            "notes",
+        ],
+        column_config={
+            "category": st.column_config.TextColumn("Category"),
+            "subcategory": st.column_config.TextColumn("Subcategory"),
+            "component": st.column_config.TextColumn("Component"),
+            "method": st.column_config.SelectboxColumn("Method", options=["One Time", "Repeating"]),
+            "cost": st.column_config.NumberColumn("Cost", format="$%0.0f"),
+            "cost_units": st.column_config.TextColumn("Cost Units"),
+            "quantity": st.column_config.NumberColumn("Quantity", format="%0.0f"),
+            "quantity_units": st.column_config.TextColumn("Quantity Units"),
+            "useful_life": st.column_config.NumberColumn("Useful Life", format="%0.0f"),
+            "remaining_useful_life": st.column_config.TextColumn("Remaining Useful Life"),
+            "notes": st.column_config.TextColumn("Notes"),
+        },
+        key=f"components_editor_{chapter}",
+    )
 
-        cost = format_currency(row["cost"])
-        rows.append(
-            f"""
-            <tr>
-                <td>{escape(str(row["subcategory"]))}</td>
-                <td>{escape(str(row["component"]))}</td>
-                <td>{escape(str(row["method"]))}</td>
-                <td style="text-align:right;">{cost}</td>
-                <td>{escape(str(row["cost_units"]))}</td>
-                <td style="text-align:right;">{float(row["quantity"]):,.0f}</td>
-                <td>{escape(str(row["quantity_units"]))}</td>
-                <td style="text-align:right;">{float(row["useful_life"]):.0f}</td>
-                <td style="text-align:right;">{escape(str(row["remaining_useful_life"]))}</td>
-                <td>{escape(str(row.get("notes", "")))}</td>
-                <td class="rp-row-actions">✎ &nbsp; 🗑</td>
-            </tr>
-            """
-        )
+    if chapter == "ALL":
+        return prepare_components_input(pd.DataFrame(edited_frame))
 
-    if not rows:
-        rows.append('<tr><td colspan="11" style="height:180px;text-align:center;color:#9aa4ac;">No components in this chapter.</td></tr>')
-
-    return f"""
-    <style>
-        :root {{
-            --rp-blue-row: #c5e5f1;
-            --rp-line: #e3e7eb;
-            --rp-green: #72d957;
-        }}
-        body {{
-            margin: 0;
-            background: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            color: #65717a;
-        }}
-        .rp-panel {{
-            background: #fff;
-            border: 1px solid var(--rp-line);
-            box-shadow: 0 1px 2px rgba(31,49,64,.06);
-            padding: 14px 16px 28px 16px;
-            box-sizing: border-box;
-        }}
-        .rp-components-table {{
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            font-size: 12px;
-            color: #65717a;
-        }}
-        .rp-components-table th {{
-            background: #fff;
-            border: 1px solid #e5e8eb;
-            border-left: 0;
-            padding: 10px 8px;
-            color: #5f6870;
-            font-weight: 700;
-            text-align: left;
-            position: sticky;
-            top: 0;
-            z-index: 5;
-        }}
-        .rp-components-table th:first-child {{
-            border-left: 1px solid #e5e8eb;
-        }}
-        .rp-components-table td {{
-            border: 1px solid #edf0f2;
-            border-left: 0;
-            border-top: 0;
-            padding: 9px 8px;
-            background: #fff;
-            vertical-align: middle;
-        }}
-        .rp-components-table td:first-child {{
-            border-left: 1px solid #edf0f2;
-        }}
-        .rp-components-table tbody tr:not(.group):hover td {{
-            background: #b7b7b7;
-            color: #3d3d3d;
-        }}
-        .rp-components-table tr.group td {{
-            background: var(--rp-blue-row);
-            color: #42535f;
-            font-weight: 700;
-            padding: 8px;
-            position: sticky;
-            top: 38px;
-            z-index: 4;
-            border-top: 1px solid #e5e8eb;
-            box-shadow: 0 1px 0 rgba(31,49,64,.06);
-        }}
-        .rp-category-name {{
-            display: inline-block;
-            min-width: 180px;
-        }}
-        .rp-add-component {{
-            margin-left: 16px;
-            background: #fff;
-            border: 1px solid #dfe7ec;
-            padding: 3px 9px;
-            font-weight: 600;
-        }}
-        .rp-funded {{
-            display: inline-block;
-            border: 1px solid #d7dde2;
-            border-radius: 3px;
-            padding: 2px 8px;
-            background: #fafafa;
-            color: #69747c;
-        }}
-        .rp-row-actions {{
-            color: #2b6f9c;
-            font-weight: 700;
-            white-space: nowrap;
-        }}
-    </style>
-    <div class="rp-panel">
-        <table class="rp-components-table">
-            <thead>
-                <tr>
-                    <th style="width:12%;">Category/Subcategory</th>
-                    <th style="width:20%;">Component</th>
-                    <th style="width:9%;">Method</th>
-                    <th style="width:8%;text-align:right;">Cost</th>
-                    <th style="width:8%;">Cost Units</th>
-                    <th style="width:7%;text-align:right;">Quantity</th>
-                    <th style="width:9%;">Quantity Units</th>
-                    <th style="width:6%;text-align:right;">UL</th>
-                    <th style="width:7%;text-align:right;">RUL</th>
-                    <th>Notes</th>
-                    <th style="width:7%;">Options</th>
-                </tr>
-            </thead>
-            <tbody>{''.join(rows)}</tbody>
-        </table>
-    </div>
-    """
+    updated = editor_frame.copy()
+    edited_frame = pd.DataFrame(edited_frame)
+    updated = updated.drop(index=visible_index)
+    updated = pd.concat([updated, edited_frame], ignore_index=True)
+    return prepare_components_input(updated)
 
 
 def render_component_workspace() -> bool:
@@ -1070,17 +978,15 @@ def render_component_workspace() -> bool:
         st.button("▤", help="Export native CSV below", use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-    components.html(component_table_html(frame, chapter), height=720, scrolling=True)
+    st.markdown('<div class="rp-panel">', unsafe_allow_html=True)
+    components_frame = render_component_editor(frame, chapter)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     with st.container():
         st.markdown('<div class="rp-editor-shell">', unsafe_allow_html=True)
-        st.markdown('<div class="rp-native-editor"><h4>Edit Component Schedule</h4></div>', unsafe_allow_html=True)
-        st.markdown(
-            '<div class="rp-small-note">Use this editable grid for now; the table above previews the denser component workspace style.</div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown('<div class="rp-native-editor"><h4>Component Schedule Actions</h4></div>', unsafe_allow_html=True)
 
-        download_col, reset_col = st.columns([1, 1])
+        download_col, reset_col, apply_col, run_col = st.columns([1, 1, 1, 1])
         with download_col:
             st.download_button(
                 "Download native CSV",
@@ -1096,35 +1002,10 @@ def render_component_workspace() -> bool:
                 st.session_state["results"] = None
                 st.session_state["last_run_signature"] = None
                 st.rerun()
-
-        apply_requested = False
-        run_requested = False
-        with st.form("components_form", clear_on_submit=False):
-            components_frame = st.data_editor(
-                st.session_state["components_frame"],
-                num_rows="dynamic",
-                use_container_width=True,
-                height=420,
-                column_config={
-                    "category": st.column_config.TextColumn("Category"),
-                    "subcategory": st.column_config.TextColumn("Subcategory"),
-                    "component": st.column_config.TextColumn("Component"),
-                    "method": st.column_config.SelectboxColumn("Method", options=["One Time", "Repeating"]),
-                    "cost": st.column_config.NumberColumn("Cost", format="$%0.2f"),
-                    "cost_units": st.column_config.TextColumn("Cost Units"),
-                    "quantity": st.column_config.NumberColumn("Quantity", format="%0.2f"),
-                    "quantity_units": st.column_config.TextColumn("Quantity Units"),
-                    "useful_life": st.column_config.NumberColumn("Useful Life", format="%0.0f"),
-                    "remaining_useful_life": st.column_config.TextColumn("Remaining Useful Life"),
-                    "notes": st.column_config.TextColumn("Notes"),
-                },
-                key="components_editor",
-            )
-            action_col, run_col = st.columns(2)
-            with action_col:
-                apply_requested = st.form_submit_button("Apply Component Changes", use_container_width=True)
-            with run_col:
-                run_requested = st.form_submit_button("Run Study", type="primary", use_container_width=True)
+        with apply_col:
+            apply_requested = st.button("Apply Component Changes", use_container_width=True)
+        with run_col:
+            run_requested = st.button("Run Study", type="primary", use_container_width=True)
 
         if apply_requested or run_requested:
             st.session_state["components_frame"] = prepare_components_input(pd.DataFrame(components_frame))
