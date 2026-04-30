@@ -343,6 +343,7 @@ APP_CSS = """
     }
     .rp-component-cell {
         min-height: 28px;
+        height: 28px;
         background: #fff;
         border-bottom: 1px solid #edf0f2;
         color: #65717a;
@@ -369,7 +370,19 @@ APP_CSS = """
     div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker),
     div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) {
         background: #b7b7b7;
-        padding: 2px 0;
+        padding: 0;
+        gap: 0.25rem;
+    }
+    .rp-editing-row-marker,
+    .rp-category-edit-row-marker {
+        display: none;
+    }
+    div[data-testid="element-container"]:has(.rp-editing-row-marker),
+    div[data-testid="element-container"]:has(.rp-category-edit-row-marker) {
+        display: none;
+        height: 0;
+        margin: 0;
+        padding: 0;
     }
     div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) input,
     div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) [data-baseweb="select"] > div,
@@ -378,19 +391,50 @@ APP_CSS = """
         height: 28px;
         font-size: 12px;
         color: #3d3d3d;
-        background: #f5f5f5;
-        border-color: #d8d8d8;
+        background: #f5f5f5 !important;
+        border: 1px solid #d8d8d8 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        outline: 0 !important;
+        padding: 3px 6px !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) [data-baseweb="select"],
+    div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) [data-baseweb="select"] > div,
+    div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) [data-baseweb="input"],
+    div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) [data-baseweb="input"] {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) input:focus,
+    div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) input:focus {
+        border-color: #aeb7bf !important;
+        box-shadow: none !important;
+        outline: 0 !important;
     }
     div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) div[data-testid="stTextInput"],
     div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) div[data-testid="stNumberInput"],
     div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) div[data-testid="stSelectbox"],
     div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) div[data-testid="stTextInput"] {
         margin-bottom: 0;
+        padding: 0;
+    }
+    div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) div[data-testid="InputInstructions"],
+    div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) div[data-testid="InputInstructions"],
+    div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) div[data-baseweb="base-input"] + div {
+        display: none;
+    }
+    div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) div[data-testid="stVerticalBlock"],
+    div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) div[data-testid="stVerticalBlock"] > div,
+    div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) div[data-testid="stVerticalBlock"],
+    div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) div[data-testid="stVerticalBlock"] > div {
+        gap: 0;
     }
     div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) button,
     div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) button {
         min-width: 24px;
         min-height: 24px;
+        height: 24px;
         padding: 0 4px;
         background: transparent;
         border: 0;
@@ -398,11 +442,12 @@ APP_CSS = """
         font-size: 14px;
         font-weight: 600;
         box-shadow: none;
+        border-radius: 0;
     }
     div[data-testid="stHorizontalBlock"]:has(.rp-editing-row-marker) button:hover,
     div[data-testid="stHorizontalBlock"]:has(.rp-category-edit-row-marker) button:hover {
         color: #b10000;
-        background: #f6e0e0;
+        background: transparent;
         border: 0;
     }
     div[data-testid="stHorizontalBlock"]:has(.rp-component-cell) button,
@@ -1164,7 +1209,7 @@ def render_component_display_row(row_index: int, row: pd.Series, categories: lis
 
 
 def render_component_edit_row(row_index: int, row: pd.Series, categories: list[str]) -> None:
-    columns = st.columns([1.2, 2.2, 1.25, 1.0, 1.0, 1.0, 1.15, 0.75, 0.9, 2.2, 0.5, 0.5, 0.5])
+    columns = st.columns([1.2, 2.2, 1.25, 1.0, 1.0, 1.0, 1.15, 0.75, 0.9, 2.2, 1.1])
     with columns[0]:
         st.markdown("<span class='rp-editing-row-marker'></span>", unsafe_allow_html=True)
         subcategory = st.text_input("Subcategory", value=str(row["subcategory"]), key=f"edit_subcategory_{row_index}", label_visibility="collapsed")
@@ -1179,21 +1224,29 @@ def render_component_edit_row(row_index: int, row: pd.Series, categories: list[s
             label_visibility="collapsed",
         )
     with columns[3]:
-        cost = st.number_input("Cost", value=float(row["cost"]), min_value=0.0, step=100.0, key=f"edit_cost_{row_index}", label_visibility="collapsed")
+        cost = st.number_input("Cost", value=float(row["cost"]), min_value=0.0, step=100.0, format="%.0f", key=f"edit_cost_{row_index}", label_visibility="collapsed")
     with columns[4]:
         cost_units = st.text_input("Cost Units", value=str(row["cost_units"]), key=f"edit_cost_units_{row_index}", label_visibility="collapsed")
     with columns[5]:
-        quantity = st.number_input("Quantity", value=float(row["quantity"]), min_value=0.0, step=1.0, key=f"edit_quantity_{row_index}", label_visibility="collapsed")
+        quantity = st.number_input("Quantity", value=float(row["quantity"]), min_value=0.0, step=1.0, format="%.0f", key=f"edit_quantity_{row_index}", label_visibility="collapsed")
     with columns[6]:
         quantity_units = st.text_input("Quantity Units", value=str(row["quantity_units"]), key=f"edit_quantity_units_{row_index}", label_visibility="collapsed")
     with columns[7]:
-        useful_life = st.number_input("UL", value=float(row["useful_life"]), min_value=0.0, step=1.0, key=f"edit_useful_life_{row_index}", label_visibility="collapsed")
+        useful_life = st.number_input("UL", value=float(row["useful_life"]), min_value=0.0, step=1.0, format="%.0f", key=f"edit_useful_life_{row_index}", label_visibility="collapsed")
     with columns[8]:
         remaining_useful_life = st.text_input("RUL", value=str(row["remaining_useful_life"]), key=f"edit_remaining_life_{row_index}", label_visibility="collapsed")
     with columns[9]:
         notes = st.text_input("Notes", value=str(row.get("notes", "")), key=f"edit_notes_{row_index}", label_visibility="collapsed")
     with columns[10]:
-        if st.button("💾", help="Save component", key=f"save_component_{row_index}"):
+        action_cols = st.columns(3)
+        with action_cols[0]:
+            save_clicked = st.button("💾", help="Save component", key=f"save_component_{row_index}")
+        with action_cols[1]:
+            delete_clicked = st.button("✖", help="Delete component", key=f"delete_edit_component_{row_index}")
+        with action_cols[2]:
+            move_clicked = st.button("⇄", help="Move to another category", key=f"move_component_{row_index}")
+
+        if save_clicked:
             frame = prepare_components_input(st.session_state["components_frame"])
             frame.loc[row_index, [
                 "subcategory",
@@ -1223,11 +1276,11 @@ def render_component_edit_row(row_index: int, row: pd.Series, categories: list[s
             st.session_state["moving_component_index"] = None
             mark_components_dirty()
             st.rerun()
-    with columns[11]:
-        if st.button("✖", help="Delete component", key=f"delete_edit_component_{row_index}"):
+
+        if delete_clicked:
             render_delete_component_dialog(row_index)
-    with columns[12]:
-        if st.button("⇄", help="Move to another category", key=f"move_component_{row_index}"):
+
+        if move_clicked:
             st.session_state["moving_component_index"] = row_index
             st.rerun()
 
