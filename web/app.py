@@ -61,24 +61,6 @@ APP_CSS = """
         background: var(--rp-page);
         color: #4b5563;
     }
-    section[data-testid="stSidebar"] {
-        width: 238px !important;
-        min-width: 238px !important;
-        background: var(--rp-navy);
-        border-right: 1px solid #10202b;
-    }
-    section[data-testid="stSidebar"] > div {
-        background: var(--rp-navy);
-        padding-top: 1.3rem;
-    }
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3,
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] label,
-    section[data-testid="stSidebar"] span {
-        color: #eaf2f6 !important;
-    }
     div[data-testid="stAppViewContainer"] .main .block-container {
         max-width: 1180px;
         padding: 1.1rem 1.8rem 3rem 1.8rem;
@@ -180,7 +162,7 @@ APP_CSS = """
         margin: 18px auto 8px auto;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
         color: #75838d;
         font-size: 12px;
     }
@@ -191,13 +173,6 @@ APP_CSS = """
         border-radius: 2px;
         font-weight: 700;
         margin-left: 6px;
-    }
-    .rp-tutorial {
-        background: var(--rp-green);
-        color: #287a29;
-        font-weight: 700;
-        padding: 6px 12px;
-        border-radius: 3px;
     }
     .rp-tabs {
         max-width: 1110px;
@@ -428,7 +403,6 @@ def require_password():
 
     if not password:
         if allow_no_password:
-            st.sidebar.warning("Password bypass is enabled for local development.")
             return
 
         st.error("This app is not configured for public access yet. Set APP_PASSWORD before deploying.")
@@ -458,23 +432,6 @@ def inject_styles():
     st.markdown(APP_CSS, unsafe_allow_html=True)
 
 
-def render_sidebar_shell():
-    st.sidebar.markdown(
-        """
-        <div style="text-align:center;font-size:16px;font-weight:700;margin-bottom:18px;">Client Center</div>
-        <div style="background:#192936;margin:0 -16px 12px -16px;padding:12px 16px;font-weight:700;font-size:12px;">Dashboard</div>
-        <div style="display:flex;gap:6px;margin-bottom:18px;">
-            <span style="background:#f28b30;color:#152531;padding:3px 6px;border-radius:2px;font-weight:700;">rss</span>
-            <span style="background:#4ba4d9;color:white;padding:3px 6px;border-radius:2px;font-weight:700;">t</span>
-            <span style="background:#4169a8;color:white;padding:3px 6px;border-radius:2px;font-weight:700;">f</span>
-            <span style="background:#d84b35;color:white;padding:3px 6px;border-radius:2px;font-weight:700;">in</span>
-        </div>
-        <div style="border:1px solid #7d93a3;padding:8px;font-weight:700;font-size:12px;">Latest updates</div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-
 def render_project_shell(active_tab: str = "Components"):
     tabs = "".join(
         f'<div class="rp-tab {"active" if tab == active_tab else ""}">{tab}</div>'
@@ -495,7 +452,6 @@ def render_project_shell(active_tab: str = "Components"):
         </div>
         <div class="rp-cost-row">
             <div>Cost Centers:<span class="rp-select-pill">⌄</span></div>
-            <div class="rp-tutorial">Video Overview (3:22)</div>
         </div>
         <div class="rp-tabs">{tabs}</div>
         """,
@@ -942,7 +898,6 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         <div class="rp-toolbar">
             <div>Chapters: <span style="display:inline-block;min-width:160px;border:1px solid #dfe5e9;padding:4px 10px;background:#fff;">{escape(chapter)} ▾</span></div>
             <div>
-                <span class="rp-green-btn">View Tutorial (4:29)</span>
                 <span class="rp-green-btn">⬆</span>
                 <span class="rp-green-btn">＋</span>
                 <span class="rp-green-btn">↻</span>
@@ -1072,50 +1027,6 @@ def render_component_workspace() -> bool:
         st.markdown("</div>", unsafe_allow_html=True)
 
     return run_requested
-
-
-def show_sidebar_tools():
-    st.sidebar.header("Workspace")
-
-    if st.sidebar.button("Reset to default inputs", use_container_width=True):
-        seed_session_state(force=True)
-        st.rerun()
-
-    uploaded_components = st.sidebar.file_uploader("Replace components from CSV", type=["csv"])
-    if uploaded_components is not None and st.sidebar.button("Load components CSV", use_container_width=True):
-        st.session_state["components_frame"] = prepare_components_input(pd.read_csv(uploaded_components))
-        st.session_state["results"] = None
-        st.session_state["last_run_signature"] = None
-        st.rerun()
-
-    uploaded_assessments = st.sidebar.file_uploader("Replace assessment schedule from CSV", type=["csv"])
-    if uploaded_assessments is not None and st.sidebar.button("Load assessment CSV", use_container_width=True):
-        st.session_state["assessment_frame"] = prepare_assessment_input(pd.read_csv(uploaded_assessments))
-        st.session_state["results"] = None
-        st.session_state["last_run_signature"] = None
-        st.rerun()
-
-    st.sidebar.download_button(
-        "Download current assumptions",
-        data=csv_bytes(assumptions_frame_from_state()),
-        file_name="assumptions.csv",
-        mime="text/csv",
-        use_container_width=True,
-    )
-    st.sidebar.download_button(
-        "Download current components",
-        data=csv_bytes(st.session_state["components_frame"]),
-        file_name="component_list_v2.csv",
-        mime="text/csv",
-        use_container_width=True,
-    )
-    st.sidebar.download_button(
-        "Download current assessments",
-        data=csv_bytes(st.session_state["assessment_frame"]),
-        file_name="assessment_contributions.csv",
-        mime="text/csv",
-        use_container_width=True,
-    )
 
 
 def render_inputs():
@@ -1346,14 +1257,10 @@ def render_outputs(results):
 
 
 def main():
-    st.set_page_config(page_title="Reserve Study", layout="wide")
+    st.set_page_config(page_title="Reserve Study", layout="wide", initial_sidebar_state="collapsed")
     inject_styles()
     seed_session_state()
     require_password()
-    render_sidebar_shell()
-    if st.sidebar.button("Reset workspace", use_container_width=True):
-        seed_session_state(force=True)
-        st.rerun()
 
     run_requested = render_component_workspace()
     input_signature = current_input_signature()
