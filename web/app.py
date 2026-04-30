@@ -4,12 +4,16 @@ from html import escape
 import os
 import json
 import sys
+import shutil
+import subprocess
+import tempfile
+import re
 
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import streamlit.components.v1 as components
-from openpyxl import Workbook
+from openpyxl import Workbook, load_workbook
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.worksheet.datavalidation import DataValidation
 
@@ -679,36 +683,140 @@ def components_from_template_frame(raw_frame: pd.DataFrame) -> pd.DataFrame:
     return prepare_components_input(pd.DataFrame(rows, columns=COMPONENT_INPUT_COLUMNS))
 
 
+def _component_list_frame_from_workbook(uploaded_file) -> pd.DataFrame:
+    workbook_bytes = uploaded_file.getvalue()
+    workbook_bytes = _recalculate_workbook_bytes(workbook_bytes, uploaded_file.name)
+    formula_workbook = load_workbook(BytesIO(workbook_bytes), data_only=False, read_only=False)
+    if "Component List" not in formula_workbook.sheetnames:
+        raise ValueError('Workbook must include a sheet named exactly "Component List". Extra sheets are fine.')
+
+    value_workbook = load_workbook(BytesIO(workbook_bytes), data_only=True, read_only=False)
+    formula_sheet = formula_workbook["Component List"]
+    value_sheet = value_workbook["Component List"]
+    values, unresolved = _worksheet_values_with_formula_refs(formula_workbook, value_workbook, formula_sheet, value_sheet)
+    _raise_for_uncalculated_required_formulas(values, formula_sheet, unresolved)
+    return pd.DataFrame(values)
+
+
+def _recalculate_workbook_bytes(workbook_bytes: bytes, file_name: str) -> bytes:
+    compiler = shutil.which("soffice") or shutil.which("libreoffice")
+    if compiler is None:
+        return workbook_bytes
+
+    suffix = Path(file_name).suffix.lower() or ".xlsx"
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        source = tmp_path / f"upload{suffix}"
+        source.write_bytes(workbook_bytes)
+        result = subprocess.run(
+            [compiler, "--headless", "--convert-to", "xlsx", "--outdir", str(tmp_path), str(source)],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=30,
+        )
+        converted = tmp_path / "upload.xlsx"
+        if result.returncode == 0 and converted.exists():
+            return converted.read_bytes()
+    return workbook_bytes
+
+
+def _worksheet_values_with_formula_refs(formula_workbook, value_workbook, formula_sheet, value_sheet):
+    rows = []
+    unresolved = set()
+    for row_index in range(1, formula_sheet.max_row + 1):
+        row_values = []
+        for column_index in range(1, formula_sheet.max_column + 1):
+            formula_cell = formula_sheet.cell(row=row_index, column=column_index)
+            cached_value = value_sheet.cell(row=row_index, column=column_index).value
+            value = cached_value
+            if isinstance(formula_cell.value, str) and formula_cell.value.startswith("=") and cached_value is None:
+                value = _resolve_simple_formula_reference(formula_cell.value, formula_workbook, value_workbook)
+                if value is None:
+                    unresolved.add((row_index, column_index))
+            row_values.append(value)
+        rows.append(row_values)
+    return rows, unresolved
+
+
+def _resolve_simple_formula_reference(formula: str, formula_workbook, value_workbook):
+    match = re.fullmatch(r"=\s*(?:'([^']+)'|([^'!]+))!\$?([A-Z]+)\$?(\d+)\s*", formula.strip(), re.IGNORECASE)
+    if not match:
+        return None
+    sheet_name = match.group(1) or match.group(2)
+    coordinate = f"{match.group(3).upper()}{match.group(4)}"
+    if sheet_name not in value_workbook.sheetnames:
+        return None
+    cached_value = value_workbook[sheet_name][coordinate].value
+    if cached_value is not None:
+        return cached_value
+    raw_value = formula_workbook[sheet_name][coordinate].value
+    if isinstance(raw_value, str) and raw_value.startswith("="):
+        return _resolve_simple_formula_reference(raw_value, formula_workbook, value_workbook)
+    return raw_value
+
+
+def _raise_for_uncalculated_required_formulas(values, formula_sheet, unresolved) -> None:
+    headers = {}
+    for row_number, row in enumerate(values, start=1):
+        normalized_values = [str(value).strip().lower() if value is not None else "" for value in row]
+        if "component" in normalized_values or "component description" in normalized_values or "component name" in normalized_values:
+            headers = {value: index + 1 for index, value in enumerate(normalized_values) if value}
+            header_row = row_number
+            break
+    else:
+        return
+
+    required_columns = [
+        headers.get("component") or headers.get("component description") or headers.get("component name"),
+        headers.get("cost") or headers.get("current cost"),
+        headers.get("quantity"),
+        headers.get("useful life") or headers.get("ul"),
+        headers.get("remaining useful life") or headers.get("rul"),
+    ]
+    required_columns = [column for column in required_columns if column is not None]
+    for row_index in range(header_row + 1, formula_sheet.max_row + 1):
+        for column_index in required_columns:
+            if (row_index, column_index) in unresolved:
+                raise ValueError(
+                    "The Component List contains formulas that were not saved with calculated values. "
+                    "Direct references such as =OtherTab!A1 are supported. For other formulas, open the workbook "
+                    "in Excel or LibreOffice, let it recalculate, save it, and upload again."
+                )
+
+
 def load_component_upload(uploaded_file) -> pd.DataFrame:
     suffix = Path(uploaded_file.name).suffix.lower()
-    if suffix == ".csv":
+    if suffix in {".csv", ".xlscsv"}:
         frame = pd.read_csv(uploaded_file)
         if "component" in frame.columns:
             return prepare_components_input(frame)
         return components_from_template_frame(frame)
-    if suffix in {".xlsx", ".xlsm", ".xls"}:
+    if suffix in {".xlsx", ".xlsm"}:
+        return components_from_template_frame(_component_list_frame_from_workbook(uploaded_file))
+    if suffix == ".xls":
         return components_from_template_frame(pd.read_excel(uploaded_file, sheet_name="Component List", header=None))
-    raise ValueError("Upload a native component CSV or the Excel template downloaded from this page.")
+    raise ValueError("Upload a component schedule in CSV, XLSX, XLSM, XLSCSV, or XLS format.")
 
 
 @st.dialog("Upload")
 def render_component_import_dialog():
-    st.markdown("Import components using only the downloaded **THIS** template, or upload the native component CSV.")
+    st.markdown("Upload a component schedule using THIS TEMPLATE in CSV, XLSX, XLSM, or XLSCSV format.")
     template_col, upload_col = st.columns([1, 1.4])
     with template_col:
         st.download_button(
-            "THIS template",
+            "THIS TEMPLATE",
             data=component_template_bytes(),
             file_name="ridge_park_component_import_template.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            help='Download the Excel workbook with "Instructions" and "Component List" tabs.',
+            help='Download the Excel workbook. Keep the schedule tab named exactly "Component List"; additional tabs are allowed.',
             use_container_width=True,
         )
     with upload_col:
         uploaded_components = st.file_uploader(
-            "Upload CSV or completed template",
-            type=["csv", "xlsx", "xlsm", "xls"],
-            help="Upload a native component_list_v2.csv or the completed Excel template.",
+            "Upload component schedule",
+            type=["csv", "xlsx", "xlsm", "xlscsv", "xls"],
+            help='Upload CSV/XLSCSV or a workbook with a sheet named exactly "Component List". Extra workbook tabs are allowed.',
         )
 
     if uploaded_components is not None:
