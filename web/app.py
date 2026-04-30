@@ -905,7 +905,7 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
             rows.append(
                 f"""
                 <tr class="group">
-                    <td colspan="10">{escape(category)} <span style="margin-left:16px;background:#fff;border:1px solid #dfe7ec;padding:3px 9px;">+ Add component</span></td>
+                    <td colspan="10"><span class="rp-category-name">{escape(category)}</span><span class="rp-add-component">+ Add component</span></td>
                     <td class="rp-row-actions">✎ 🗑 ⬆</td>
                 </tr>
                 """
@@ -956,23 +956,36 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         }}
         .rp-components-table {{
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
             font-size: 12px;
             color: #65717a;
         }}
         .rp-components-table th {{
             background: #fff;
             border: 1px solid #e5e8eb;
+            border-left: 0;
             padding: 10px 8px;
             color: #5f6870;
             font-weight: 700;
             text-align: left;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }}
+        .rp-components-table th:first-child {{
+            border-left: 1px solid #e5e8eb;
         }}
         .rp-components-table td {{
             border: 1px solid #edf0f2;
+            border-left: 0;
+            border-top: 0;
             padding: 9px 8px;
             background: #fff;
             vertical-align: middle;
+        }}
+        .rp-components-table td:first-child {{
+            border-left: 1px solid #edf0f2;
         }}
         .rp-components-table tr.selected td {{
             background: #b7b7b7;
@@ -983,6 +996,22 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
             color: #42535f;
             font-weight: 700;
             padding: 8px;
+            position: sticky;
+            top: 38px;
+            z-index: 4;
+            border-top: 1px solid #e5e8eb;
+            box-shadow: 0 1px 0 rgba(31,49,64,.06);
+        }}
+        .rp-category-name {{
+            display: inline-block;
+            min-width: 180px;
+        }}
+        .rp-add-component {{
+            margin-left: 16px;
+            background: #fff;
+            border: 1px solid #dfe7ec;
+            padding: 3px 9px;
+            font-weight: 600;
         }}
         .rp-funded {{
             display: inline-block;
@@ -1002,7 +1031,7 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         <table class="rp-components-table">
             <thead>
                 <tr>
-                    <th style="width:12%;">Subcategory</th>
+                    <th style="width:12%;">Category/Subcategory</th>
                     <th style="width:20%;">Component</th>
                     <th style="width:9%;">Method</th>
                     <th style="width:8%;text-align:right;">Cost</th>
