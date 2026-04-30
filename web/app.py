@@ -1,9 +1,17 @@
 from pathlib import Path
+from io import BytesIO
 import os
 import json
+import sys
 
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
+
+APP_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = APP_ROOT.parent
+if str(APP_ROOT) not in sys.path:
+    sys.path.insert(0, str(APP_ROOT))
 
 from reserve_plots import build_all_plots
 from reserve_study_web_adapter import (
@@ -19,8 +27,6 @@ from reserve_study_web_adapter import (
 )
 
 
-APP_ROOT = Path(__file__).resolve().parent
-PROJECT_ROOT = APP_ROOT.parent
 DEFAULT_VARIANT = os.getenv("DEFAULT_VARIANT", "2026_joint_buget_maint")
 DEFAULT_SOURCE_DIR = PROJECT_ROOT / DEFAULT_VARIANT / "source_data"
 DEFAULT_ASSUMPTIONS_FILE = DEFAULT_SOURCE_DIR / "assumptions.csv"
@@ -134,6 +140,14 @@ def csv_bytes(df):
 
 def matrix_csv_bytes(df):
     return df.to_csv().encode("utf-8")
+
+
+def figure_png_bytes(figure):
+    buffer = BytesIO()
+    figure.savefig(buffer, format="png", dpi=160, bbox_inches="tight")
+    plt.close(figure)
+    buffer.seek(0)
+    return buffer
 
 
 def format_currency(value):
@@ -418,7 +432,7 @@ def render_outputs(results):
     with tabs[1]:
         for title, figure in build_all_plots(results):
             st.markdown(f"#### {title}")
-            st.pyplot(figure, use_container_width=True)
+            st.image(figure_png_bytes(figure), use_container_width=True)
 
     with tabs[2]:
         st.dataframe(reserve_projection_display, use_container_width=True, hide_index=True)
