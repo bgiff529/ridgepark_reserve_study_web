@@ -1,0 +1,14 @@
+.git
+__pycache__/
+.pytest_cache/
+*.pyc
+runs/
+.DS_Store
+.venv/
+venv/
+.conda-env/
+.VSCodeCounter/
+.ipynb_checkpoints/
+.mplconfig/
+.mplconfig-test/
+scraps/

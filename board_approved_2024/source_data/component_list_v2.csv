@@ -1,0 +1,147 @@
+category,subcategory,component,tracking,method,cost,cost_units,quantity,quantity_units,life_years,remaining_life,service_date,source_page
+Appliances,Bar Service,Clubhouse Bar Appliances,Logistical,Fixed,2000,Allow,1,Allow,10,3:06,7/1/18,75
+Appliances,Coin Operated,Dryer,Logistical,Fixed,800,Each,3,Each,12,2:06,7/1/15,105
+Appliances,Coin Operated,Washer,Logistical,Fixed,800,Each,3,Each,15,5:06,7/1/15,155
+Appliances,Staff Service,Clubhouse Staff Refrigerator,Logistical,Fixed,1200,Each,1,Each,15,5:06,7/1/15,97
+Asphalt,Crack Repair,Asphalt Crack Seal,Logistical,Fixed,25000,Allow,1,Allow,3,1:06,7/1/23,59
+Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3,$/SF,20000,SF,25,20:06,N/A,60
+Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3,$/SF,20000,SF,25,10:06,N/A,60
+Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3,$/SF,20000,SF,25,10:06,N/A,60
+Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3,$/SF,20000,SF,25,10:06,N/A,60
+Asphalt,Overlay,Asphalt Mill and Overlay,Logistical,One Time,3,$/SF,20000,SF,25,10:06,N/A,60
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,One Time,6,$/SF,20000,SF,30,0:06,N/A,61
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,One Time,6,$/SF,20000,SF,30,1:06,N/A,61
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,One Time,6,$/SF,20000,SF,30,2:06,N/A,61
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,One Time,6,$/SF,20000,SF,30,3:06,N/A,61
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Logistical,One Time,6,$/SF,20000,SF,30,4:06,N/A,61
+Asphalt,Slurry,Asphalt Slurry Seal,Logistical,Fixed,0.75,$/SF,100000,SF,10,6:06,7/1/21,63
+Asphalt,Top Coat,Asphalt Seal Coat,Logistical,Fixed,0.4,$/SF,100000,SF,3,1:06,7/1/23,62
+Balconies-Decks-Stairways,Railings,Stairway/Balcony Railing,Logistical,Fixed,7500,Allow,1,Allow,8,2:06,7/1/19,148
+Balconies-Decks-Stairways,Railings,Walkway Railing,Logistical,Fixed,3000,Allow,1,Allow,8,3:06,7/1/20,154
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500,Each,23,Each,20,0:06,7/1/05,64
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500,Each,23,Each,20,1:06,7/1/06,64
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500,Each,23,Each,20,2:06,7/1/07,64
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500,Each,23,Each,20,3:06,7/1/08,64
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500,Each,23,Each,20,4:06,7/1/09,64
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Logistical,Fixed,2500,Each,23,Each,20,5:06,7/1/10,64
+Balconies-Decks-Stairways,Structural,Metal Stairway Flashing/Stringers,Logistical,Fixed,15000,Allow,1,Allow,7,2:06,7/1/20,121
+Balconies-Decks-Stairways,Structural,Wood Balcony Walls,Logistical,Fixed,25000,Allow,1,Allow,5,2:06,7/1/22,156
+Concrete,Major Repairs,Concrete Sidewalks-Stairs-Patios/Grinding-Repairs,Logistical,Fixed,10000,Allow,1,Allow,3,0:06,7/1/22,102
+Concrete,Major Repairs,Curbs-Gutters,Logistical,Adjusted,5000,Allow,1,Allow,3,0:06,7/1/22,104
+Concrete,Pool,Pool Area Concrete Deck,Logistical,One Time,12,$/SF,1592,SF,25,18:06,N/A,128
+Doors-Windows,Entry Unit,Unit Front and Screen Doors,Logistical,Fixed,1000,Each,23,Each,25,5:06,7/1/05,153
+Doors-Windows,Entry Unit,Unit Front and Screen Doors,Logistical,Fixed,1000,Each,23,Each,25,6:06,7/1/06,153
+Doors-Windows,Entry Unit,Unit Front and Screen Doors,Logistical,Fixed,1000,Each,23,Each,25,7:06,7/1/07,153
+Doors-Windows,Entry Unit,Unit Front and Screen Doors,Logistical,Fixed,1000,Each,23,Each,25,8:06,7/1/08,153
+Doors-Windows,Entry Unit,Unit Front and Screen Doors,Logistical,Fixed,1000,Each,23,Each,25,9:06,7/1/09,153
+Doors-Windows,Entry Unit,Unit Front and Screen Doors,Logistical,Fixed,1000,Each,23,Each,25,10:06,7/1/10,153
+Doors-Windows,Raised Panel,Clubhouse Bathroom/Interior Doors,Logistical,Fixed,5000,Allow,1,Allow,10,7:06,7/1/22,79
+Doors-Windows,Renovation,Clubhouse/Fitness Windows,Logistical,Fixed,4500,Allow,1,Allow,7,2:06,7/1/20,100
+Doors-Windows,Sliders,Clubhouse Sliding Glass Doors,Logistical,Fixed,4000,Allow,1,Allow,10,5:06,7/1/20,95
+Doors-Windows,Window Treatment,Clubhouse Blinds,Logistical,Fixed,2000,Allow,1,Allow,7,4:06,7/1/22,80
+Doors-Windows,Wood and Metal,Clubhouse Glass Doors,Logistical,Fixed,3500,Allow,1,Allow,10,3:06,7/1/18,87
+Equipment,Audio Visual,"Clubhouse 50"" TV",Logistical,Fixed,450,Each,1,Each,10,3:06,7/1/18,74
+Equipment,Fitness Machines,Fitness Center Equipment,Logistical,Fixed,7500,Allow,1,Allow,7,2:06,7/1/20,110
+Equipment,HVAC,Sauna Heater,Logistical,Fixed,250,Each,1,Each,15,2:06,7/1/12,144
+Equipment,Mail,Mail Boxes,Logistical,Fixed,10000,Job,1,Job,25,10:06,7/1/10,120
+Equipment,Pool,Pool Chemical Controller-Rola Chem,Logistical,Fixed,2500,Job,1,Job,15,10:06,7/1/20,134
+Equipment,Pool,Pool Cover,Logistical,Fixed,4,$/SF,720,SF,12,2:06,7/1/15,136
+Equipment,Pool,Pool Filter Hayward,Logistical,Fixed,1300,Each,1,Each,15,5:06,7/1/15,137
+Equipment,Pool,Pool Heater Raypak,Logistical,Fixed,3000,Each,1,Each,15,2:06,7/1/12,138
+Equipment,Pool,Pool Misc Pipes Valves,Logistical,Fixed,1500,Allow,1,Allow,7,4:06,7/1/22,139
+Equipment,Pool,Pool Pump Hayward,Logistical,Fixed,750,Each,1,Each,15,6:06,7/1/16,140
+Equipment,Pool,Pool Rails-Ladder,Logistical,Fixed,250,Each,3,Each,15,5:06,7/1/15,141
+Equipment,Pool,Pool Room Compressor,Logistical,Fixed,500,Each,1,Each,15,5:06,7/1/15,143
+Exterior Furniture,Patio,Pool Chairs-Tables-Chaise Lounge,Logistical,Fixed,1750,Allow,1,Allow,4,1:06,7/1/22,133
+Exterior Surfaces,Pool,Pool Coping,Logistical,Fixed,35,$/LF,120,LF,20,10:06,7/1/15,135
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,5:06,7/1/00,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,6:06,7/1/01,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,7:06,7/1/02,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,8:06,7/1/03,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,9:06,7/1/04,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,10:06,7/1/05,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,11:06,7/1/06,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,12:06,7/1/07,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,13:06,7/1/08,157
+Exterior Surfaces,Renovation,Wood Siding,Logistical,Fixed,12,$/SF,12500,SF,30,14:06,7/1/09,157
+Exterior Surfaces,Roofing,Fascia-Flashing-Soffits,Logistical,Fixed,10000,Allow,1,Allow,8,1:06,7/1/18,108
+Exterior Surfaces,Siding,Clubhouse Siding,Logistical,Fixed,12,$/SF,7500,SF,30,5:06,7/1/00,94
+Exterior Surfaces,Siding,Corrugated Balcony Walls,Logistical,Fixed,5000,Allow,1,Allow,10,7:06,7/1/22,103
+Exterior Surfaces,Siding,Stucco Siding Repair,Logistical,Fixed,10000,Allow,1,Allow,7,4:06,7/1/22,149
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500,Each,23,Each,20,0:06,7/1/05,71
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500,Each,23,Each,20,1:06,7/1/06,71
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500,Each,23,Each,20,2:06,7/1/07,71
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500,Each,23,Each,20,3:06,7/1/08,71
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500,Each,23,Each,20,4:06,7/1/09,71
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Logistical,Fixed,2500,Each,23,Each,20,5:06,7/1/10,71
+Fences-Walls-Gates,Chain Link,Chain Link Fence,Logistical,Fixed,2500,Allow,1,Allow,10,3:06,7/1/18,70
+Fences-Walls-Gates,Concrete,Concrete Brick Grouted Wall,Logistical,Fixed,2500,Allow,1,Allow,3,0:06,7/1/22,101
+Fences-Walls-Gates,Concrete,Pool Area Wall Repair,Logistical,Fixed,2500,Allow,1,Allow,5,0:06,7/1/20,132
+Fences-Walls-Gates,Concrete,Stacked Concrete Block Wall,Logistical,Fixed,1500,Allow,1,Allow,5,2:06,7/1/22,147
+Fences-Walls-Gates,Metal,Pool Area Metal Rail Fence-Gate,Logistical,Fixed,75,$/LF,200,LF,25,10:06,7/1/10,129
+Fences-Walls-Gates,Renovation,Wooden Perimeter Fence,Logistical,Fixed,5000,Allow,1,Allow,5,3:06,7/1/23,158
+Fire Safety,Equipment,Chimney Flues-Caps-Spark Arrestors,Logistical,Fixed,5000,Allow,1,Allow,5,3:06,7/1/23,73
+Fire Safety,Extinguishers,Fire Extinguishers,Logistical,Fixed,2000,Allow,1,Allow,5,0:06,7/1/20,109
+Fire Safety,Interior Cleaning,Chimney Cleaning,Logistical,Fixed,200,Each,138,Each,3,0:06,7/1/22,72
+Fire Safety,Interior Cleaning,Dryer Vent Cleaning,Logistical,Fixed,200,Each,138,Each,3,0:06,7/1/22,106
+Flooring,Carpet,Clubhouse Carpet,Logistical,Fixed,9,$/SF,4000,SF,12,9:06,7/1/22,81
+Flooring,Tile,Clubhouse Tile Floor,Logistical,Fixed,16,$/SF,1000,SF,20,5:06,7/1/10,99
+Flooring,Tile,Pool Area Tile Exterior,Logistical,Fixed,16,$/SF,400,SF,20,5:06,7/1/10,131
+HVAC,Equipment,Clubhouse Furnace,Logistical,Fixed,1200,Each,3,Each,15,5:06,7/1/15,86
+HVAC,Gas,Clubhouse Fireplace,Logistical,Fixed,1000,Job,1,Job,20,5:06,7/1/10,84
+Interior Furniture,Bar Service,Clubhouse Barstools,Logistical,Fixed,350,Each,3,Each,15,5:06,7/1/15,77
+Interior Furniture,Metal Folding,Clubhouse Folding Tables-Chairs,Logistical,Fixed,1500,Allow,1,Allow,5,2:06,7/1/22,85
+Interior Furniture,Upholstered,Clubhouse Sofa-Chairs,Logistical,Fixed,5000,Allow,1,Allow,12,2:06,7/1/15,96
+Interior Furniture,Wood Upholstered,Clubhouse Table and Chairs,Logistical,Fixed,1600,Each,3,Each,20,5:06,7/1/10,98
+Landscape,Concrete,Landscape Border Blocks,Logistical,Fixed,1000,Allow,1,Allow,3,0:06,7/1/22,115
+Landscape,Fire Safety,Tree Removal-Major Trimming,Logistical,Fixed,8000,Allow,1,Allow,1,0:06,7/1/24,151
+Landscape,Irrigation,Irrigation Control Valves-Sprinkers-Timers,Logistical,Fixed,2500,Allow,1,Allow,3,0:06,7/1/22,114
+Landscape,Renovation,Landscape Replenishment,Logistical,Fixed,2500,Allow,1,Allow,3,0:06,7/1/22,116
+Landscape,Renovation,Landscape Rock,Logistical,Fixed,2500,Allow,1,Allow,8,5:06,7/1/22,117
+Lighting,Carport,Carport Flood Lights,Logistical,Fixed,1500,Allow,1,Allow,4,0:06,7/1/21,66
+Lighting,Emergency,Clubhouse Emergency Lighting,Logistical,Fixed,1500,Allow,1,Allow,5,0:06,7/1/20,83
+Lighting,Exterior,Exterior Globe Wall Lighting,Logistical,Fixed,2000,Allow,1,Allow,12,5:06,7/1/18,107
+Lighting,Exterior,Pool Area Cage Lights Lights,Logistical,Fixed,175,Each,6,Each,20,5:06,7/1/10,127
+Lighting,Flourescent,Carport Flourescent Lights,Logistical,Fixed,2000,Allow,1,Allow,7,3:06,7/1/21,67
+Lighting,HVAC,Clubhouse Ceiling Fans,Logistical,Fixed,1500,Allow,1,Allow,10,0:06,7/1/15,82
+Lighting,Interior,Clubhouse Interior Lighting,Logistical,Fixed,3500,Allow,1,Allow,7,2:06,7/1/20,89
+Lighting,Pole Lights,Pole Globe Lights,Logistical,Fixed,5000,Allow,1,Allow,7,2:06,7/1/20,126
+Lighting,Sconces,Lighting Exterior Sconces,Logistical,Fixed,3000,Allow,1,Allow,8,3:06,7/1/20,119
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Logistical,Fixed,4,$/SF,25000,SF,10,0:06,7/1/15,124
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Logistical,Fixed,4,$/SF,25000,SF,10,1:06,7/1/16,124
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Logistical,Fixed,4,$/SF,25000,SF,10,2:06,7/1/17,124
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Logistical,Fixed,4,$/SF,25000,SF,10,3:06,7/1/18,124
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Logistical,Fixed,4,$/SF,25000,SF,10,4:06,7/1/19,124
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Logistical,Fixed,4,$/SF,25000,SF,10,5:06,7/1/20,124
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Logistical,Fixed,4,$/SF,25000,SF,10,6:06,7/1/21,124
+Painting,Exterior Metal,Pool Area Metal Rail Fence-Gate-Painting,Logistical,Fixed,15,$/LF,200,LF,10,0:06,7/1/15,130
+Painting,Interior,Clubhouse Interior Painting,Logistical,Fixed,1.75,$/SF,20000,SF,12,1:06,7/1/14,90
+Painting,Parking,Parking Striping-Curb Painting,Logistical,Fixed,5000,Allow,1,Allow,7,3:06,7/1/21,125
+Plumbing,Equipment,Clubhouse Hot Water Heaters-Expansion,Logistical,Fixed,1200,Each,2,Each,12,9:06,7/1/22,88
+Plumbing,Sanitation,Sewer Lateral Lines-Cleanouts,Logistical,Fixed,5000,Allow,1,Allow,5,1:06,7/1/21,146
+Renovation,Bar Service,Clubhouse Bar Remodel,Logistical,Fixed,5000,Job,1,Job,20,5:06,7/1/10,76
+Renovation,Bathrooms,Clubhouse Bathroom Remodel,Logistical,Fixed,6000,Each,2,Each,20,5:06,7/1/10,78
+Renovation,Kitchenette,Fitness Room Kitchenette Remodel,Logistical,Fixed,3500,Allow,1,Allow,20,5:06,7/1/10,111
+Renovation,Laundry,Laundry Room Remodel,Logistical,Fixed,3500,Allow,1,Allow,20,5:06,7/1/10,118
+Renovation,Plaster,Pool Resurface,Logistical,Fixed,12,$/SF,1200,SF,15,13:06,7/1/23,142
+Renovation,Shop,Clubhouse Maintenance Shop Remodel,Logistical,Fixed,2500,Allow,1,Allow,10,3:06,7/1/18,91
+Renovation,Shower Room,Clubhouse Pool Room-Shower Remodel,Logistical,Fixed,5000,Allow,1,Allow,20,5:06,7/1/10,92
+Renovation,Wood,Sauna Remodel,Logistical,Fixed,2500,Job,1,Job,20,5:06,7/1/10,145
+Roofing,Drainage,Gutters-Downspouts,Logistical,Fixed,5000,Allow,1,Allow,5,0:06,7/1/20,113
+Roofing,Elastomeric,Garage Flat Roof,Logistical,Fixed,6000,SF,13,SF,25,10:06,7/1/10,112
+Roofing,Metal,Carport Roofs,Logistical,Fixed,12,$/SF,4280,SF,25,5:06,7/1/05,68
+Roofing,Metal,Carport Roofs,Logistical,Fixed,12,$/SF,4280,SF,25,6:06,7/1/06,68
+Roofing,Metal,Carport Roofs,Logistical,Fixed,12,$/SF,4280,SF,25,7:06,7/1/07,68
+Roofing,Metal,Carport Roofs,Logistical,Fixed,12,$/SF,4280,SF,25,8:06,7/1/08,68
+Roofing,Metal,Carport Roofs,Logistical,Fixed,12,$/SF,4280,SF,25,9:06,7/1/09,68
+Roofing,Shingle,Clubhouse Roof,Logistical,Fixed,12,$/SF,4500,SF,25,2:06,7/1/02,93
+Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12,$/SF,20000,SF,30,0:06,7/1/95,152
+Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12,$/SF,20000,SF,30,1:06,7/1/96,152
+Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12,$/SF,20000,SF,30,2:06,7/1/97,152
+Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12,$/SF,20000,SF,30,3:06,7/1/98,152
+Roofing,Shingle,Unit Building Shingle Roofs,Logistical,Fixed,12,$/SF,20000,SF,30,4:06,7/1/99,152
+Signage,Misc,Misc and Parking Signs,Logistical,Fixed,1000,Allow,1,Allow,5,3:06,7/1/23,122
+Signage,Monument,Monument Sign/Wall,Logistical,Fixed,2000,Allow,1,Allow,15,5:06,7/1/15,123
+Signage,Numbers,Building Signs/Numbers,Logistical,Fixed,2000,Allow,1,Allow,5,0:06,7/1/20,65
+Structural,Metal,Carport Support Posts-Beams,Logistical,Fixed,5000,Allow,1,Allow,10,2:06,7/1/17,69
+Structural,Renovation,Trash Enclosures,Logistical,Fixed,7500,Allow,1,Allow,5,0:06,7/1/20,150

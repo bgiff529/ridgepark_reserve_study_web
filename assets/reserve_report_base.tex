@@ -1,0 +1,217 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.8in,top=0.85in,bottom=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext,newtxmath,microtype,graphicx,booktabs,longtable,array,tabularx,multirow,xcolor,fancyhdr,lastpage,pdflscape,caption,tocloft,hyperref,colortbl}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue,pdftitle={{REPORT_TITLE}}}
+\definecolor{linegray}{HTML}{C8CDD2}
+\definecolor{sectionblue}{HTML}{3A5F7D}
+\definecolor{softgray}{HTML}{F6F7F8}
+\setlength{\headheight}{16pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize {{ASSOC_NAME}}}
+\fancyhead[R]{\footnotesize {{ANALYSIS_DATE_STR}}}
+\fancyfoot[L]{\footnotesize Reserve Study Report}
+\fancyfoot[R]{\footnotesize Page \thepage\ of \pageref{LastPage}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\renewcommand{\arraystretch}{1.18}
+
+\newcommand{\sectionrule}{\par\vspace{0.2em}{\color{linegray}\rule{\linewidth}{0.6pt}}\par\vspace{0.6em}}
+\newcommand{\reportsection}[1]{%
+  \par\vspace{0.2em}%
+  \addcontentsline{toc}{section}{#1}%
+  {{\Large\bfseries\color{sectionblue} #1\par}}%
+  \sectionrule
+}
+\newcommand{\subnote}[1]{\vspace{0.3em}\colorbox{softgray}{\parbox{0.97\linewidth}{\small #1}}\vspace{0.4em}}
+
+\begin{document}
+
+\thispagestyle{empty}
+\begin{flushleft}
+{\small Board of Directors}\\
+{\small {{ASSOC_NAME}}}\\
+{\small {{CITY_STATE}}}
+\end{flushleft}
+
+\vspace{0.8em}
+{{COVER_LETTER_BODY}}
+
+Sincerely,\\[0.7em]
+{{SIGNER_NAME}}\\
+{{SIGNER_TITLE}}
+\newpage
+
+\thispagestyle{empty}
+\begin{center}
+\vspace*{1.2cm}
+{\LARGE\bfseries {{ASSOC_NAME}}}\\[2.0cm]
+{\Huge\bfseries {{REPORT_TITLE}}}\\[0.45cm]
+{\Large\bfseries {{REPORT_TYPE}}}\\[0.45cm]
+{\LARGE\bfseries {{REPORT_SUBTITLE}}}\\[1.7cm]
+{\large\bfseries For 30-Year Projection Period Beginning {{ANALYSIS_DATE_STR}}}\\[1.0cm]
+\IfFileExists{{{COVER_IMAGE_FILENAME}}}{\includegraphics[width=0.68\linewidth]{{{COVER_IMAGE_FILENAME}}}}{\vspace{3cm}}
+\end{center}
+\newpage
+
+\tableofcontents
+\newpage
+
+\reportsection{Preparer's Report on Reserve Study}
+{{PREPARER_BODY}}
+
+\subnote{This document was not prepared by a credentialed professional. It is best treated as a transparent analytical report, not as a substitute for a professional reserve study.}
+
+\newpage
+\reportsection{Statement of Position}
+\begin{tabularx}{\linewidth}{>{\bfseries}l X}
+Projection period: & {{ANALYSIS_YEAR}} to {{PROJECTION_END_YEAR}} \\
+Type of project: & {{PROJECT_TYPE}} \\
+Number of units: & {{NUM_UNITS}} \\
+Location: & {{CITY_STATE}} \\
+Project construction date: & {{CONSTRUCTION_DATE}} \\
+Analysis date: & {{ANALYSIS_DATE_STR}} \\
+Report prepared by: & {{PREPARER}} \\
+\end{tabularx}
+
+\vspace{0.8em}
+\begin{tabularx}{\linewidth}{X r}
+\toprule
+Metric & Value \\
+\midrule
+{{STATEMENT_TABLE}}
+\bottomrule
+\end{tabularx}
+
+\subnote{First-year reserve contribution: {{FIRST_YEAR_CONTRIBUTION}}. First-year ending balance: {{FIRST_YEAR_END_BALANCE}}. Ending balance in the final projection year ({{FINAL_YEAR}}): {{FINAL_YEAR_END_BALANCE}}.}
+
+\newpage
+\reportsection{Summary of Major Components}
+{\small Analysis Date - {{ANALYSIS_DATE_STR}} \quad Inflation: {{INFLATION_PCT}} \quad Investment: {{INVESTMENT_PCT}} \quad Contribution Factor: {{CONTRIBUTION_FACTOR}}}
+
+\vspace{0.6em}
+\begin{tabularx}{\linewidth}{X >{\centering\arraybackslash}p{1.3cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{2.3cm} >{\raggedleft\arraybackslash}p{2.7cm}}
+\toprule
+Category & Useful Lives & Replacement Years & Remaining Years & Future Cost \\
+\midrule
+{{SUMMARY_TABLE}}
+\bottomrule
+\end{tabularx}
+
+\newpage
+\reportsection{Percent Funded - Annual - Ending Balance}
+\begin{longtable}{>{\centering\arraybackslash}p{1.4cm} >{\raggedleft\arraybackslash}p{2.6cm} >{\raggedleft\arraybackslash}p{2.7cm} >{\raggedleft\arraybackslash}p{2.0cm}}
+\toprule
+Year & Ending Balance & Funded Balance & Percent Funded \\
+\midrule
+\endfirsthead
+\toprule
+Year & Ending Balance & Funded Balance & Percent Funded \\
+\midrule
+\endhead
+{{PERCENT_FUNDED_TABLE}}
+\bottomrule
+\end{longtable}
+
+\newpage
+\reportsection{Cash Flow - Annual}
+\begin{longtable}{>{\centering\arraybackslash}p{1.1cm} >{\raggedleft\arraybackslash}p{2.0cm} >{\raggedleft\arraybackslash}p{1.9cm} >{\raggedleft\arraybackslash}p{2.1cm} >{\raggedleft\arraybackslash}p{1.9cm} >{\raggedleft\arraybackslash}p{1.7cm} >{\raggedleft\arraybackslash}p{2.0cm}}
+\toprule
+Year & Begin & Contribution & Special Assess. & Expenditures & Interest & Ending \\
+\midrule
+\endfirsthead
+\toprule
+Year & Begin & Contribution & Special Assess. & Expenditures & Interest & Ending \\
+\midrule
+\endhead
+{{CASHFLOW_TABLE}}
+\bottomrule
+\end{longtable}
+
+\newpage
+\reportsection{Disclosures}
+\begin{itemize}
+\item This report was generated from current component inventory and condition, projected expenditures, annual contribution schedules, and reserve cash-flow projections.
+\item Analysis date: {{ANALYSIS_DATE_STR}}. Projection horizon: 30 years.
+\item Inflation assumption used in the model: {{INFLATION_PCT}}.
+\item Investment return assumption used in the model: {{INVESTMENT_PCT}}.
+\item Beginning reserve balance used in the projection: {{BEGIN_BALANCE}}.
+\item While component replacement timing and cost estimates are best guesses, actual field conditions may cause different timing or scope.
+\item This document is formatted to resemble a conventional reserve study using custom Python-based software designed and written by Brendan J. Gifford rather than from proprietary reserve-study software.
+\item Readers should review contribution levels, projected expenditures, and percent-funded results together. No single table should be interpreted in isolation.
+\end{itemize}
+
+\newpage
+\begin{landscape}
+\reportsection{Expenditures Matrix: Years 1--10}
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\begin{tabular}{p{4.2cm}*{10}{r}}
+\toprule
+{{MATRIX_1_10}}
+\bottomrule
+\end{tabular}
+\end{landscape}
+
+\newpage
+\begin{landscape}
+\reportsection{Expenditures Matrix: Years 11--20}
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\begin{tabular}{p{4.2cm}*{10}{r}}
+\toprule
+{{MATRIX_11_20}}
+\bottomrule
+\end{tabular}
+\end{landscape}
+
+\newpage
+\begin{landscape}
+\reportsection{Expenditures Matrix: Years 21--30}
+\scriptsize
+\setlength{\tabcolsep}{4.0pt}
+\begin{tabular}{p{4.2cm}*{10}{r}}
+\toprule
+{{MATRIX_21_30}}
+\bottomrule
+\end{tabular}
+\end{landscape}
+
+\newpage
+\reportsection{Component List - Summary}
+\scriptsize
+\begin{longtable}{p{4.2cm} p{1.6cm} r r r c c r}
+\toprule
+\textbf{Category} & \textbf{Replace} & \textbf{Basis Cost} & \textbf{Quantity} & \textbf{Current Cost} & \textbf{Est Life} & \textbf{Rem Life} & \textbf{Future Cost} \\
+\textbf{Component} & \textbf{Date} &  &  &  &  &  &  \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Category} & \textbf{Replace} & \textbf{Basis Cost} & \textbf{Quantity} & \textbf{Current Cost} & \textbf{Est Life} & \textbf{Rem Life} & \textbf{Future Cost} \\
+\textbf{Component} & \textbf{Date} &  &  &  &  &  &  \\
+\midrule
+\endhead
+{{COMPONENT_SUMMARY_LONGTABLE}}
+\bottomrule
+\end{longtable}
+
+\newpage
+\reportsection{Upcoming Major Components}
+\begin{longtable}{>{\centering\arraybackslash}p{2.0cm} p{2.6cm} p{7.0cm} >{\raggedleft\arraybackslash}p{2.3cm}}
+\toprule
+Date & Category & Component & Future Cost \\
+\midrule
+\endfirsthead
+\toprule
+Date & Category & Component & Future Cost \\
+\midrule
+\endhead
+{{UPCOMING_TABLE}}
+\bottomrule
+\end{longtable}
+
+\subnote{Largest summarized category by future cost: {{MAX_CATEGORY}} at {{MAX_CATEGORY_COST}}. Lowest year-end reserve balance in the projection occurs in {{MIN_BALANCE_YEAR}}, at {{MIN_BALANCE_VALUE}}. Highest projected percent funded occurs in {{MAX_FUNDED_YEAR}}, at {{MAX_FUNDED_VALUE}}.}
+
+\end{document}
