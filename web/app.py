@@ -244,7 +244,7 @@ APP_CSS = """
         background: #fff;
         vertical-align: middle;
     }
-    .rp-components-table tr.selected td {
+    .rp-components-table tbody tr:not(.group):hover td {
         background: #b7b7b7;
         color: #3d3d3d;
     }
@@ -897,8 +897,7 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
 
     rows = []
     current_category = None
-    selected_position = min(8, max(len(frame) - 1, 0))
-    for display_index, (_, row) in enumerate(frame.head(80).iterrows(), start=1):
+    for _, row in frame.head(80).iterrows():
         category = str(row.get("category", "") or "Uncategorized")
         if category != current_category:
             current_category = category
@@ -911,11 +910,10 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
                 """
             )
 
-        selected_class = "selected" if display_index - 1 == selected_position else ""
         cost = format_currency(row["cost"])
         rows.append(
             f"""
-            <tr class="{selected_class}">
+            <tr>
                 <td>{escape(str(row["subcategory"]))}</td>
                 <td>{escape(str(row["component"]))}</td>
                 <td>{escape(str(row["method"]))}</td>
@@ -987,7 +985,7 @@ def component_table_html(components_frame: pd.DataFrame, chapter: str) -> str:
         .rp-components-table td:first-child {{
             border-left: 1px solid #edf0f2;
         }}
-        .rp-components-table tr.selected td {{
+        .rp-components-table tbody tr:not(.group):hover td {{
             background: #b7b7b7;
             color: #3d3d3d;
         }}
