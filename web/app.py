@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import tempfile
 import re
+from urllib.parse import quote
 
 import pandas as pd
 import streamlit as st
@@ -42,7 +43,7 @@ DEFAULT_COMPONENTS_FILE = DEFAULT_SOURCE_DIR / "component_list_v2.csv"
 DEFAULT_ASSESSMENT_FILE = DEFAULT_SOURCE_DIR / "assessment_contributions.csv"
 UI_TABS = [
     "Components",
-    "Control Panel",
+    "Assumptions",
     "Recommendations",
     "Funding Plan Override",
     "Tables and Charts",
@@ -177,10 +178,15 @@ APP_CSS = """
         padding: 13px 4px 12px 4px;
         border-bottom: 2px solid transparent;
         white-space: nowrap;
+        text-decoration: none;
     }
     .rp-tab.active {
         color: #3d7f98;
         border-bottom-color: #9ec3d2;
+    }
+    .rp-tab:hover {
+        color: #3d7f98;
+        text-decoration: none;
     }
     .rp-panel {
         max-width: 1110px;
@@ -419,7 +425,7 @@ def inject_styles():
 
 def render_project_shell(active_tab: str = "Components"):
     tabs = "".join(
-        f'<div class="rp-tab {"active" if tab == active_tab else ""}">{tab}</div>'
+        f'<a class="rp-tab {"active" if tab == active_tab else ""}" href="?tab={quote(tab)}">{tab}</a>'
         for tab in UI_TABS
     )
     st.markdown(
@@ -433,7 +439,6 @@ def render_project_shell(active_tab: str = "Components"):
                 <div class="rp-avatar">●</div>
                 <div class="rp-project-title">Ridge Park Reserve Study<span>Project workspace</span></div>
             </div>
-            <div class="rp-project-subtabs"><span>Documents</span><span>uPlanIt</span></div>
         </div>
         <div class="rp-tabs">{tabs}</div>
         """,
@@ -453,6 +458,17 @@ def assumptions_frame_from_state():
             ]
         )
     )
+
+
+def update_assumptions_from_frame(frame: pd.DataFrame) -> None:
+    assumptions = load_assumptions(coerce_assumptions_frame(frame))
+    st.session_state["analysis_date"] = pd.Timestamp(assumptions["analysis_date"]).date()
+    st.session_state["inflation"] = float(assumptions["inflation"])
+    st.session_state["investment"] = float(assumptions["investment"])
+    st.session_state["contribution_factor"] = float(assumptions.get("contribution_factor", 0))
+    st.session_state["begin_balance"] = float(assumptions["begin_balance"])
+    st.session_state["results"] = None
+    st.session_state["last_run_signature"] = None
 
 
 def csv_bytes(df):
@@ -1018,6 +1034,65 @@ def render_component_workspace() -> bool:
     return run_requested
 
 
+def render_assumptions_workspace() -> bool:
+    render_project_shell("Assumptions")
+
+    st.markdown('<div class="rp-panel">', unsafe_allow_html=True)
+    assumptions_frame = st.data_editor(
+        assumptions_frame_from_state(),
+        num_rows="fixed",
+        use_container_width=True,
+        height=240,
+        hide_index=True,
+        column_config={
+            "Parameter": st.column_config.TextColumn("Parameter", disabled=True),
+            "Value": st.column_config.TextColumn("Value"),
+        },
+        key="assumptions_editor",
+    )
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    st.markdown('<div class="rp-editor-shell">', unsafe_allow_html=True)
+    st.markdown('<div class="rp-native-editor"><h4>Assumption Actions</h4></div>', unsafe_allow_html=True)
+    download_col, reset_col, apply_col, run_col = st.columns([1, 1, 1, 1])
+    with download_col:
+        st.download_button(
+            "Download assumptions CSV",
+            data=csv_bytes(assumptions_frame_from_state()),
+            file_name="assumptions.csv",
+            mime="text/csv",
+            use_container_width=True,
+        )
+    with reset_col:
+        if st.button("Reset assumptions", use_container_width=True):
+            defaults = load_default_inputs()
+            assumptions = defaults["assumptions"]
+            st.session_state["analysis_date"] = pd.Timestamp(assumptions["analysis_date"]).date()
+            st.session_state["inflation"] = float(assumptions["inflation"])
+            st.session_state["investment"] = float(assumptions["investment"])
+            st.session_state["contribution_factor"] = float(assumptions.get("contribution_factor", 0))
+            st.session_state["begin_balance"] = float(assumptions["begin_balance"])
+            st.session_state["results"] = None
+            st.session_state["last_run_signature"] = None
+            st.rerun()
+    with apply_col:
+        apply_requested = st.button("Apply Assumptions", use_container_width=True)
+    with run_col:
+        run_requested = st.button("Run Study", type="primary", use_container_width=True)
+
+    if apply_requested or run_requested:
+        try:
+            update_assumptions_from_frame(pd.DataFrame(assumptions_frame))
+            if apply_requested and not run_requested:
+                st.success("Assumptions saved in this browser session. Click Run Study to refresh results.")
+        except Exception as exc:
+            st.error(f"Could not apply assumptions: {exc}")
+            run_requested = False
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    return run_requested
+
+
 def render_inputs():
     st.title("Ridge Park Reserve Study")
     st.caption("Edit assumptions, maintain the component schedule, update annual reserve contributions, and run the study.")
@@ -1264,7 +1339,15 @@ def main():
     seed_session_state()
     require_password()
 
-    run_requested = render_component_workspace()
+    active_tab = st.query_params.get("tab", "Components")
+    if active_tab not in UI_TABS:
+        active_tab = "Components"
+
+    if active_tab == "Assumptions":
+        run_requested = render_assumptions_workspace()
+    else:
+        run_requested = render_component_workspace()
+
     input_signature = current_input_signature()
 
     if run_requested:
