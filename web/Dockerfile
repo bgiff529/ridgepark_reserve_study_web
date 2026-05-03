@@ -10,7 +10,5 @@ COPY . .
 WORKDIR /app/web
 
 ENV PORT=8080
-ENV STREAMLIT_SERVER_HEADLESS=true
-ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
-CMD sh -c "streamlit run app.py --server.address=0.0.0.0 --server.port=${PORT}"
+CMD sh -c "shiny run --host 0.0.0.0 --port ${PORT} app.py"

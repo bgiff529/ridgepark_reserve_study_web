@@ -1,6 +1,6 @@
 # Reserve Study Web
 
-This folder contains a minimal Streamlit web app for running the Ridge Park reserve study from a browser.
+This folder contains a Shiny for Python web app for running the Ridge Park reserve study from a browser.
 
 The app is intended to live inside the main reserve-study repository. It imports the shared
 `reserve_study/` package from the repository root, so model changes and web changes are committed
@@ -24,21 +24,21 @@ The current default inputs are loaded from:
 
 1. From the repository root, create a virtual environment and install dependencies.
 2. Set a shared password.
-3. Start Streamlit.
+3. Start Shiny.
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r web/requirements.txt
 export APP_PASSWORD='choose-a-strong-shared-password'
-streamlit run web/app.py
+shiny run --host 127.0.0.1 --port 8505 web/app.py
 ```
 
 For local-only testing without a password gate:
 
 ```bash
 export ALLOW_NO_PASSWORD=true
-streamlit run web/app.py
+shiny run --host 127.0.0.1 --port 8505 web/app.py
 ```
 
 ## Render Deployment
@@ -91,7 +91,7 @@ After deployment:
 
 ## Main Files
 
-- `app.py`: Streamlit user interface and password gate
+- `app.py`: Shiny user interface and password gate
 - `reserve_study_web_adapter.py`: compatibility layer between the UI tables and the object-oriented model
 - `reserve_plots.py`: matplotlib plots shown in the app's `Plots` tab
 - `requirements.txt`: Python dependencies, including the scientific stack used by the model
