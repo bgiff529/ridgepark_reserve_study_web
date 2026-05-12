@@ -61,9 +61,10 @@ class IntegrationTests(unittest.TestCase):
         results = study.run(projection_years=30)
         plot_paths = results.build_plots()
 
-        self.assertGreaterEqual(len(plot_paths), 4)
+        self.assertGreaterEqual(len(plot_paths), 10)
         for plot_path in plot_paths:
             self.assertTrue(plot_path.exists())
+            self.assertEqual(plot_path.suffix, ".pdf")
 
 
 if __name__ == "__main__":
