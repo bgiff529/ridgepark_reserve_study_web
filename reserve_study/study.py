@@ -183,7 +183,7 @@ class ProjectionEngine:
 
         current_balance = float(assumptions.begin_balance if starting_balance is None else starting_balance)
         end_year = start_year + projection_years - 1
-        contribution_map, special_map = collection_schedule.annual_maps()
+        contribution_map, special_map, additional_income_map = collection_schedule.annual_maps()
         monthly_exp_map = expenditure_schedule.monthly_amounts()
 
         rows: list[ReserveProjectionYear] = []
@@ -191,12 +191,15 @@ class ProjectionEngine:
             begin_balance = current_balance
             annual_contribution = float(contribution_map.get(year, 0.0))
             annual_special = float(special_map.get(year, 0.0))
+            annual_additional_income = float(additional_income_map.get(year, 0.0))
             monthly_contribution = annual_contribution / 12.0
+            monthly_additional_income = annual_additional_income / 12.0
             year_expenditures = 0.0
             year_interest = 0.0
 
             for month in range(1, 13):
                 current_balance += monthly_contribution
+                current_balance += monthly_additional_income
 
                 interest = current_balance * monthly_rate
                 current_balance += interest
@@ -216,6 +219,7 @@ class ProjectionEngine:
                     begin_balance=round(begin_balance, 2),
                     contribution=round(annual_contribution, 2),
                     special_assessment=round(annual_special, 2),
+                    additional_income=round(annual_additional_income, 2),
                     expenditures=round(year_expenditures, 2),
                     interest=round(year_interest, 2),
                     end_balance=round(current_balance, 2),
@@ -349,7 +353,8 @@ class ReserveStudy:
         first_year_collection = collection_schedule.annual_for_year(analysis_year)
         annual_contribution = float(first_year_collection.contribution)
         special_assessment = float(first_year_collection.special_assessment)
-        projected_reserve_contribution = annual_contribution + special_assessment
+        additional_income = float(first_year_collection.additional_income)
+        projected_reserve_contribution = annual_contribution + special_assessment + additional_income
         average_annual_per_unit = annual_contribution / units if units else np.nan
         monthly_contribution = annual_contribution / 12.0
         average_monthly_per_unit = monthly_contribution / units if units else np.nan

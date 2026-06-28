@@ -17,6 +17,7 @@ COMPONENT_INPUT_COLUMNS = [
     "useful_life",
     "remaining_useful_life",
     "notes",
+    "B6_category",
 ]
 
 TEXT_COMPONENT_COLUMNS = {
@@ -28,6 +29,7 @@ TEXT_COMPONENT_COLUMNS = {
     "quantity_units",
     "remaining_useful_life",
     "notes",
+    "B6_category",
 }
 
 

@@ -45,6 +45,13 @@ class ReserveOptimizer:
         merged = pd.DataFrame({"year": years}).merge(base[["year", "special_assessment"]], on="year", how="left").fillna(0.0)
         return merged["special_assessment"].to_numpy(dtype=float)
 
+    def get_existing_additional_income(self, years) -> np.ndarray:
+        base = self.study_result.collection_schedule.annual_df()
+        if base.empty:
+            return np.zeros(len(years), dtype=float)
+        merged = pd.DataFrame({"year": years}).merge(base[["year", "additional_income"]], on="year", how="left").fillna(0.0)
+        return merged["additional_income"].to_numpy(dtype=float)
+
     def resolve_special_assessments(self, years, mode: str = "zero", special_vector=None, special_dict=None, special_func=None) -> np.ndarray:
         years = np.asarray(years, dtype=int)
         if mode == "zero":
@@ -139,11 +146,23 @@ class ReserveOptimizer:
             idx += 1
         return vals
 
-    def build_collection_schedule(self, years, contribution_vector, special_vector=None) -> CollectionSchedule:
-        return self.study_result.collection_schedule.with_contributions(years, contribution_vector, special_vector=special_vector)
+    def build_collection_schedule(self, years, contribution_vector, special_vector=None, additional_income_vector=None) -> CollectionSchedule:
+        if additional_income_vector is None:
+            additional_income_vector = self.get_existing_additional_income(years)
+        return self.study_result.collection_schedule.with_contributions(
+            years,
+            contribution_vector,
+            special_vector=special_vector,
+            additional_income_vector=additional_income_vector,
+        )
 
-    def run_projection_from_contributions(self, years, contribution_vector, special_vector=None, starting_balance=None) -> tuple[CollectionSchedule, object]:
-        collection_schedule = self.build_collection_schedule(years, contribution_vector, special_vector=special_vector)
+    def run_projection_from_contributions(self, years, contribution_vector, special_vector=None, starting_balance=None, additional_income_vector=None) -> tuple[CollectionSchedule, object]:
+        collection_schedule = self.build_collection_schedule(
+            years,
+            contribution_vector,
+            special_vector=special_vector,
+            additional_income_vector=additional_income_vector,
+        )
         projection = ProjectionEngine.project(
             expenditure_schedule=self.study_result.expenditure_schedule,
             collection_schedule=collection_schedule,

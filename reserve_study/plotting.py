@@ -55,10 +55,10 @@ class PlotBuilder:
 
         assessments = assessments.copy()
         if assessments.empty:
-            assessments = years.assign(annual_contribution=0.0, special_assessment=0.0)
+            assessments = years.assign(annual_contribution=0.0, special_assessment=0.0, additional_income=0.0)
         if "annual_contribution" not in assessments.columns and "contribution" in assessments.columns:
             assessments = assessments.rename(columns={"contribution": "annual_contribution"})
-        for column in ["annual_contribution", "special_assessment"]:
+        for column in ["annual_contribution", "special_assessment", "additional_income"]:
             if column not in assessments.columns:
                 assessments[column] = 0.0
             assessments[column] = pd.to_numeric(assessments[column], errors="coerce").fillna(0.0)
@@ -74,12 +74,12 @@ class PlotBuilder:
         expenditures["year"] = expenditures["year"].astype(int)
         expenditures["expenditures"] = pd.to_numeric(expenditures["expenditures"], errors="coerce").fillna(0.0)
 
-        out = years.merge(assessments[["year", "annual_contribution", "special_assessment"]], on="year", how="left")
+        out = years.merge(assessments[["year", "annual_contribution", "special_assessment", "additional_income"]], on="year", how="left")
         out = out.merge(expenditures[["year", "expenditures"]], on="year", how="left")
-        out[["annual_contribution", "special_assessment", "expenditures"]] = out[
-            ["annual_contribution", "special_assessment", "expenditures"]
+        out[["annual_contribution", "special_assessment", "additional_income", "expenditures"]] = out[
+            ["annual_contribution", "special_assessment", "additional_income", "expenditures"]
         ].fillna(0.0)
-        out["total_contributions"] = out["annual_contribution"] + out["special_assessment"]
+        out["total_contributions"] = out["annual_contribution"] + out["special_assessment"] + out["additional_income"]
         inflation_factor = (1.0 + float(self.scenario.assumptions.inflation)) ** (out["year"] - analysis_year)
         out["total_contributions_real"] = out["total_contributions"] / inflation_factor
         out["expenditures_real"] = out["expenditures"] / inflation_factor
@@ -172,9 +172,10 @@ class PlotBuilder:
         fig, ax = plt.subplots(figsize=(11, 6))
         ax2 = ax.twinx()
         colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
-        ax.plot(df["year"], df["annual_contribution"], marker="o", markersize=4, linewidth=1.6, color=colors[0])
-        ax.plot(df["year"], df["special_assessment"], marker="o", markersize=4, linewidth=1.6, color=colors[1])
-        ax.plot(df["year"], df["total_contributions_real"], linewidth=1.8, linestyle="--", color=colors[2])
+        ax.plot(df["year"], df["annual_contribution"], marker="o", markersize=4, linewidth=1.6, color=colors[0], label="Assessment contribution")
+        ax.plot(df["year"], df["special_assessment"], marker="o", markersize=4, linewidth=1.6, color=colors[1], label="Special assessment")
+        ax.plot(df["year"], df["additional_income"], marker="o", markersize=4, linewidth=1.6, color=colors[3], label="Additional Income")
+        ax.plot(df["year"], df["total_contributions_real"], linewidth=1.8, linestyle="--", color=colors[2], label="Total, inflation-adjusted")
         ax2.plot(
             cumulative_nominal["year"],
             cumulative_nominal["cumulative_contributions"],
@@ -204,8 +205,8 @@ class PlotBuilder:
             "alpha": 0.95,
         }
         for info, headline in [
-            (quarter_info, "Quarter of\n30-year Cumulative\nContributions\nCollected"),
-            (half_info, "Half of\n30-year Cumulative\nContributions\nCollected"),
+            (quarter_info, "Quarter of\n30-year Cumulative\nReserve Inflows\nCollected"),
+            (half_info, "Half of\n30-year Cumulative\nReserve Inflows\nCollected"),
         ]:
             if info["x"] is None:
                 continue
@@ -223,7 +224,7 @@ class PlotBuilder:
                 bbox=bbox_style,
             )
 
-        ax.set_title("Reserve Contributions Over Time")
+        ax.set_title("Reserve Inflows Over Time")
         ax.set_xlabel("Year")
         ax.set_ylabel("Annual Dollars")
         ax2.set_ylabel("Cumulative Dollars")
@@ -233,6 +234,8 @@ class PlotBuilder:
         ax.set_xlim(base_year, df["year"].max() + 2)
         self._style_money_axis(ax)
         self._style_money_axis(ax2)
+        lines = ax.get_lines() + ax2.get_lines()
+        ax.legend(lines, [line.get_label() for line in lines], loc="upper left")
         return self._finish(fig, path)
 
     def _plot_expenditures_and_total_contributions(self, df: pd.DataFrame, path: Path) -> Path:
@@ -244,10 +247,10 @@ class PlotBuilder:
         ax.plot(df["year"], df["expenditures_real"], linewidth=1.8, linestyle="--", color=exp_color)
         ax2.plot(df["year"], df["total_contributions"], marker="o", markersize=4, linewidth=1.8, color=contrib_color)
         ax2.plot(df["year"], df["total_contributions_real"], linewidth=1.8, linestyle="--", color=contrib_color)
-        ax.set_title("Expenditures and Total Contributions Over Time")
+        ax.set_title("Expenditures and Total Reserve Inflows Over Time")
         ax.set_xlabel("Year")
         ax.set_ylabel("Annual Expenditures", color=exp_color)
-        ax2.set_ylabel("Annual Total Contributions", color=contrib_color)
+        ax2.set_ylabel("Annual Total Reserve Inflows", color=contrib_color)
         ax.set_ylim(bottom=0)
         ax2.set_ylim(bottom=0)
         ax.set_xticks(sorted(df["year"].unique()))
@@ -293,7 +296,7 @@ class PlotBuilder:
             markersize=4,
             linewidth=2.0,
             color=contrib_color,
-            label="Contributions",
+            label="Reserve inflows",
         )
         ax_bottom.set_xlabel("Year")
         ax_bottom.set_ylabel("Cumulative Dollars")
@@ -315,7 +318,7 @@ class PlotBuilder:
             width=0.8,
             color=green,
             alpha=0.35,
-            label="Annual contribution",
+            label="Assessment contribution",
         )
         ax.bar(
             df["year"],
@@ -326,6 +329,15 @@ class PlotBuilder:
             alpha=0.7,
             label="Special assessment",
         )
+        ax.bar(
+            df["year"],
+            df["additional_income"],
+            width=0.8,
+            bottom=df["annual_contribution"] + df["special_assessment"],
+            color="tab:blue",
+            alpha=0.55,
+            label="Additional Income",
+        )
         ax2.plot(
             df["year"],
             df["cumulative_contributions"],
@@ -333,12 +345,12 @@ class PlotBuilder:
             linewidth=2.5,
             marker="o",
             markersize=4,
-            label="Cumulative contributions",
+            label="Cumulative reserve inflows",
         )
-        ax.set_title("Annual and Cumulative Reserve Contributions")
+        ax.set_title("Annual and Cumulative Reserve Inflows")
         ax.set_xlabel("Year")
-        ax.set_ylabel("Annual Reserve Contributions", color=green)
-        ax2.set_ylabel("Cumulative Reserve Contributions", color=green)
+        ax.set_ylabel("Annual Reserve Inflows", color=green)
+        ax2.set_ylabel("Cumulative Reserve Inflows", color=green)
         ax.set_xticks(df["year"])
         ax.set_xlim(df["year"].min() - 0.5, df["year"].max() + 0.5)
         ax.set_ylim(bottom=0)
@@ -360,11 +372,31 @@ class PlotBuilder:
         red = "red"
         ax.bar(
             df["year"],
-            df["total_contributions"],
+            df["annual_contribution"],
             width=0.75,
             color=green,
             alpha=0.35,
-            label="Annual reserve contributions",
+            label="Assessment contribution",
+            zorder=2,
+        )
+        ax.bar(
+            df["year"],
+            df["special_assessment"],
+            width=0.75,
+            bottom=df["annual_contribution"],
+            color=green,
+            alpha=0.7,
+            label="Special assessment",
+            zorder=2,
+        )
+        ax.bar(
+            df["year"],
+            df["additional_income"],
+            width=0.75,
+            bottom=df["annual_contribution"] + df["special_assessment"],
+            color="tab:blue",
+            alpha=0.55,
+            label="Additional Income",
             zorder=2,
         )
         ax.bar(
@@ -383,7 +415,7 @@ class PlotBuilder:
             linewidth=2.5,
             marker="o",
             markersize=4,
-            label="Cumulative reserve contributions",
+            label="Cumulative reserve inflows",
             zorder=4,
         )
         ax2.plot(
@@ -396,7 +428,7 @@ class PlotBuilder:
             label="Cumulative expenditures",
             zorder=5,
         )
-        ax.set_title("Annual and Cumulative Reserve Contributions and Expenditures")
+        ax.set_title("Annual and Cumulative Reserve Inflows and Expenditures")
         ax.set_xlabel("Year")
         ax.set_ylabel("Annual Dollars")
         ax2.set_ylabel("Cumulative Dollars")
@@ -458,8 +490,9 @@ class PlotBuilder:
 
     def _plot_contributions(self, df: pd.DataFrame, path: Path) -> Path:
         fig, ax = plt.subplots(figsize=(11, 6))
-        ax.plot(df["year"], df["annual_contribution"], linewidth=2.5, label="Annual contribution")
+        ax.plot(df["year"], df["annual_contribution"], linewidth=2.5, label="Assessment contribution")
         ax.plot(df["year"], df["special_assessment"], linewidth=2.0, label="Special assessment")
+        ax.plot(df["year"], df["additional_income"], linewidth=2.0, label="Additional Income")
         ax.plot(df["year"], df["total_contributions_real"], linewidth=2.0, linestyle="--", label="Total, inflation-adjusted")
         ax2 = ax.twinx()
         ax2.plot(df["year"], df["cumulative_contributions"], color="0.25", linewidth=2.0, label="Cumulative total")
@@ -471,7 +504,7 @@ class PlotBuilder:
             linestyle="--",
             label="Cumulative, inflation-adjusted",
         )
-        ax.set_title("Reserve Contributions")
+        ax.set_title("Reserve Inflows")
         ax.set_xlabel("Year")
         ax.set_ylabel("Annual dollars")
         ax2.set_ylabel("Cumulative dollars")
@@ -485,17 +518,17 @@ class PlotBuilder:
         fig, (ax, ax_bottom) = plt.subplots(2, 1, figsize=(11, 8), sharex=True, gridspec_kw={"height_ratios": [2, 1]})
         ax.plot(df["year"], df["expenditures"], linewidth=2.2, label="Expenditures")
         ax.plot(df["year"], df["expenditures_real"], linewidth=2.0, linestyle="--", label="Expenditures, inflation-adjusted")
-        ax.plot(df["year"], df["total_contributions"], linewidth=2.2, label="Contributions")
+        ax.plot(df["year"], df["total_contributions"], linewidth=2.2, label="Reserve inflows")
         ax.plot(
             df["year"],
             df["total_contributions_real"],
             linewidth=2.0,
             linestyle="--",
-            label="Contributions, inflation-adjusted",
+            label="Reserve inflows, inflation-adjusted",
         )
         ax_bottom.plot(df["year"], df["cumulative_expenditures"], linewidth=2.2, label="Cumulative expenditures")
-        ax_bottom.plot(df["year"], df["cumulative_contributions"], linewidth=2.2, label="Cumulative contributions")
-        ax.set_title("Reserve Expenditures and Contributions")
+        ax_bottom.plot(df["year"], df["cumulative_contributions"], linewidth=2.2, label="Cumulative reserve inflows")
+        ax.set_title("Reserve Expenditures and Inflows")
         ax.set_ylabel("Annual dollars")
         ax_bottom.set_xlabel("Year")
         ax_bottom.set_ylabel("Cumulative dollars")

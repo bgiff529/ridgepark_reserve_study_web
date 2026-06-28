@@ -31,6 +31,7 @@ class ScenarioRepository:
                 useful_life=row["useful_life"],
                 remaining_useful_life=row["remaining_useful_life"],
                 notes=row["notes"],
+                b6_category=row["B6_category"],
             )
             for _, row in component_df.iterrows()
         ]
@@ -67,7 +68,7 @@ class ScenarioRepository:
     def write_optimization_results(self, paths: ScenarioPaths, result: OptimizationResult) -> None:
         paths.ensure_output_dirs()
         self.copy_source_data(paths)
-        result.assessments_df().rename(columns={"contribution": "annual_contribution"}).to_csv(
+        result.assessments_df().rename(columns={"contribution": "annual_contribution", "additional_income": "Additional Income"}).to_csv(
             paths.output_source_data_dir / "optimized_assessment_contributions.csv", index=False
         )
         result.projection_df().to_csv(paths.working_csv_dir / "optimized_reserve_projection.csv", index=False)

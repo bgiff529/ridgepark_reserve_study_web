@@ -76,7 +76,8 @@ class ReportBuilder:
             prefix = r"\rowcolor{blue!12} " if index % 2 == 0 else ""
             rows.append(
                 f"{prefix}{int(row.year)} & {latex_money(row.begin_balance)} & {latex_money(row.contribution)} & "
-                f"{latex_money(row.special_assessment)} & {latex_money(row.expenditures)} & {latex_money(row.interest)} & {latex_money(row.end_balance)}{ROW}"
+                f"{latex_money(row.special_assessment)} & {latex_money(row.additional_income)} & {latex_money(row.expenditures)} & "
+                f"{latex_money(row.interest)} & {latex_money(row.end_balance)}{ROW}"
             )
         return self._rows_join(rows)
 
@@ -214,7 +215,9 @@ class ReportBuilder:
             "CONSTRUCTION_DATE": latex_escape(association.get("CONSTRUCTION_DATE", "")),
             "PREPARER": latex_escape(association.get("PREPARER", "")),
             "STATEMENT_TABLE": self._make_statement_table(statement),
-            "FIRST_YEAR_CONTRIBUTION": latex_money(first_year["contribution"] + first_year["special_assessment"]),
+            "FIRST_YEAR_CONTRIBUTION": latex_money(
+                first_year["contribution"] + first_year["special_assessment"] + first_year.get("additional_income", 0.0)
+            ),
             "FIRST_YEAR_END_BALANCE": latex_money(first_year["end_balance"]),
             "FINAL_YEAR": int(final_year["year"]),
             "FINAL_YEAR_END_BALANCE": latex_money(final_year["end_balance"]),

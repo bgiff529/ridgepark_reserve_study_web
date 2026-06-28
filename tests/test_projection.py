@@ -28,7 +28,9 @@ class ProjectionTests(unittest.TestCase):
             component_id=0,
         )
         expenditure_schedule = ExpenditureSchedule.from_components([component], assumptions, projection_years=1, extend_for_next_instance=False)
-        collection_schedule = CollectionSchedule.from_rows([AnnualCollection(year=2026, contribution=1200.0, special_assessment=2400.0)])
+        collection_schedule = CollectionSchedule.from_rows(
+            [AnnualCollection(year=2026, contribution=1200.0, special_assessment=2400.0, additional_income=600.0)]
+        )
         projection = ProjectionEngine.project(
             expenditure_schedule=expenditure_schedule,
             collection_schedule=collection_schedule,
@@ -39,6 +41,7 @@ class ProjectionTests(unittest.TestCase):
         row = projection.years[0]
         self.assertEqual(row.begin_balance, 1200.0)
         self.assertEqual(row.special_assessment, 2400.0)
+        self.assertEqual(row.additional_income, 600.0)
         self.assertEqual(row.expenditures, expenditure_schedule.events[0].amount)
         self.assertGreater(row.end_balance, 0)
 

@@ -1,0 +1,93 @@
+big_six_category,category,subcategory,component,first_year,last_year,occurrence_count,total_future_cost
+Carports,Roofing,Metal,Carport Roofs,2031,2039,5,341244.23
+Carports,Structural,Metal,Carport Support Posts-Beams,2028,2048,3,22341.59
+Chimney Chases,Exterior Surfaces,Structural,Chimney Chases Structural Renovations,2026,2051,12,1059226.58
+Sidewalks,Balconies-Decks-Stairways,Railings,Adding Walkway Railing,2026,2026,1,21312.67
+Balconies,Balconies-Decks-Stairways,Railings,Stairway/Balcony Railing,2026,2050,4,44941.35
+Sidewalks,Balconies-Decks-Stairways,Railings,Walkway Railing,2028,2052,4,19071.31
+Balconies,Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,2027,2051,10,895472.79
+Balconies,Balconies-Decks-Stairways,Structural,Stairway/Balcony Railing,2026,2046,2,163753.79
+Balconies,Balconies-Decks-Stairways,Structural,Wood Balcony Walls,2028,2053,6,241208.06
+Stairways,Balconies-Decks-Stairways,Structural,Metal Stairway Flashing/Stringers,2026,2054,5,120122.56
+Facia-Flashing-Soffits,Exterior Surfaces,Roofing,Fascia-Flashing-Soffits,2026,2050,5,115740.7
+Garage Roofs,Roofing,Elastomeric,Garage Flat Roof,2036,2046,2,959078.66
+Sidewalks,Concrete,Major Repairs,Concrete Sidewalks-Stairs-Patios/Grinding-Repairs,2026,2053,10,156212.66999999998
+Sidewalks,Concrete,Major Repairs,Curbs-Gutters,2026,2053,10,78106.31999999999
+Pool,Concrete,Pool,Pool Area Concrete Deck,2044,2044,1,33007.53
+Clubhouse,Doors-Windows,Raised Panel,Clubhouse Bathroom/Interior Doors,2036,2046,2,15984.64
+Clubhouse,Doors-Windows,Renovation,Clubhouse/Fitness Windows,2036,2046,2,14386.18
+Other,Doors-Windows,Renovation,Raise and Replace Windows,2035,2035,1,22819.94
+Other,Doors-Windows,Renovation,Skylights,2026,2026,1,6089.33
+Clubhouse,Doors-Windows,Sliders,Clubhouse Sliding Glass Doors,2036,2046,2,12787.71
+Clubhouse,Doors-Windows,Window Treatment,Clubhouse Blinds,2036,2046,2,3196.9300000000003
+Clubhouse,Doors-Windows,Wood and Metal,Clubhouse Glass Doors,2036,2046,2,11189.25
+Clubhouse,Equipment,Mail,Mail Boxes,2036,2036,1,13639.26
+Pool,Equipment,Pool,Pool Chemical Controller-Rola Chem,2036,2051,2,8722.2
+Pool,Equipment,Pool,Pool Cover,2028,2052,3,13825.46
+Pool,Equipment,Pool,Pool Filter Hayward,2031,2046,2,3912.4
+Pool,Equipment,Pool,Pool Heater Raypak,2028,2043,2,8262.46
+Pool,Equipment,Pool,Pool Misc Pipes Valves,2030,2051,4,9599.77
+Pool,Equipment,Pool,Pool Pump Hayward,2032,2047,2,2324.86
+Pool,Equipment,Pool,Pool Rails-Ladder,2031,2046,2,2257.15
+Pool,Equipment,Pool,Pool Room Compressor,2031,2046,2,1504.77
+Pool,Exterior Surfaces,Pool,Pool Coping,2036,2036,1,5728.49
+Other,Fences-Walls-Gates,Chain Link,Chain Link Fence,2029,2049,3,11505.92
+Other,Fences-Walls-Gates,Concrete,Concrete Brick Grouted Wall,2026,2053,11,51231.83
+Other,Fences-Walls-Gates,Concrete,Pool Area Wall Repair,2026,2051,6,22736.18
+Other,Fences-Walls-Gates,Concrete,Stacked Concrete Block Wall,2028,2053,6,14472.48
+Other,Fences-Walls-Gates,Metal,Pool Area Metal Rail Fence-Gate,2036,2036,1,20458.89
+Other,Fences-Walls-Gates,Renovation,Wooden Perimeter Fence,2029,2054,6,49688.85
+Chimney Chases,Fire Safety,Equipment,Chimney Flues-Caps-Spark Arrestors,2029,2054,6,49688.85
+Clubhouse,Flooring,Carpet,Clubhouse Carpet,2034,2046,2,112270.82
+Clubhouse,Flooring,Tile,Clubhouse Tile Floor,2034,2054,2,57721.99
+Pool,Flooring,Tile,Pool Area Tile Exterior,2034,2054,2,23088.800000000003
+Other,Landscape,Concrete,Landscape Border Blocks,2026,2053,10,15621.26
+Other,Landscape,Fire Safety,"Landscaping, Wildfire Defensible Space",2026,2055,30,482837.76
+Other,Landscape,Fire Safety,Tree Removal-Major Trimming,2026,2055,31,393374.4
+Other,Landscape,Renovation,Landscape Replenishment,2026,2053,10,39053.159999999996
+Other,Landscape,Renovation,Landscape Rock,2031,2055,4,17366.45
+Clubhouse,Plumbing,Equipment,Clubhouse Hot Water Heaters-Expansion,2031,2055,3,12589.55
+Other,Plumbing,Inspection,Water Valve and Line Annual Inspection,2026,2054,15,41766.63
+Other,Plumbing,Sanitation,"Sewer Inspection, Semi-annual Inspection",2026,2054,15,97447.61
+Other,Plumbing,Sanitation,Sewer Lateral Lines-Cleanouts,2026,2054,15,118925.54
+Clubhouse,Renovation,Bar Service,Clubhouse Bar Remodel,2034,2054,2,18038.12
+Clubhouse,Renovation,Bathrooms,Clubhouse Bathroom Remodel,2034,2054,2,43291.49
+Clubhouse,Renovation,Kitchenette,Fitness Room Kitchenette Remodel,2034,2054,2,12626.689999999999
+Clubhouse,Renovation,Laundry,Laundry Room Remodel,2034,2054,2,12626.689999999999
+Pool,Renovation,Plaster,Pool Resurface,2039,2054,2,54898.44
+Clubhouse,Renovation,Shop,Clubhouse Maintenance Shop Remodel,2029,2049,3,11505.92
+Clubhouse,Renovation,Shower Room,Clubhouse Pool Room-Shower Remodel,2031,2051,2,16507.43
+Clubhouse,Renovation,Wood,Sauna Remodel,2031,2051,2,8253.720000000001
+Other,Signage,Misc,Misc and Parking Signs,2029,2049,3,4602.37
+Other,Signage,Monument,Monument Sign/Wall,2028,2048,2,6042.66
+Other,Signage,Numbers,Building Signs/Numbers,2026,2051,6,18188.95
+Other,Structural,Renovation,Trash Enclosures,2026,2051,6,68208.52
+Painting,Painting,Exterior,Painting Buidling 14,2030,2050,3,65133.61
+Painting,Painting,Exterior,Painting Building 1,2027,2047,3,150174.52000000002
+Painting,Painting,Exterior,Painting Building 10,2028,2048,3,158165.04
+Painting,Painting,Exterior,Painting Building 11,2028,2048,3,105711.46
+Painting,Painting,Exterior,Painting Building 12,2028,2048,3,158165.04
+Painting,Painting,Exterior,Painting Building 13,2027,2047,3,153558.29
+Painting,Painting,Exterior,Painting Building 2,2026,2046,3,145800.5
+Painting,Painting,Exterior,Painting Building 3,2026,2046,3,141681.35
+Painting,Painting,Exterior,Painting Building 4,2026,2046,3,189898.24
+Painting,Painting,Exterior,Painting Building 5,2035,2055,3,316736.75
+Painting,Painting,Exterior,Painting Building 6,2026,2046,3,150968.41
+Painting,Painting,Exterior,Painting Building 7,2026,2046,3,150968.41
+Painting,Painting,Exterior,Painting Building 8,2027,2047,3,187526.18
+Painting,Painting,Exterior,Painting Building 9,2028,2048,3,105711.46
+Painting,Painting,Exterior Metal,Pool Area Metal Rail Fence-Gate-Painting,2034,2054,3,16006.21
+Painting,Painting,Interior,Clubhouse Interior Painting,2036,2048,2,115799.56
+Painting,Painting,Parking,Parking Striping-Curb Painting,2026,2053,10,78106.31999999999
+Paving,Asphalt,Crack Repair,Asphalt Crack Seal,2026,2053,8,353334.88
+Paving,Asphalt,Overlay,Asphalt Mill and Overlay,2035,2035,5,397260.05
+Paving,Asphalt,Remove and Replace,Asphalt Remove and Replace,2051,2055,5,1353799.38
+Paving,Asphalt,Top Coat,Asphalt Seal Coat,2040,2045,2,132589.01
+Siding,Exterior Surfaces,Renovation,Wood Siding,2036,2045,10,2345382.73
+Siding,Exterior Surfaces,Siding,Clubhouse Siding,2031,2031,1,105888.12
+Siding,Exterior Surfaces,Siding,Corrugated Balcony Walls,2033,2053,3,25900.03
+Siding,Exterior Surfaces,Siding,Stucco Siding Repair,2029,2050,4,62134.41
+Gutters,Roofing,Drainage,Gutters-Downspouts,2026,2051,6,227361.74
+Sloped Roofs,Roofing,Inspection,Roof Inspection and Repair,2026,2026,1,17253.12
+Sloped Roofs,Roofing,Shingle,Clubhouse Roof,2035,2035,1,71506.81
+Sloped Roofs,Roofing,Shingle,Unit Building Shingle Roofs,2036,2040,5,1737904.62

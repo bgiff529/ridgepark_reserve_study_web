@@ -46,6 +46,7 @@ class Component:
     useful_life: float
     remaining_useful_life: str
     notes: str = ""
+    b6_category: str = ""
     component_id: int | None = None
 
     def __post_init__(self) -> None:
@@ -55,6 +56,7 @@ class Component:
         self.method = "One Time" if str(self.method).strip().lower() == "one time" else "Repeating"
         self.cost_units = str(self.cost_units).strip()
         self.quantity_units = str(self.quantity_units).strip()
+        self.b6_category = "" if pd.isna(self.b6_category) else str(self.b6_category).strip()
         remaining_months = parse_remaining_life_to_months(self.remaining_useful_life)
         self.remaining_useful_life = "0:00" if pd.isna(remaining_months) else months_to_ym(remaining_months)
         self.notes = "" if pd.isna(self.notes) else str(self.notes).strip()
@@ -123,6 +125,7 @@ class Component:
             "replacement_date": self.replacement_date(assumptions.analysis_date),
             "future_cost": self.future_cost(assumptions.analysis_date, assumptions.inflation),
             "notes": self.notes,
+            "B6_category": self.b6_category,
         }
 
 
@@ -141,6 +144,7 @@ class CashflowEvent:
     life_months: int | None = None
     current_cost: float | None = None
     notes: str = ""
+    b6_category: str = ""
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "date", normalize_to_month(pd.Timestamp(self.date)))
@@ -169,6 +173,7 @@ class CashflowEvent:
             "current_cost": None if self.current_cost is None else round(float(self.current_cost), 2),
             "future_cost": round(float(self.amount), 2),
             "notes": self.notes,
+            "B6_category": self.b6_category,
             "replacement_year": self.year,
         }
 
@@ -178,12 +183,14 @@ class AnnualCollection:
     year: int
     contribution: float
     special_assessment: float = 0.0
+    additional_income: float = 0.0
 
     def to_dict(self) -> dict[str, float | int]:
         return {
             "year": int(self.year),
             "contribution": round(float(self.contribution), 2),
             "special_assessment": round(float(self.special_assessment), 2),
+            "additional_income": round(float(self.additional_income), 2),
         }
 
 
@@ -193,6 +200,7 @@ class ReserveProjectionYear:
     begin_balance: float
     contribution: float
     special_assessment: float
+    additional_income: float
     expenditures: float
     interest: float
     end_balance: float
@@ -205,6 +213,7 @@ class ReserveProjectionYear:
             "begin_balance": round(self.begin_balance, 2),
             "contribution": round(self.contribution, 2),
             "special_assessment": round(self.special_assessment, 2),
+            "additional_income": round(self.additional_income, 2),
             "expenditures": round(self.expenditures, 2),
             "interest": round(self.interest, 2),
             "end_balance": round(self.end_balance, 2),

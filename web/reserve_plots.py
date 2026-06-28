@@ -38,8 +38,13 @@ def _prepare_assessment_plot_df(results):
     plot_df["special_assessment"] = pd.to_numeric(
         plot_df["special_assessment"], errors="coerce"
     ).fillna(0.0)
+    if "Additional Income" not in plot_df.columns:
+        plot_df["Additional Income"] = plot_df.get("additional_income", 0.0)
+    plot_df["additional_income"] = pd.to_numeric(
+        plot_df["Additional Income"], errors="coerce"
+    ).fillna(0.0)
     plot_df["total_contributions"] = (
-        plot_df["annual_contribution"] + plot_df["special_assessment"]
+        plot_df["annual_contribution"] + plot_df["special_assessment"] + plot_df["additional_income"]
     )
 
     expenditures = results["expenditures_by_year_detail"].copy()
@@ -118,7 +123,7 @@ def plot_reserve_contributions_over_time(results):
     base_year = analysis_year
     last_year = int(plot_df["year"].max())
 
-    contribution_plot = plot_df[["year", "annual_contribution", "special_assessment", "total_contributions_real"]].copy()
+    contribution_plot = plot_df[["year", "annual_contribution", "special_assessment", "additional_income", "total_contributions_real"]].copy()
     contribution_plot = contribution_plot.rename(columns={"annual_contribution": "contribution"})
 
     cumulative_plot = plot_df[["year", "total_contributions_real"]].copy()
@@ -163,13 +168,15 @@ def plot_reserve_contributions_over_time(results):
     annual_color = plt.rcParams["axes.prop_cycle"].by_key()["color"][0]
     special_color = plt.rcParams["axes.prop_cycle"].by_key()["color"][1]
     real_total_color = plt.rcParams["axes.prop_cycle"].by_key()["color"][2]
+    additional_income_color = plt.rcParams["axes.prop_cycle"].by_key()["color"][3]
     cumulative_color = "black"
 
-    ax.plot(contribution_plot["year"], contribution_plot["contribution"], marker="o", markersize=4, linewidth=1.6, linestyle="-", color=annual_color)
-    ax.plot(contribution_plot["year"], contribution_plot["special_assessment"], marker="o", markersize=4, linewidth=1.6, linestyle="-", color=special_color)
-    ax.plot(contribution_plot["year"], contribution_plot["total_contributions_real"], linewidth=1.8, linestyle="--", color=real_total_color)
-    ax2.plot(cumulative_plot_nominal["year"], cumulative_plot_nominal["cumulative_contributions"], color=cumulative_color, linewidth=1.8, linestyle="-")
-    ax2.plot(cumulative_plot["year"], cumulative_plot["cumulative_contributions_real"], color=cumulative_color, linewidth=2.4, linestyle="--")
+    ax.plot(contribution_plot["year"], contribution_plot["contribution"], marker="o", markersize=4, linewidth=1.6, linestyle="-", color=annual_color, label="Assessment contribution")
+    ax.plot(contribution_plot["year"], contribution_plot["special_assessment"], marker="o", markersize=4, linewidth=1.6, linestyle="-", color=special_color, label="Special assessment")
+    ax.plot(contribution_plot["year"], contribution_plot["additional_income"], marker="o", markersize=4, linewidth=1.6, linestyle="-", color=additional_income_color, label="Additional Income")
+    ax.plot(contribution_plot["year"], contribution_plot["total_contributions_real"], linewidth=1.8, linestyle="--", color=real_total_color, label="Total, inflation-adjusted")
+    ax2.plot(cumulative_plot_nominal["year"], cumulative_plot_nominal["cumulative_contributions"], color=cumulative_color, linewidth=1.8, linestyle="-", label="Cumulative total")
+    ax2.plot(cumulative_plot["year"], cumulative_plot["cumulative_contributions_real"], color=cumulative_color, linewidth=2.4, linestyle="--", label="Cumulative, inflation-adjusted")
 
     ax.set_ylim(bottom=0)
     cum_max = max(
@@ -179,8 +186,8 @@ def plot_reserve_contributions_over_time(results):
     ax2.set_ylim(0, cum_max * 1.12 if cum_max else 1.0)
 
     milestones = [
-        {"info": quarter_info, "headline": "Quarter of\n30-year Cumulative\nContributions\nCollected", "text_y": 0.96},
-        {"info": half_info, "headline": "Half of\n30-year Cumulative\nContributions\nCollected", "text_y": 0.96},
+        {"info": quarter_info, "headline": "Quarter of\n30-year Cumulative\nReserve Inflows\nCollected", "text_y": 0.96},
+        {"info": half_info, "headline": "Half of\n30-year Cumulative\nReserve Inflows\nCollected", "text_y": 0.96},
     ]
     bbox_style = {
         "boxstyle": "round,pad=0.35,rounding_size=0.2",
@@ -215,7 +222,7 @@ def plot_reserve_contributions_over_time(results):
             bbox=bbox_style,
         )
 
-    ax.set_title("Reserve Contributions Over Time")
+    ax.set_title("Reserve Inflows Over Time")
     ax.set_xlabel("Year")
     ax.set_ylabel("Annual Dollars")
     ax2.set_ylabel("Cumulative Dollars")
@@ -227,6 +234,8 @@ def plot_reserve_contributions_over_time(results):
     _money_axis(ax)
     _money_axis(ax2)
     ax.grid(True, axis="y", alpha=0.3)
+    lines = ax.get_lines() + ax2.get_lines()
+    ax.legend(lines, [line.get_label() for line in lines], loc="upper left")
     fig.tight_layout()
     return fig
 
@@ -244,10 +253,10 @@ def plot_expenditures_and_total_contributions(results):
     ax2.plot(plot_df["year"], plot_df["total_contributions"], marker="o", markersize=4, linewidth=1.8, linestyle="-", color=contrib_color)
     ax2.plot(plot_df["year"], plot_df["total_contributions_real"], linewidth=1.8, linestyle="--", color=contrib_color)
 
-    ax.set_title("Expenditures and Total Contributions Over Time")
+    ax.set_title("Expenditures and Total Reserve Inflows Over Time")
     ax.set_xlabel("Year")
     ax.set_ylabel("Annual Expenditures", color=exp_color)
-    ax2.set_ylabel("Annual Total Contributions", color=contrib_color)
+    ax2.set_ylabel("Annual Total Reserve Inflows", color=contrib_color)
     ax.set_ylim(bottom=0)
     ax2.set_ylim(bottom=0)
     ax.set_xticks(sorted(plot_df["year"].unique()))
@@ -289,7 +298,7 @@ def plot_annual_and_cumulative_expenditures_vs_contributions(results):
     ax.grid(True, axis="y", alpha=0.3)
 
     line_exp, = ax_bottom.plot(plot_df["year"], plot_df["cumulative_expenditures"], marker="o", markersize=4, linewidth=2.0, linestyle="-", color=exp_color, label="Expenditures")
-    line_contrib, = ax_bottom.plot(plot_df["year"], plot_df["cumulative_contributions"], marker="o", markersize=4, linewidth=2.0, linestyle="-", color=contrib_color, label="Contributions")
+    line_contrib, = ax_bottom.plot(plot_df["year"], plot_df["cumulative_contributions"], marker="o", markersize=4, linewidth=2.0, linestyle="-", color=contrib_color, label="Reserve inflows")
     ax_bottom.set_xlabel("Year")
     ax_bottom.set_ylabel("Cumulative Dollars")
     ax_bottom.set_ylim(bottom=0)
@@ -310,14 +319,15 @@ def plot_annual_and_cumulative_reserve_contributions(results):
     ax2 = ax.twinx()
     green = "green"
 
-    ax.bar(plot_df["year"], plot_df["annual_contribution"], width=0.8, color=green, alpha=0.35, label="Annual contribution")
+    ax.bar(plot_df["year"], plot_df["annual_contribution"], width=0.8, color=green, alpha=0.35, label="Assessment contribution")
     ax.bar(plot_df["year"], plot_df["special_assessment"], width=0.8, bottom=plot_df["annual_contribution"], color=green, alpha=0.7, label="Special assessment")
-    ax2.plot(plot_df["year"], plot_df["cumulative_contributions"], color=green, linewidth=2.5, marker="o", markersize=4, label="Cumulative contributions")
+    ax.bar(plot_df["year"], plot_df["additional_income"], width=0.8, bottom=plot_df["annual_contribution"] + plot_df["special_assessment"], color="tab:blue", alpha=0.55, label="Additional Income")
+    ax2.plot(plot_df["year"], plot_df["cumulative_contributions"], color=green, linewidth=2.5, marker="o", markersize=4, label="Cumulative reserve inflows")
 
-    ax.set_title("Annual and Cumulative Reserve Contributions")
+    ax.set_title("Annual and Cumulative Reserve Inflows")
     ax.set_xlabel("Year")
-    ax.set_ylabel("Annual Reserve Contributions", color=green)
-    ax2.set_ylabel("Cumulative Reserve Contributions", color=green)
+    ax.set_ylabel("Annual Reserve Inflows", color=green)
+    ax2.set_ylabel("Cumulative Reserve Inflows", color=green)
     ax.set_xticks(plot_df["year"])
     ax.set_xlim(plot_df["year"].min() - 0.5, plot_df["year"].max() + 0.5)
     ax.set_ylim(bottom=0)
@@ -344,12 +354,14 @@ def plot_annual_and_cumulative_contributions_and_expenditures(results):
     fig, ax = plt.subplots(figsize=(12, 6.5))
     ax2 = ax.twinx()
 
-    ax.bar(plot_df["year"], plot_df["total_contributions"], width=0.75, color=green, alpha=0.35, label="Annual reserve contributions", zorder=2)
+    ax.bar(plot_df["year"], plot_df["annual_contribution"], width=0.75, color=green, alpha=0.35, label="Assessment contribution", zorder=2)
+    ax.bar(plot_df["year"], plot_df["special_assessment"], width=0.75, bottom=plot_df["annual_contribution"], color=green, alpha=0.7, label="Special assessment", zorder=2)
+    ax.bar(plot_df["year"], plot_df["additional_income"], width=0.75, bottom=plot_df["annual_contribution"] + plot_df["special_assessment"], color="tab:blue", alpha=0.55, label="Additional Income", zorder=2)
     ax.bar(plot_df["year"], plot_df["expenditures"], width=0.75, color=red, alpha=0.35, label="Annual expenditures", zorder=3)
-    ax2.plot(plot_df["year"], plot_df["cumulative_contributions"], color=green, linewidth=2.5, marker="o", markersize=4, label="Cumulative reserve contributions", zorder=4)
+    ax2.plot(plot_df["year"], plot_df["cumulative_contributions"], color=green, linewidth=2.5, marker="o", markersize=4, label="Cumulative reserve inflows", zorder=4)
     ax2.plot(plot_df["year"], plot_df["cumulative_expenditures"], color=red, linewidth=2.5, marker="o", markersize=4, label="Cumulative expenditures", zorder=5)
 
-    ax.set_title("Annual and Cumulative Reserve Contributions and Expenditures")
+    ax.set_title("Annual and Cumulative Reserve Inflows and Expenditures")
     ax.set_xlabel("Year")
     ax.set_ylabel("Annual Dollars")
     ax2.set_ylabel("Cumulative Dollars")
@@ -412,10 +424,10 @@ def plot_reserve_balance(results):
 
 def build_all_plots(results):
     return [
-        ("Reserve Contributions Over Time", plot_reserve_contributions_over_time(results)),
-        ("Expenditures and Total Contributions Over Time", plot_expenditures_and_total_contributions(results)),
-        ("Annual and Cumulative Expenditures vs Contributions", plot_annual_and_cumulative_expenditures_vs_contributions(results)),
-        ("Annual and Cumulative Reserve Contributions", plot_annual_and_cumulative_reserve_contributions(results)),
-        ("Annual and Cumulative Reserve Contributions and Expenditures", plot_annual_and_cumulative_contributions_and_expenditures(results)),
+        ("Reserve Inflows Over Time", plot_reserve_contributions_over_time(results)),
+        ("Expenditures and Total Reserve Inflows Over Time", plot_expenditures_and_total_contributions(results)),
+        ("Annual and Cumulative Expenditures vs Reserve Inflows", plot_annual_and_cumulative_expenditures_vs_contributions(results)),
+        ("Annual and Cumulative Reserve Inflows", plot_annual_and_cumulative_reserve_contributions(results)),
+        ("Annual and Cumulative Reserve Inflows and Expenditures", plot_annual_and_cumulative_contributions_and_expenditures(results)),
         ("Reserve Balance", plot_reserve_balance(results)),
     ]

@@ -1,117 +1,117 @@
-category,subcategory,component,method,cost,cost_units,quantity,quantity_units,useful_life,remaining_useful_life,notes
-Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60
-Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60
-Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60
-Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60
-Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60
-Asphalt,Crack Repair,Asphalt Crack Seal,One Time,25000.0,Allow,1,Allow,3,0:06,Source page: 59
-Asphalt,Crack Repair,Asphalt Crack Seal,One Time,25000.0,Allow,1,Allow,3,3:06,Source page: 59
-Asphalt,Crack Repair,Asphalt Crack Seal,Repeating,25000.0,Allow,1,Allow,3,12:06,Source page: 59
-Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,25:06,Source page: 61
-Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,26:06,Source page: 61
-Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,27:06,Source page: 61
-Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,28:06,Source page: 61
-Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,29:06,Source page: 61
-Asphalt,Top Coat,Asphalt Seal Coat,One Time,0.4,$/SF,100000,SF,5,14:06,Source page: 62
-Asphalt,Top Coat,Asphalt Seal Coat,One Time,0.4,$/SF,100000,SF,5,19:06,Source page: 62
-Asphalt,Top Coat,Asphalt Seal Coat,Repeating,0.4,$/SF,100000,SF,5,30:06,Source page: 62
-Balconies-Decks-Stairways,Railings,Stairway/Balcony Railing,Repeating,7500.0,Allow,1,Allow,8,0:06,Source page: 148
-Balconies-Decks-Stairways,Railings,Walkway Railing,Repeating,3000.0,Allow,1,Allow,8,2:06,Source page: 154
-Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,0:06,Source page: 64
-Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,1:06,Source page: 64
-Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,2:06,Source page: 64
-Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,3:06,Source page: 64
-Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,4:06,Source page: 64
-Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,5:06,Source page: 64
-Balconies-Decks-Stairways,Structural,Metal Stairway Flashing/Stringers,Repeating,15000.0,Allow,1,Allow,7,2:06,Source page: 121
-Balconies-Decks-Stairways,Structural,Wood Balcony Walls,Repeating,25000.0,Allow,1,Allow,5,2:06,Source page: 156
-Concrete,Major Repairs,Concrete Sidewalks-Stairs-Patios/Grinding-Repairs,Repeating,10000.0,Allow,1,Allow,3,0:06,Source page: 102
-Concrete,Major Repairs,Curbs-Gutters,Repeating,5000.0,Allow,1,Allow,3,0:06,Source page: 104
-Concrete,Pool,Pool Area Concrete Deck,Repeating,12.0,$/SF,1592,SF,25,18:06,Source page: 128
-Doors-Windows,Raised Panel,Clubhouse Bathroom/Interior Doors,Repeating,5000.0,Allow,1,Allow,10,10:06,Source page: 79
-Doors-Windows,Renovation,Clubhouse/Fitness Windows,Repeating,4500.0,Allow,1,Allow,10,10:06,Source page: 100
-Doors-Windows,Sliders,Clubhouse Sliding Glass Doors,Repeating,4000.0,Allow,1,Allow,10,10:06,Source page: 95
-Doors-Windows,Window Treatment,Clubhouse Blinds,Repeating,1000.0,Allow,1,Allow,10,10:06,Source page: 80
-Doors-Windows,Wood and Metal,Clubhouse Glass Doors,Repeating,3500.0,Allow,1,Allow,10,10:06,Source page: 87
-Equipment,Mail,Mail Boxes,Repeating,10000.0,Job,1,Job,25,10:06,Source page: 120
-Equipment,Pool,Pool Chemical Controller-Rola Chem,Repeating,2500.0,Job,1,Job,15,10:06,Source page: 134
-Equipment,Pool,Pool Cover,Repeating,4.0,$/SF,720,SF,12,2:06,Source page: 136
-Equipment,Pool,Pool Filter Hayward,Repeating,1300.0,Each,1,Each,15,5:06,Source page: 137
-Equipment,Pool,Pool Heater Raypak,Repeating,3000.0,Each,1,Each,15,2:06,Source page: 138
-Equipment,Pool,Pool Misc Pipes Valves,Repeating,1500.0,Allow,1,Allow,7,4:06,Source page: 139
-Equipment,Pool,Pool Pump Hayward,Repeating,750.0,Each,1,Each,15,6:06,Source page: 140
-Equipment,Pool,Pool Rails-Ladder,Repeating,250.0,Each,3,Each,15,5:06,Source page: 141
-Equipment,Pool,Pool Room Compressor,Repeating,500.0,Each,1,Each,15,5:06,Source page: 143
-Exterior Surfaces,Pool,Pool Coping,Repeating,35.0,$/LF,120,LF,20,10:06,Source page: 135
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,2:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,4:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,4:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,6:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,8:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,10:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,11:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,12:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,13:06,Source page: 157
-Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,14:06,Source page: 157
-Exterior Surfaces,Roofing,Fascia-Flashing-Soffits,Repeating,10000.0,Allow,1,Allow,8,0:06,Source page: 108
-Exterior Surfaces,Siding,Clubhouse Siding,Repeating,12.0,$/SF,7500,SF,30,5:06,Source page: 94
-Exterior Surfaces,Siding,Corrugated Balcony Walls,Repeating,5000.0,Allow,1,Allow,10,7:06,Source page: 103
-Exterior Surfaces,Siding,Stucco Siding Repair,Repeating,10000.0,Allow,1,Allow,7,3:06,Source page: 149
-Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,0:06,Source page: 71
-Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,1:06,Source page: 71
-Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,2:06,Source page: 71
-Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,3:06,Source page: 71
-Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,4:06,Source page: 71
-Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,5:06,Source page: 71
-Fences-Walls-Gates,Chain Link,Chain Link Fence,Repeating,2500.0,Allow,1,Allow,10,3:06,Source page: 70
-Fences-Walls-Gates,Concrete,Concrete Brick Grouted Wall,Repeating,2500.0,Allow,1,Allow,3,0:06,Source page: 101
-Fences-Walls-Gates,Concrete,Pool Area Wall Repair,Repeating,2500.0,Allow,1,Allow,5,0:06,Source page: 132
-Fences-Walls-Gates,Concrete,Stacked Concrete Block Wall,Repeating,1500.0,Allow,1,Allow,5,2:06,Source page: 147
-Fences-Walls-Gates,Metal,Pool Area Metal Rail Fence-Gate,Repeating,75.0,$/LF,200,LF,25,10:06,Source page: 129
-Fences-Walls-Gates,Renovation,Wooden Perimeter Fence,Repeating,5000.0,Allow,1,Allow,5,3:06,Source page: 158
-Fire Safety,Equipment,Chimney Flues-Caps-Spark Arrestors,Repeating,5000.0,Allow,1,Allow,5,3:06,Source page: 73
-Flooring,Carpet,Clubhouse Carpet,Repeating,9.0,$/SF,4000,SF,12,8:06,Source page: 81
-Flooring,Tile,Clubhouse Tile Floor,Repeating,16.0,$/SF,1000,SF,20,8:06,Source page: 99
-Flooring,Tile,Pool Area Tile Exterior,Repeating,16.0,$/SF,400,SF,20,8:06,Source page: 131
-Landscape,Concrete,Landscape Border Blocks,Repeating,1000.0,Allow,1,Allow,3,0:06,Source page: 115
-Landscape,Fire Safety,Tree Removal-Major Trimming,Repeating,8000.0,Allow,1,Allow,1,0:06,Source page: 151
-Landscape,Renovation,Landscape Replenishment,Repeating,2500.0,Allow,1,Allow,3,0:06,Source page: 116
-Landscape,Renovation,Landscape Rock,Repeating,2500.0,Allow,1,Allow,8,5:06,Source page: 117
-Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,0:06,Source page: 124
-Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,1:06,Source page: 124
-Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,2:06,Source page: 124
-Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,3:06,Source page: 124
-Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,4:06,Source page: 124
-Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,5:06,Source page: 124
-Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,6:06,Source page: 124
-Painting,Exterior Metal,Pool Area Metal Rail Fence-Gate-Painting,Repeating,15.0,$/LF,200,LF,10,8:06,Source page: 130
-Painting,Interior,Clubhouse Interior Painting,Repeating,1.75,$/SF,20000,SF,12,10:06,Source page: 90
-Painting,Parking,Parking Striping-Curb Painting,Repeating,5000.0,Allow,1,Allow,3,0:06,Source page: 125
-Plumbing,Equipment,Clubhouse Hot Water Heaters-Expansion,Repeating,1200.0,Each,2,Each,12,5:06,Source page: 88
-Plumbing,Sanitation,Sewer Lateral Lines-Cleanouts,Repeating,5000.0,Allow,1,Allow,2,0:06,Source page: 146
-Renovation,Bar Service,Clubhouse Bar Remodel,Repeating,5000.0,Job,1,Job,20,8:06,Source page: 76
-Renovation,Bathrooms,Clubhouse Bathroom Remodel,Repeating,6000.0,Each,2,Each,20,8:06,Source page: 78
-Renovation,Kitchenette,Fitness Room Kitchenette Remodel,Repeating,3500.0,Allow,1,Allow,20,8:06,Source page: 111
-Renovation,Laundry,Laundry Room Remodel,Repeating,3500.0,Allow,1,Allow,20,8:06,Source page: 118
-Renovation,Plaster,Pool Resurface,Repeating,12.0,$/SF,1200,SF,15,13:06,Source page: 142
-Renovation,Shop,Clubhouse Maintenance Shop Remodel,Repeating,2500.0,Allow,1,Allow,10,3:06,Source page: 91
-Renovation,Shower Room,Clubhouse Pool Room-Shower Remodel,Repeating,5000.0,Allow,1,Allow,20,5:06,Source page: 92
-Renovation,Wood,Sauna Remodel,Repeating,2500.0,Job,1,Job,20,5:06,Source page: 145
-Roofing,Drainage,Gutters-Downspouts,Repeating,20000.0,Allow,1,Allow,5,4:06,Source page: 113
-Roofing,Elastomeric,Garage Flat Roof,Repeating,300000.0,Allow,1,Allow,10,10:06,Source page: 112
-Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,5:06,Source page: 68
-Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,7:06,Source page: 68
-Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,9:06,Source page: 68
-Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,11:06,Source page: 68
-Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,13:06,Source page: 68
-Roofing,Shingle,Clubhouse Roof,Repeating,12.0,$/SF,4500,SF,25,9:06,Source page: 93
-Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,10:06,Source page: 152
-Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,11:06,Source page: 152
-Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,12:06,Source page: 152
-Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,13:06,Source page: 152
-Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,14:06,Source page: 152
-Signage,Misc,Misc and Parking Signs,Repeating,1000.0,Allow,1,Allow,10,3:06,Source page: 122
-Signage,Monument,Monument Sign/Wall,Repeating,2000.0,Allow,1,Allow,20,2:06,Source page: 123
-Signage,Numbers,Building Signs/Numbers,Repeating,2000.0,Allow,1,Allow,5,0:06,Source page: 65
-Structural,Metal,Carport Support Posts-Beams,Repeating,5000.0,Allow,1,Allow,10,2:06,Source page: 69
-Structural,Renovation,Trash Enclosures,Repeating,7500.0,Allow,1,Allow,5,0:06,Source page: 150
+category,subcategory,component,method,cost,cost_units,quantity,quantity_units,useful_life,remaining_useful_life,notes,B6_category
+Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60,Paving
+Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60,Paving
+Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60,Paving
+Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60,Paving
+Asphalt,Overlay,Asphalt Mill and Overlay,One Time,3.0,$/SF,20000,SF,15,9:06,Source page: 60,Paving
+Asphalt,Crack Repair,Asphalt Crack Seal,One Time,25000.0,Allow,1,Allow,3,0:06,Source page: 59,Paving
+Asphalt,Crack Repair,Asphalt Crack Seal,One Time,25000.0,Allow,1,Allow,3,3:06,Source page: 59,Paving
+Asphalt,Crack Repair,Asphalt Crack Seal,Repeating,25000.0,Allow,1,Allow,3,12:06,Source page: 59,Paving
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,25:06,Source page: 61,Paving
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,26:06,Source page: 61,Paving
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,27:06,Source page: 61,Paving
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,28:06,Source page: 61,Paving
+Asphalt,Remove and Replace,Asphalt Remove and Replace,Repeating,6.0,$/SF,20000,SF,30,29:06,Source page: 61,Paving
+Asphalt,Top Coat,Asphalt Seal Coat,One Time,0.4,$/SF,100000,SF,5,14:06,Source page: 62,Paving
+Asphalt,Top Coat,Asphalt Seal Coat,One Time,0.4,$/SF,100000,SF,5,19:06,Source page: 62,Paving
+Asphalt,Top Coat,Asphalt Seal Coat,Repeating,0.4,$/SF,100000,SF,5,30:06,Source page: 62,Paving
+Balconies-Decks-Stairways,Railings,Stairway/Balcony Railing,Repeating,7500.0,Allow,1,Allow,8,0:06,Source page: 148,Balconies
+Balconies-Decks-Stairways,Railings,Walkway Railing,Repeating,3000.0,Allow,1,Allow,8,2:06,Source page: 154,Sidewalks
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,0:06,Source page: 64,Balconies
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,1:06,Source page: 64,Balconies
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,2:06,Source page: 64,Balconies
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,3:06,Source page: 64,Balconies
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,4:06,Source page: 64,Balconies
+Balconies-Decks-Stairways,Structural,Balconies-Decks-Posts/Structural Supports,Repeating,2500.0,Each,23,Each,20,5:06,Source page: 64,Balconies
+Balconies-Decks-Stairways,Structural,Metal Stairway Flashing/Stringers,Repeating,15000.0,Allow,1,Allow,7,2:06,Source page: 121,Stairways
+Balconies-Decks-Stairways,Structural,Wood Balcony Walls,Repeating,25000.0,Allow,1,Allow,5,2:06,Source page: 156,Balconies
+Concrete,Major Repairs,Concrete Sidewalks-Stairs-Patios/Grinding-Repairs,Repeating,10000.0,Allow,1,Allow,3,0:06,Source page: 102,Sidewalks
+Concrete,Major Repairs,Curbs-Gutters,Repeating,5000.0,Allow,1,Allow,3,0:06,Source page: 104,Sidewalks
+Concrete,Pool,Pool Area Concrete Deck,Repeating,12.0,$/SF,1592,SF,25,18:06,Source page: 128,Pool
+Doors-Windows,Raised Panel,Clubhouse Bathroom/Interior Doors,Repeating,5000.0,Allow,1,Allow,10,10:06,Source page: 79,Clubhouse
+Doors-Windows,Renovation,Clubhouse/Fitness Windows,Repeating,4500.0,Allow,1,Allow,10,10:06,Source page: 100,Clubhouse
+Doors-Windows,Sliders,Clubhouse Sliding Glass Doors,Repeating,4000.0,Allow,1,Allow,10,10:06,Source page: 95,Clubhouse
+Doors-Windows,Window Treatment,Clubhouse Blinds,Repeating,1000.0,Allow,1,Allow,10,10:06,Source page: 80,Clubhouse
+Doors-Windows,Wood and Metal,Clubhouse Glass Doors,Repeating,3500.0,Allow,1,Allow,10,10:06,Source page: 87,Clubhouse
+Equipment,Mail,Mail Boxes,Repeating,10000.0,Job,1,Job,25,10:06,Source page: 120,Clubhouse
+Equipment,Pool,Pool Chemical Controller-Rola Chem,Repeating,2500.0,Job,1,Job,15,10:06,Source page: 134,Pool
+Equipment,Pool,Pool Cover,Repeating,4.0,$/SF,720,SF,12,2:06,Source page: 136,Pool
+Equipment,Pool,Pool Filter Hayward,Repeating,1300.0,Each,1,Each,15,5:06,Source page: 137,Pool
+Equipment,Pool,Pool Heater Raypak,Repeating,3000.0,Each,1,Each,15,2:06,Source page: 138,Pool
+Equipment,Pool,Pool Misc Pipes Valves,Repeating,1500.0,Allow,1,Allow,7,4:06,Source page: 139,Pool
+Equipment,Pool,Pool Pump Hayward,Repeating,750.0,Each,1,Each,15,6:06,Source page: 140,Pool
+Equipment,Pool,Pool Rails-Ladder,Repeating,250.0,Each,3,Each,15,5:06,Source page: 141,Pool
+Equipment,Pool,Pool Room Compressor,Repeating,500.0,Each,1,Each,15,5:06,Source page: 143,Pool
+Exterior Surfaces,Pool,Pool Coping,Repeating,35.0,$/LF,120,LF,20,10:06,Source page: 135,Pool
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,2:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,4:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,4:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,6:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,8:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,10:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,11:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,12:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,13:06,Source page: 157,Siding
+Exterior Surfaces,Renovation,Wood Siding,Repeating,12.0,$/SF,12500,SF,30,14:06,Source page: 157,Siding
+Exterior Surfaces,Roofing,Fascia-Flashing-Soffits,Repeating,10000.0,Allow,1,Allow,8,0:06,Source page: 108,Facia-Flashing-Soffits
+Exterior Surfaces,Siding,Clubhouse Siding,Repeating,12.0,$/SF,7500,SF,30,5:06,Source page: 94,Siding
+Exterior Surfaces,Siding,Corrugated Balcony Walls,Repeating,5000.0,Allow,1,Allow,10,7:06,Source page: 103,Siding
+Exterior Surfaces,Siding,Stucco Siding Repair,Repeating,10000.0,Allow,1,Allow,7,3:06,Source page: 149,Siding
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,0:06,Source page: 71,Chimney Chases
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,1:06,Source page: 71,Chimney Chases
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,2:06,Source page: 71,Chimney Chases
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,3:06,Source page: 71,Chimney Chases
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,4:06,Source page: 71,Chimney Chases
+Exterior Surfaces,Structural,Chimney Chases Structural Renovations,Repeating,2500.0,Each,23,Each,20,5:06,Source page: 71,Chimney Chases
+Fences-Walls-Gates,Chain Link,Chain Link Fence,Repeating,2500.0,Allow,1,Allow,10,3:06,Source page: 70,Other
+Fences-Walls-Gates,Concrete,Concrete Brick Grouted Wall,Repeating,2500.0,Allow,1,Allow,3,0:06,Source page: 101,Other
+Fences-Walls-Gates,Concrete,Pool Area Wall Repair,Repeating,2500.0,Allow,1,Allow,5,0:06,Source page: 132,Other
+Fences-Walls-Gates,Concrete,Stacked Concrete Block Wall,Repeating,1500.0,Allow,1,Allow,5,2:06,Source page: 147,Other
+Fences-Walls-Gates,Metal,Pool Area Metal Rail Fence-Gate,Repeating,75.0,$/LF,200,LF,25,10:06,Source page: 129,Other
+Fences-Walls-Gates,Renovation,Wooden Perimeter Fence,Repeating,5000.0,Allow,1,Allow,5,3:06,Source page: 158,Other
+Fire Safety,Equipment,Chimney Flues-Caps-Spark Arrestors,Repeating,5000.0,Allow,1,Allow,5,3:06,Source page: 73,Chimney Chases
+Flooring,Carpet,Clubhouse Carpet,Repeating,9.0,$/SF,4000,SF,12,8:06,Source page: 81,Clubhouse
+Flooring,Tile,Clubhouse Tile Floor,Repeating,16.0,$/SF,1000,SF,20,8:06,Source page: 99,Clubhouse
+Flooring,Tile,Pool Area Tile Exterior,Repeating,16.0,$/SF,400,SF,20,8:06,Source page: 131,Pool
+Landscape,Concrete,Landscape Border Blocks,Repeating,1000.0,Allow,1,Allow,3,0:06,Source page: 115,Other
+Landscape,Fire Safety,Tree Removal-Major Trimming,Repeating,8000.0,Allow,1,Allow,1,0:06,Source page: 151,Other
+Landscape,Renovation,Landscape Replenishment,Repeating,2500.0,Allow,1,Allow,3,0:06,Source page: 116,Other
+Landscape,Renovation,Landscape Rock,Repeating,2500.0,Allow,1,Allow,8,5:06,Source page: 117,Other
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,0:06,Source page: 124,Other
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,1:06,Source page: 124,Other
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,2:06,Source page: 124,Other
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,3:06,Source page: 124,Other
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,4:06,Source page: 124,Other
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,5:06,Source page: 124,Other
+Painting,Exterior,Painting Unit Buildings-Clubhouse-Exterior,Repeating,4.0,$/SF,25000,SF,10,6:06,Source page: 124,Other
+Painting,Exterior Metal,Pool Area Metal Rail Fence-Gate-Painting,Repeating,15.0,$/LF,200,LF,10,8:06,Source page: 130,Painting
+Painting,Interior,Clubhouse Interior Painting,Repeating,1.75,$/SF,20000,SF,12,10:06,Source page: 90,Painting
+Painting,Parking,Parking Striping-Curb Painting,Repeating,5000.0,Allow,1,Allow,3,0:06,Source page: 125,Painting
+Plumbing,Equipment,Clubhouse Hot Water Heaters-Expansion,Repeating,1200.0,Each,2,Each,12,5:06,Source page: 88,Clubhouse
+Plumbing,Sanitation,Sewer Lateral Lines-Cleanouts,Repeating,5000.0,Allow,1,Allow,2,0:06,Source page: 146,Other
+Renovation,Bar Service,Clubhouse Bar Remodel,Repeating,5000.0,Job,1,Job,20,8:06,Source page: 76,Clubhouse
+Renovation,Bathrooms,Clubhouse Bathroom Remodel,Repeating,6000.0,Each,2,Each,20,8:06,Source page: 78,Clubhouse
+Renovation,Kitchenette,Fitness Room Kitchenette Remodel,Repeating,3500.0,Allow,1,Allow,20,8:06,Source page: 111,Clubhouse
+Renovation,Laundry,Laundry Room Remodel,Repeating,3500.0,Allow,1,Allow,20,8:06,Source page: 118,Clubhouse
+Renovation,Plaster,Pool Resurface,Repeating,12.0,$/SF,1200,SF,15,13:06,Source page: 142,Pool
+Renovation,Shop,Clubhouse Maintenance Shop Remodel,Repeating,2500.0,Allow,1,Allow,10,3:06,Source page: 91,Clubhouse
+Renovation,Shower Room,Clubhouse Pool Room-Shower Remodel,Repeating,5000.0,Allow,1,Allow,20,5:06,Source page: 92,Clubhouse
+Renovation,Wood,Sauna Remodel,Repeating,2500.0,Job,1,Job,20,5:06,Source page: 145,Clubhouse
+Roofing,Drainage,Gutters-Downspouts,Repeating,20000.0,Allow,1,Allow,5,4:06,Source page: 113,Gutters
+Roofing,Elastomeric,Garage Flat Roof,Repeating,300000.0,Allow,1,Allow,10,10:06,Source page: 112,Garage Roofs
+Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,5:06,Source page: 68,Carports
+Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,7:06,Source page: 68,Carports
+Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,9:06,Source page: 68,Carports
+Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,11:06,Source page: 68,Carports
+Roofing,Metal,Carport Roofs,Repeating,12.0,$/SF,4280,SF,25,13:06,Source page: 68,Carports
+Roofing,Shingle,Clubhouse Roof,Repeating,12.0,$/SF,4500,SF,25,9:06,Source page: 93,Sloped Roofs
+Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,10:06,Source page: 152,Sloped Roofs
+Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,11:06,Source page: 152,Sloped Roofs
+Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,12:06,Source page: 152,Sloped Roofs
+Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,13:06,Source page: 152,Sloped Roofs
+Roofing,Shingle,Unit Building Shingle Roofs,Repeating,12.0,$/SF,20000,SF,30,14:06,Source page: 152,Sloped Roofs
+Signage,Misc,Misc and Parking Signs,Repeating,1000.0,Allow,1,Allow,10,3:06,Source page: 122,Other
+Signage,Monument,Monument Sign/Wall,Repeating,2000.0,Allow,1,Allow,20,2:06,Source page: 123,Other
+Signage,Numbers,Building Signs/Numbers,Repeating,2000.0,Allow,1,Allow,5,0:06,Source page: 65,Other
+Structural,Metal,Carport Support Posts-Beams,Repeating,5000.0,Allow,1,Allow,10,2:06,Source page: 69,Carports
+Structural,Renovation,Trash Enclosures,Repeating,7500.0,Allow,1,Allow,5,0:06,Source page: 150,Other

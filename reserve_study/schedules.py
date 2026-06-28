@@ -56,6 +56,7 @@ class ExpenditureSchedule:
                         life_months=int(life_months),
                         current_cost=round(component.current_cost, 2),
                         notes=component.notes,
+                        b6_category=component.b6_category,
                     )
                 )
                 if component.is_one_time:
@@ -126,13 +127,18 @@ class CollectionSchedule:
 
     @classmethod
     def from_dataframe(cls, df: pd.DataFrame) -> "CollectionSchedule":
+        def number(value) -> float:
+            return 0.0 if pd.isna(value) or value == "" else float(value)
+
         rows = []
         for _, row in df.iterrows():
+            additional_income = row.get("additional_income", row.get("Additional Income", 0.0))
             rows.append(
                 AnnualCollection(
                     year=int(row["year"]),
-                    contribution=float(row.get("annual_contribution", row.get("contribution", 0.0)) or 0.0),
-                    special_assessment=float(row.get("special_assessment", 0.0) or 0.0),
+                    contribution=number(row.get("annual_contribution", row.get("contribution", 0.0))),
+                    special_assessment=number(row.get("special_assessment", 0.0)),
+                    additional_income=number(additional_income),
                 )
             )
         return cls.from_rows(rows)
@@ -142,18 +148,20 @@ class CollectionSchedule:
 
     def annual_for_year(self, year: int) -> AnnualCollection:
         match = next((row for row in self.annual_collections if int(row.year) == int(year)), None)
-        return match or AnnualCollection(year=int(year), contribution=0.0, special_assessment=0.0)
+        return match or AnnualCollection(year=int(year), contribution=0.0, special_assessment=0.0, additional_income=0.0)
 
-    def annual_maps(self) -> tuple[dict[int, float], dict[int, float]]:
+    def annual_maps(self) -> tuple[dict[int, float], dict[int, float], dict[int, float]]:
         contribution_map = {int(row.year): float(row.contribution) for row in self.annual_collections}
         special_map = {int(row.year): float(row.special_assessment) for row in self.annual_collections}
-        return contribution_map, special_map
+        additional_income_map = {int(row.year): float(row.additional_income) for row in self.annual_collections}
+        return contribution_map, special_map, additional_income_map
 
     def dated_events(self, start_year: int, projection_years: int) -> list[CashflowEvent]:
         events: list[CashflowEvent] = []
         for year in range(int(start_year), int(start_year) + int(projection_years)):
             annual = self.annual_for_year(year)
             monthly_contribution = float(annual.contribution) / 12.0
+            monthly_additional_income = float(annual.additional_income) / 12.0
             for month in range(1, 13):
                 events.append(
                     CashflowEvent(
@@ -162,6 +170,14 @@ class CollectionSchedule:
                         event_type="contribution",
                     )
                 )
+                if monthly_additional_income:
+                    events.append(
+                        CashflowEvent(
+                            date=pd.Timestamp(year=year, month=month, day=1),
+                            amount=monthly_additional_income,
+                            event_type="additional_income",
+                        )
+                    )
             if annual.special_assessment:
                 events.append(
                     CashflowEvent(
@@ -172,12 +188,19 @@ class CollectionSchedule:
                 )
         return events
 
-    def with_contributions(self, years, contribution_vector, special_vector=None) -> "CollectionSchedule":
+    def with_contributions(self, years, contribution_vector, special_vector=None, additional_income_vector=None) -> "CollectionSchedule":
         years = list(years)
         if special_vector is None:
             special_vector = [0.0] * len(years)
+        if additional_income_vector is None:
+            additional_income_vector = [0.0] * len(years)
         rows = [
-            AnnualCollection(year=int(year), contribution=float(contribution), special_assessment=float(special))
-            for year, contribution, special in zip(years, contribution_vector, special_vector)
+            AnnualCollection(
+                year=int(year),
+                contribution=float(contribution),
+                special_assessment=float(special),
+                additional_income=float(additional_income),
+            )
+            for year, contribution, special, additional_income in zip(years, contribution_vector, special_vector, additional_income_vector)
         ]
         return CollectionSchedule.from_rows(rows)

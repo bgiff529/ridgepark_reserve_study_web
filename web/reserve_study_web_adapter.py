@@ -23,6 +23,7 @@ ASSESSMENT_INPUT_COLUMNS = [
     "year",
     "annual_contribution",
     "special_assessment",
+    "Additional Income",
 ]
 
 ASSUMPTION_DEFAULTS = {
@@ -74,6 +75,8 @@ def prepare_assessment_input(source) -> pd.DataFrame:
     out = df.copy()
     if "contribution" in out.columns and "annual_contribution" not in out.columns:
         out = out.rename(columns={"contribution": "annual_contribution"})
+    if "additional_income" in out.columns and "Additional Income" not in out.columns:
+        out = out.rename(columns={"additional_income": "Additional Income"})
     for column in ASSESSMENT_INPUT_COLUMNS:
         if column not in out.columns:
             out[column] = 0
@@ -83,6 +86,7 @@ def prepare_assessment_input(source) -> pd.DataFrame:
     out["year"] = out["year"].astype(int)
     out["annual_contribution"] = pd.to_numeric(out["annual_contribution"], errors="coerce").fillna(0.0)
     out["special_assessment"] = pd.to_numeric(out["special_assessment"], errors="coerce").fillna(0.0)
+    out["Additional Income"] = pd.to_numeric(out["Additional Income"], errors="coerce").fillna(0.0)
     return out.sort_values("year").reset_index(drop=True)
 
 

@@ -1,0 +1,5 @@
+Please find attached your reserve study report. This version was generated from association CSV source files using a Python-to-LaTeX workflow so that the report can be reproduced, updated, and audited from the underlying data package.
+
+The report is intended to mirror the structure and feel of a conventional reserve study: a cover page, statement of position, component summaries, annual funding projections, expenditure schedules, and supporting disclosures. The purpose is not to imitate the original preparer's authorship, but to provide a transparent and reusable reporting format driven directly by the uploaded reserve data.
+
+The reserve model remains a planning tool rather than a prediction of exact future outcomes. Actual repair timing, pricing, inflation, and investment returns will differ from the assumptions used here. The goal is to keep the association approximately funded at approximately the right time and to make long-range reserve decisions easier to review.

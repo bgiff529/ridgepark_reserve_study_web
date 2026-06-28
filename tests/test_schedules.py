@@ -35,14 +35,19 @@ class ScheduleTests(unittest.TestCase):
         self.assertEqual(schedule.events[1].date, pd.Timestamp("2034-01-01"))
 
     def test_collection_schedule_generates_monthly_and_special_cashflows(self):
-        schedule = CollectionSchedule.from_rows([AnnualCollection(year=2030, contribution=1200.0, special_assessment=2400.0)])
+        schedule = CollectionSchedule.from_rows(
+            [AnnualCollection(year=2030, contribution=1200.0, special_assessment=2400.0, additional_income=600.0)]
+        )
 
         events = schedule.dated_events(start_year=2030, projection_years=1)
         contributions = [event for event in events if event.event_type == "contribution"]
+        additional_income = [event for event in events if event.event_type == "additional_income"]
         specials = [event for event in events if event.event_type == "special_assessment"]
 
         self.assertEqual(len(contributions), 12)
         self.assertEqual(contributions[0].amount, 100.0)
+        self.assertEqual(len(additional_income), 12)
+        self.assertEqual(additional_income[0].amount, 50.0)
         self.assertEqual(len(specials), 1)
         self.assertEqual(specials[0].date, pd.Timestamp("2030-01-01"))
 
